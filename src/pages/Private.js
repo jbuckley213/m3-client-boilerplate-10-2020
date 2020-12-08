@@ -22,7 +22,7 @@ class Private extends Component {
   }
 
   orderPosts = () => {
-    const postsArr = [];
+    const postsArr = [...this.props.user.posts];
     this.state.users.forEach((user) => {
       postsArr.push(...user.posts);
     });
@@ -38,20 +38,35 @@ class Private extends Component {
     this.setState({ posts: postsArr });
   };
 
+  handleInput = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    postService
+      .createPost(this.props.user._id, this.state.post)
+      .then((createdPost) => {
+        console.log(createdPost);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
-    if (this.state.posts.length !== 0) {
-      console.log(this.state.posts[0]);
-    }
     return (
       <div>
         <h1>Private Route</h1>
         <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input
             name="post"
             value={this.state.post}
             onChange={this.handleInput}
           />
+          <button type="submit">Submit</button>
         </form>
         {this.state.posts.map((post) => {
           return <Post key={post._id} post={post} />;

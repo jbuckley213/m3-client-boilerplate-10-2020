@@ -91,7 +91,7 @@ class Profile extends Component {
           ? this.state.user.following &&
             this.state.user.following.map((user) => {
               return (
-                <Link to={`/profile/${user._id}`}>
+                <Link key={user._id} to={`/profile/${user._id}`}>
                   {user.firstName} {user.lastName}
                 </Link>
               );

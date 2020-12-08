@@ -15,6 +15,20 @@ class PostService {
 
     return pr;
   };
+
+  createPost = (postedBy, postContent) => {
+    const pr = this.api.post("/posts", { postedBy, postContent });
+    return pr;
+  };
+
+  likePost = (postId) => {
+    const pr = this.api.put(`/posts/${postId}/likes`);
+    return pr;
+  };
+  unlikePost = (postId) => {
+    const pr = this.api.put(`/posts/${postId}/unlikes`);
+    return pr;
+  };
 }
 
 const postService = new PostService();
