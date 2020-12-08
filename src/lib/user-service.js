@@ -15,6 +15,11 @@ class UserService {
 
     return pr;
   };
+
+  getOne = (id) => {
+    const pr = this.api.get(`/users/${id}`);
+    return pr;
+  };
 }
 
 const userService = new UserService();

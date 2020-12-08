@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import postService from "./../lib/post-service";
-import Post from "./../components/Post";
+import Post from "./../components/Posts/Post";
 
 class Private extends Component {
   state = {
