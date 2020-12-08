@@ -8,13 +8,10 @@ class Private extends Component {
   state = {
     users: [],
     posts: [],
+    post: "",
   };
 
   componentDidMount() {
-    // userService
-    //   .getAll()
-    //   .then((users) => this.setState({ users: users.data }))
-    //   .catch((err) => this.setState({ users: [] }));
     postService
       .getAllPostsByFollowedUsers()
       .then((apiResponse) => {
@@ -49,7 +46,13 @@ class Private extends Component {
       <div>
         <h1>Private Route</h1>
         <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
-
+        <form>
+          <input
+            name="post"
+            value={this.state.post}
+            onChange={this.handleInput}
+          />
+        </form>
         {this.state.posts.map((post) => {
           return <Post key={post._id} post={post} />;
         })}
