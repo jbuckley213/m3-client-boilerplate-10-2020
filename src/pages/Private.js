@@ -26,7 +26,7 @@ class Private extends Component {
   };
 
   orderPosts = () => {
-    // const postsArr = [...this.props.user.posts];
+    //const postsArr = [...this.props.user.posts];
     const postsArr = [];
 
     this.state.users.forEach((user) => {
@@ -63,7 +63,7 @@ class Private extends Component {
 
   render() {
     return (
-      <div>
+      <div className="dashboard">
         <h1>Private Route</h1>
         <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
         <img src={this.props.user.image} />

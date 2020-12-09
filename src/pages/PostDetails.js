@@ -77,6 +77,39 @@ class PostDetails extends Component {
       });
   };
 
+  showCommentInput = () => {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          name="commentInput"
+          value={this.state.commentInput}
+          onChange={this.handleInput}
+          autoComplete="off"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  };
+
+  displayComments = () => {
+    return (
+      <div>
+        {this.state.post.comments &&
+          this.state.post.comments.map((comment) => {
+            return (
+              <div key={comment._id}>
+                <p>
+                  {comment.createdBy.firstName} {comment.createdBy.lastName}
+                </p>
+
+                <p>{comment.commentContent}</p>
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
+
   render() {
     let classes = "";
     if (this.state.isLiked) {
@@ -86,12 +119,15 @@ class PostDetails extends Component {
     return (
       <div className="card">
         <header className="card-header">
-          {/* <Link to={`profile/${post.postedBy._id}`}> */}
-          <p className="card-header-title">
-            {post.postedBy && post.postedBy.firstName}{" "}
-            {post.postedBy && post.postedBy.lastName}
-          </p>
-          {/* </Link> */}
+          {post.postedBy && (
+            <Link to={`/profile/${post.postedBy._id}`}>
+              <p className="card-header-title">
+                {post.postedBy && post.postedBy.firstName}{" "}
+                {post.postedBy && post.postedBy.lastName}
+              </p>
+            </Link>
+          )}
+
           <a href="#" className="card-header-icon" aria-label="more options">
             <span className="icon">
               <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -122,28 +158,13 @@ class PostDetails extends Component {
             Comment
           </p>
         </footer>
-        <h3>Comments:</h3>
-        {post.comments &&
-          post.comments.map((comment) => {
-            return (
-              <div key={comment._id}>
-                <p>
-                  {comment.createdBy.firstName} {comment.createdBy.lastName}
-                </p>
 
-                <p>{comment.commentContent}</p>
-              </div>
-            );
-          })}
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="commentInput"
-            value={this.state.commentInput}
-            onChange={this.handleInput}
-            autoComplete="off"
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <section>
+          <h3>Comments:</h3>
+          {this.displayComments()}
+
+          {this.showCommentInput()}
+        </section>
       </div>
     );
   }

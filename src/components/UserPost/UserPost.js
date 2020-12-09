@@ -3,26 +3,13 @@ import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
 
-import "./Post.css";
+// import "./../Posts/Post.css";
 import "bulma/css/bulma.css";
 
 class Post extends Component {
   state = {
     isliked: false,
-    numberOfLikes: 0,
-    numberOfComments: 0,
-  };
-
-  countNumberOfLikes = () => {
-    let numberOfLikes = this.props.post.likes.length;
-    console.log(numberOfLikes);
-    this.setState({ numberOfLikes });
-  };
-
-  countNumberOfComments = () => {
-    let numberOfComments = this.props.post.comments.length;
-    console.log(numberOfComments);
-    this.setState({ numberOfComments });
+    showDelete: false,
   };
 
   handleLike = () => {
@@ -30,10 +17,7 @@ class Post extends Component {
       postService
         .likePost(this.props.post._id)
         .then((postLiked) => {
-          let numberOfLikes = this.state.numberOfLikes;
-          numberOfLikes++;
-          console.log(numberOfLikes);
-          this.setState({ numberOfLikes: numberOfLikes });
+          console.log(postLiked);
         })
         .catch((err) => {
           console.log(err);
@@ -43,10 +27,7 @@ class Post extends Component {
       postService
         .unlikePost(this.props.post._id)
         .then((postUnliked) => {
-          let numberOfLikes = this.state.numberOfLikes;
-          numberOfLikes--;
-          console.log(numberOfLikes);
-          this.setState({ numberOfLikes: numberOfLikes });
+          console.log(postUnliked);
         })
         .catch((err) => {
           console.log(err);
@@ -65,9 +46,11 @@ class Post extends Component {
       });
     }
     this.setState({ isLiked: isLiked });
-    this.countNumberOfLikes();
-    this.countNumberOfComments();
   }
+
+  toggleDelete = () => {
+    this.setState({ showDelete: !this.state.showDelete });
+  };
   render() {
     const { post } = this.props;
     let classes = "";
@@ -104,12 +87,20 @@ class Post extends Component {
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
           >
-            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+            {this.state.isLiked ? "Liked" : "Like"}
           </p>
 
-          <p href="#" className="card-footer-item">
-            Comment {this.state.numberOfComments}
+          <p onClick={this.toggleDelete} href="#" className="card-footer-item">
+            Delete
           </p>
+          {this.state.showDelete ? (
+            <div>
+              <button onClick={() => this.props.deletePost(post._id)}>
+                Confirm Delete
+              </button>
+              <button onClick={this.toggleDelete}>Cancel</button>
+            </div>
+          ) : null}
         </footer>
       </div>
     );

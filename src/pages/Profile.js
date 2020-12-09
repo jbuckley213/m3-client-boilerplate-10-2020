@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
+import UserPost from "./../components/UserPost/UserPost";
+
 import { Link } from "react-router-dom";
 import postService from "../lib/post-service";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
@@ -16,6 +18,7 @@ class Profile extends Component {
     showPosts: true,
     showLikes: false,
     showFollowing: false,
+    postInput: "",
   };
 
   componentDidMount() {
@@ -57,7 +60,6 @@ class Profile extends Component {
   handleFollow = () => {
     if (!this.state.isFollowed) {
       userService.follow(this.state.user._id).then((apiResponse) => {
-        console.log(apiResponse.data.following);
         this.setState({ isFollowed: true });
       });
     } else if (this.state.isFollowed) {
@@ -80,24 +82,17 @@ class Profile extends Component {
       .catch((err) => console.log(err));
   };
 
-  handleAdmin = (postId) => {
-    return (
-      <div>
-        {this.state.isAdmin ? (
-          this.state.showDelete ? (
-            <div>
-              <button onClick={() => this.deletePost(postId)}>
-                Confirm Delete
-              </button>
-              <button onClick={this.toggleDelete}>Cancel</button>
-            </div>
-          ) : (
-            <button onClick={this.toggleDelete}>Delete</button>
-          )
-        ) : null}
-      </div>
-    );
-  };
+  //   handleAdmin = (postId) => {
+  //     return (
+  //       <div>
+  //         {this.state.isAdmin ? (
+  //           : (
+  //             <button onClick={this.toggleDelete}>Delete</button>
+  //           )
+  //         ) : null}
+  //       </div>
+  //     );
+  //   };
 
   displayPosts = () => {
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
@@ -108,13 +103,49 @@ class Profile extends Component {
   displayFollowing = () => {
     this.setState({ showPosts: false, showLikes: false, showFollowing: true });
   };
-  toggleDelete = () => {
-    this.setState({ showDelete: !this.state.showDelete });
+
+  handleInput = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    postService
+      .createPost(this.props.user._id, this.state.postInput)
+      .then((createdPost) => {
+        this.handlePostApi();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  showAdminFollowButton = () => {
+    return (
+      <div>
+        {this.state.isAdmin ? (
+          <button onClick={this.handleFollow}>
+            {this.state.isFollowed
+              ? "Hide Posts on My Dashboard"
+              : "Show Posts on My Dashboard"}
+          </button>
+        ) : (
+          <button onClick={this.handleFollow}>
+            {this.state.isFollowed ? "Unfollow" : "Follow"}
+          </button>
+        )}
+      </div>
+    );
   };
 
   render() {
+    // console.log(this.state.user);
+    // if (this.state.user.following) {
+    //   console.log(this.state.user.following.length);
+    // }
     return (
-      <div>
+      <div className="profile">
         <div>
           <button onClick={this.displayPosts}>Posts</button>
           <button onClick={this.displayLikes}>Likes</button>
@@ -123,21 +154,29 @@ class Profile extends Component {
         <p>
           {this.state.user.firstName} {this.state.user.lastName}
         </p>
-        <img src={this.props.user.image} />
+        <img src={this.state.user.image} />
 
-        {this.state.isAdmin ? null : (
-          <button onClick={this.handleFollow}>
-            {this.state.isFollowed ? "Unfollow" : "Follow"}
-          </button>
-        )}
+        {this.showAdminFollowButton()}
+
+        <form onSubmit={this.handleSubmit}>
+          <input
+            name="postInput"
+            value={this.state.postInput}
+            onChange={this.handleInput}
+          />
+          <button type="submit">Submit</button>
+        </form>
 
         {this.state.showPosts
           ? this.state.user.posts &&
             this.state.user.posts.map((post) => {
               return (
                 <div key={post._id}>
-                  <Post post={post} />
-                  {this.handleAdmin(post._id)}
+                  {this.state.isAdmin ? (
+                    <UserPost post={post} deletePost={this.deletePost} />
+                  ) : (
+                    <Post post={post} />
+                  )}
                 </div>
               );
             })
@@ -149,8 +188,10 @@ class Profile extends Component {
             })
           : null}
 
-        {this.state.showFollowing
-          ? this.state.user.following &&
+        {this.state.showFollowing ? (
+          this.state.user.following.length === 0 ? (
+            <h3>Not following anyone</h3>
+          ) : (
             this.state.user.following.map((user) => {
               if (user._id === this.props.user._id) {
                 return null;
@@ -162,7 +203,8 @@ class Profile extends Component {
                 );
               }
             })
-          : null}
+          )
+        ) : null}
       </div>
     );
   }
