@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
+import Notifications from "./../components/Notifications/Notifications";
 import UserPost from "./../components/UserPost/UserPost";
 import axios from "axios";
 import "bulma/css/bulma.css";
@@ -23,13 +24,14 @@ class Profile extends Component {
     showFollowing: false,
     postInput: "",
     postPhoto: "",
+    showNotifications: false,
   };
 
   componentDidMount() {
-    this.handlePostApi();
+    this.handlePostApi(true);
   }
 
-  handlePostApi = () => {
+  handlePostApi = (mount) => {
     const profileId = this.props.match.params.id;
     userService
       .getOne(profileId)
@@ -39,7 +41,10 @@ class Profile extends Component {
           isAdmin: apiResponse.data.isAdmin,
           userId: profileId,
         });
-        this.displayPosts();
+        if (mount) {
+          this.displayPosts();
+        }
+
         this.checkFollow();
         this.orderPosts();
       })
@@ -109,9 +114,13 @@ class Profile extends Component {
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
   };
   displayLikes = () => {
+    this.handlePostApi(false);
+
     this.setState({ showPosts: false, showLikes: true, showFollowing: false });
   };
   displayFollowing = () => {
+    this.handlePostApi(false);
+
     this.setState({ showPosts: false, showLikes: false, showFollowing: true });
   };
 
@@ -181,18 +190,27 @@ class Profile extends Component {
       });
   };
 
+  toggleNotifications = () => {
+    this.setState({ showNotifications: !this.state.showNotifications });
+  };
+
   render() {
     // console.log(this.state.user);
     // if (this.state.user.following) {
     //   console.log(this.state.user.following.length);
     // }
-    console.log(this.state.posts);
+    const notifications = this.props.user.notifications;
     return (
       <div className="profile">
         <p>
           {this.state.user.firstName} {this.state.user.lastName}
         </p>
         <img src={this.state.user.image} />
+
+        {this.state.isAdmin ? (
+          <button onClick={this.toggleNotifications}>Notification</button>
+        ) : null}
+        {this.state.showNotifications ? <Notifications /> : null}
 
         {this.showAdminFollowButton()}
 
@@ -249,6 +267,7 @@ class Profile extends Component {
               })}{" "}
           </div>
         ) : null}
+
         {this.state.showLikes
           ? this.state.user.likes &&
             this.state.user.likes.map((post) => {
@@ -261,27 +280,29 @@ class Profile extends Component {
             <h3>Not following anyone</h3>
           ) : (
             <table>
-              {this.state.user.following.map((user) => {
-                if (user._id === this.props.user._id) {
-                  return null;
-                } else {
-                  return (
-                    <Link key={user._id} to={`/profile/${user._id}`}>
-                      <tr className="profile-link">
+              <tbody>
+                {this.state.user.following.map((user) => {
+                  if (user._id === this.props.user._id) {
+                    return null;
+                  } else {
+                    return (
+                      <tr key={user._id} className="profile-link">
                         <td>
                           <img src={user.image} />
                         </td>
 
                         <td>
                           <p>
-                            {user.firstName} {user.lastName}
-                          </p>{" "}
+                            <Link to={`/profile/${user._id}`}>
+                              {user.firstName} {user.lastName}
+                            </Link>
+                          </p>
                         </td>
                       </tr>
-                    </Link>
-                  );
-                }
-              })}{" "}
+                    );
+                  }
+                })}
+              </tbody>
             </table>
           )
         ) : null}

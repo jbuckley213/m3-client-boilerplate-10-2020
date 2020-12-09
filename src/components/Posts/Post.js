@@ -15,13 +15,11 @@ class Post extends Component {
 
   countNumberOfLikes = () => {
     let numberOfLikes = this.props.post.likes.length;
-    console.log(numberOfLikes);
     this.setState({ numberOfLikes });
   };
 
   countNumberOfComments = () => {
     let numberOfComments = this.props.post.comments.length;
-    console.log(numberOfComments);
     this.setState({ numberOfComments });
   };
 
@@ -30,9 +28,9 @@ class Post extends Component {
       postService
         .likePost(this.props.post._id)
         .then((postLiked) => {
+          console.log(postLiked);
           let numberOfLikes = this.state.numberOfLikes;
           numberOfLikes++;
-          console.log(numberOfLikes);
           this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
@@ -55,6 +53,20 @@ class Post extends Component {
     this.setState({ isLiked: !this.state.isLiked });
   };
 
+  // handleLike = () => {
+  //   if (!this.state.isLiked) {
+  //     let numberOfLikes = this.state.numberOfLikes;
+  //     numberOfLikes++;
+  //     this.setState({ numberOfLikes: numberOfLikes });
+  //   }
+  //   if (this.state.isLiked) {
+  //     let numberOfLikes = this.state.numberOfLikes;
+  //     numberOfLikes--;
+  //     this.setState({ numberOfLikes: numberOfLikes });
+  //   }
+  //   this.setState({ isLiked: !this.state.isLiked });
+  // };
+
   componentDidMount() {
     let isLiked = false;
     if (this.props.post) {
@@ -68,9 +80,31 @@ class Post extends Component {
     this.countNumberOfLikes();
     this.countNumberOfComments();
   }
+
+  // componentWillUnmount() {
+  //   if (!this.state.isLiked) {
+  //     postService
+  //       .likePost(this.props.post._id)
+  //       .then((postLiked) => {
+  //         console.log("Post liked");
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  //   if (this.state.isLiked) {
+  //     postService
+  //       .unlikePost(this.props.post._id)
+  //       .then((postUnliked) => {
+  //         console.log("Post unliked");
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }
   render() {
     const { post } = this.props;
-    console.log(post);
     let classes = "";
     if (this.state.isLiked) {
       classes = "liked";

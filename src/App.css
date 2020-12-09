@@ -84,3 +84,21 @@ button.navbar-button {
   border-radius: 50%;
   margin: auto 0;
 }
+
+.likes {
+  position: absolute;
+  width: 200px;
+  height: 180px;
+  top: 210px;
+  left: 70px;
+  opacity: 0.9;
+  background-color: #f2f2f2;
+
+  border: 1px solid black;
+}
+
+/* To display popup likes */
+
+.card-details {
+  height: 800px;
+}

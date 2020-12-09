@@ -10,6 +10,7 @@ class PostDetails extends Component {
     commentInput: "",
     numberOfLikes: 0,
     numberOfComments: 0,
+    showLikes: false,
   };
 
   componentDidMount() {
@@ -18,13 +19,11 @@ class PostDetails extends Component {
 
   countNumberOfLikes = () => {
     let numberOfLikes = this.state.post.likes.length;
-    console.log(numberOfLikes);
     this.setState({ numberOfLikes });
   };
 
   countNumberOfComments = () => {
     let numberOfComments = this.state.post.comments.length;
-    console.log(numberOfComments);
     this.setState({ numberOfComments });
   };
 
@@ -38,6 +37,10 @@ class PostDetails extends Component {
     });
 
     this.setState({ isLiked: isLiked });
+  };
+
+  toggleLikes = () => {
+    this.setState({ showLikes: !this.state.showLikes });
   };
 
   handlePostById = () => {
@@ -136,9 +139,9 @@ class PostDetails extends Component {
       classes = "liked";
     }
     const post = this.state.post;
-    console.log(post);
+
     return (
-      <div className="card">
+      <div className="card card-details">
         <header className="card-header">
           {post.postedBy && (
             <Link to={`/profile/${post.postedBy._id}`}>
@@ -174,6 +177,7 @@ class PostDetails extends Component {
         </div>
 
         <footer className="card-footer">
+          <button onClick={this.toggleLikes}>Likes</button>
           <p
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
@@ -192,6 +196,18 @@ class PostDetails extends Component {
 
           {this.showCommentInput()}
         </section>
+        {this.state.showLikes ? (
+          <div className="likes">
+            {post.likes &&
+              post.likes.map((user) => {
+                return (
+                  <p key={user._id}>
+                    {user.firstName} {user.lastName}
+                  </p>
+                );
+              })}
+          </div>
+        ) : null}
       </div>
     );
   }
