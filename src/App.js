@@ -18,8 +18,6 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <Navbar />
-
         <Switch>
           <Route exact path="/" component={Home} />
 
@@ -35,6 +33,7 @@ class App extends Component {
             component={PostDetails}
           />
         </Switch>
+        <Navbar />
       </div>
     );
   }

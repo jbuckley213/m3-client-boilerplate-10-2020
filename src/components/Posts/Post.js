@@ -70,6 +70,7 @@ class Post extends Component {
   }
   render() {
     const { post } = this.props;
+    console.log(post);
     let classes = "";
     if (this.state.isLiked) {
       classes = "liked";
@@ -77,6 +78,7 @@ class Post extends Component {
     return (
       <div className="card">
         <header className="card-header">
+          <img src={post.postedBy.image} />
           <p className="card-header-title">
             {post.postedBy && post.postedBy.firstName}{" "}
             {post.postedBy && post.postedBy.lastName}
@@ -90,6 +92,13 @@ class Post extends Component {
         <Link to={`/postdetails/${post._id}`}>
           <div className="card-content">
             <div className="content">
+              {post.postPhoto ? (
+                <img
+                  style={{ width: "100px" }}
+                  src={post.postPhoto && post.postPhoto}
+                  alt=""
+                ></img>
+              ) : null}
               {post.postContent}
 
               <br />

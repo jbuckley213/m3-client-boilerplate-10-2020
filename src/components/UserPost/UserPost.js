@@ -10,6 +10,18 @@ class Post extends Component {
   state = {
     isliked: false,
     showDelete: false,
+    numberOfLikes: 0,
+    numberOfComments: 0,
+  };
+
+  countNumberOfLikes = () => {
+    let numberOfLikes = this.props.post.likes.length;
+    this.setState({ numberOfLikes });
+  };
+
+  countNumberOfComments = () => {
+    let numberOfComments = this.props.post.comments.length;
+    this.setState({ numberOfComments });
   };
 
   handleLike = () => {
@@ -17,7 +29,10 @@ class Post extends Component {
       postService
         .likePost(this.props.post._id)
         .then((postLiked) => {
-          console.log(postLiked);
+          let numberOfLikes = this.state.numberOfLikes;
+          numberOfLikes++;
+          console.log(numberOfLikes);
+          this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
           console.log(err);
@@ -27,7 +42,10 @@ class Post extends Component {
       postService
         .unlikePost(this.props.post._id)
         .then((postUnliked) => {
-          console.log(postUnliked);
+          let numberOfLikes = this.state.numberOfLikes;
+          numberOfLikes--;
+          console.log(numberOfLikes);
+          this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
           console.log(err);
@@ -46,6 +64,8 @@ class Post extends Component {
       });
     }
     this.setState({ isLiked: isLiked });
+    this.countNumberOfLikes();
+    this.countNumberOfComments();
   }
 
   toggleDelete = () => {
@@ -70,6 +90,14 @@ class Post extends Component {
             </span>
           </a>
         </header>
+        {post.postPhoto ? (
+          <img
+            style={{ width: "100px" }}
+            src={post.postPhoto && post.postPhoto}
+            alt=""
+          ></img>
+        ) : null}
+
         <Link to={`/postdetails/${post._id}`}>
           <div className="card-content">
             <div className="content">
@@ -87,11 +115,11 @@ class Post extends Component {
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
           >
-            {this.state.isLiked ? "Liked" : "Like"}
+            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
           </p>
 
           <p onClick={this.toggleDelete} href="#" className="card-footer-item">
-            Delete
+            Delete {this.state.comments}
           </p>
           {this.state.showDelete ? (
             <div>

@@ -155,7 +155,13 @@ class PostDetails extends Component {
             </span>
           </a>
         </header>
-
+        {post.postPhoto ? (
+          <img
+            style={{ width: "100px" }}
+            src={post.postPhoto && post.postPhoto}
+            alt=""
+          ></img>
+        ) : null}
         <div className="card-content">
           <div className="content">
             {post.postContent}

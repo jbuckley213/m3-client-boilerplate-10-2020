@@ -21,8 +21,9 @@ class PostService {
     return pr;
   };
 
-  createPost = (postedBy, postContent) => {
-    const pr = this.api.post("/posts", { postedBy, postContent });
+  createPost = (postedBy, postContent, postPhoto) => {
+    console.log(postedBy, postContent, postPhoto);
+    const pr = this.api.post("/posts", { postedBy, postContent, postPhoto });
     return pr;
   };
 

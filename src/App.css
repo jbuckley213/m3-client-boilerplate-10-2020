@@ -10,8 +10,14 @@ body {
 
 nav.navbar {
   display: flex;
+  justify-content: space-evenly;
   padding: 0px 20px;
-  background: #686de0;
+  background: #57ba98;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: #f2f2f2;
 }
 
 button.navbar-button {
@@ -30,8 +36,51 @@ button.navbar-button {
   height: 100px;
   width: 100px;
 }
+.dashboard {
+  background-color: #f2f2f2;
+}
 
 .profile img {
   height: 100px;
   width: 100px;
+}
+.btn {
+  width: 100px;
+  margin: auto 0;
+  height: 45px;
+  border-radius: 15px;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav-link {
+  color: #f2f2f2;
+  background-color: #3b945e;
+}
+
+.profile-link img {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile-link {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.profile-link td {
+  margin: 0 20px;
+}
+
+.button-group {
+  margin-bottom: 30px;
+}
+
+.card-header img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: auto 0;
 }

@@ -59,17 +59,27 @@ class Search extends Component {
           onChange={this.handleInput}
           autoComplete="off"
         />
-        {this.state.searchInput === ""
-          ? null
-          : this.state.searchResults.map((user) => {
+        {this.state.searchInput === "" ? null : (
+          <table>
+            {this.state.searchResults.map((user) => {
               return (
                 <Link key={user._id} to={`/profile/${user._id}`}>
-                  <p>
-                    {user.firstName} {user.lastName}
-                  </p>
+                  <tr className="profile-link">
+                    <td>
+                      <img src={user.image} />
+                    </td>
+
+                    <td>
+                      <p>
+                        {user.firstName} {user.lastName}
+                      </p>{" "}
+                    </td>
+                  </tr>
                 </Link>
               );
             })}
+          </table>
+        )}
       </div>
     );
   }
