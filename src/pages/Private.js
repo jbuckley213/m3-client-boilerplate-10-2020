@@ -73,7 +73,7 @@ class Private extends Component {
             value={this.state.post}
             onChange={this.handleInput}
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Post</button>
         </form>
         {this.state.posts.map((post) => {
           return <Post key={post._id} post={post} />;

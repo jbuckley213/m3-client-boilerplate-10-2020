@@ -8,11 +8,25 @@ class PostDetails extends Component {
     post: {},
     isLiked: false,
     commentInput: "",
+    numberOfLikes: 0,
+    numberOfComments: 0,
   };
 
   componentDidMount() {
     this.handlePostById();
   }
+
+  countNumberOfLikes = () => {
+    let numberOfLikes = this.state.post.likes.length;
+    console.log(numberOfLikes);
+    this.setState({ numberOfLikes });
+  };
+
+  countNumberOfComments = () => {
+    let numberOfComments = this.state.post.comments.length;
+    console.log(numberOfComments);
+    this.setState({ numberOfComments });
+  };
 
   setLike = () => {
     let isLiked = false;
@@ -33,6 +47,8 @@ class PostDetails extends Component {
       .then((apiResponse) => {
         this.setState({ post: apiResponse.data });
         this.setLike();
+        this.countNumberOfLikes();
+        this.countNumberOfComments();
       })
       .catch((err) => console.log(err));
   };
@@ -42,7 +58,9 @@ class PostDetails extends Component {
       postService
         .likePost(this.state.post._id)
         .then((postLiked) => {
-          console.log(postLiked);
+          let numberOfLikes = this.state.numberOfLikes;
+          numberOfLikes++;
+          this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
           console.log(err);
@@ -52,7 +70,9 @@ class PostDetails extends Component {
       postService
         .unlikePost(this.state.post._id)
         .then((postUnliked) => {
-          console.log(postUnliked);
+          let numberOfLikes = this.state.numberOfLikes;
+          numberOfLikes--;
+          this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
           console.log(err);
@@ -116,6 +136,7 @@ class PostDetails extends Component {
       classes = "liked";
     }
     const post = this.state.post;
+    console.log(post);
     return (
       <div className="card">
         <header className="card-header">
@@ -151,11 +172,11 @@ class PostDetails extends Component {
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
           >
-            {this.state.isLiked ? "Liked" : "Like"}
+            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
           </p>
 
           <p href="#" className="card-footer-item">
-            Comment
+            Comment {this.state.numberOfComments}
           </p>
         </footer>
 

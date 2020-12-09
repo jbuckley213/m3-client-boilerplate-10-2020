@@ -82,18 +82,6 @@ class Profile extends Component {
       .catch((err) => console.log(err));
   };
 
-  //   handleAdmin = (postId) => {
-  //     return (
-  //       <div>
-  //         {this.state.isAdmin ? (
-  //           : (
-  //             <button onClick={this.toggleDelete}>Delete</button>
-  //           )
-  //         ) : null}
-  //       </div>
-  //     );
-  //   };
-
   displayPosts = () => {
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
   };
@@ -164,7 +152,7 @@ class Profile extends Component {
             value={this.state.postInput}
             onChange={this.handleInput}
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Post</button>
         </form>
 
         {this.state.showPosts
