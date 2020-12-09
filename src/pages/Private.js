@@ -66,6 +66,7 @@ class Private extends Component {
       <div>
         <h1>Private Route</h1>
         <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
+        <img src={this.props.user.image} />
         <form onSubmit={this.handleSubmit}>
           <input
             name="post"

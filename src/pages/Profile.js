@@ -123,6 +123,8 @@ class Profile extends Component {
         <p>
           {this.state.user.firstName} {this.state.user.lastName}
         </p>
+        <img src={this.props.user.image} />
+
         {this.state.isAdmin ? null : (
           <button onClick={this.handleFollow}>
             {this.state.isFollowed ? "Unfollow" : "Follow"}
