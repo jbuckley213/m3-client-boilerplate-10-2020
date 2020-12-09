@@ -8,6 +8,7 @@ class Profile extends Component {
   state = {
     user: {},
     isAdmin: false,
+    isFollowed: false,
     userId: "",
     showPosts: true,
     showLikes: false,
@@ -15,41 +16,56 @@ class Profile extends Component {
   };
 
   componentDidMount() {
+    this.handlePostApi();
+  }
+
+  handlePostApi = () => {
     const profileId = this.props.match.params.id;
     userService
       .getOne(profileId)
       .then((apiResponse) => {
-        console.log("apiResponse.data.user", apiResponse.data.user);
-
         this.setState({
           user: apiResponse.data.user,
           isAdmin: apiResponse.data.isAdmin,
           userId: profileId,
         });
+        this.displayPosts();
+        this.checkFollow();
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   componentDidUpdate = () => {
     if (this.state.userId !== this.props.match.params.id) {
-      const profileId = this.props.match.params.id;
-      userService
-        .getOne(profileId)
-        .then((apiResponse) => {
-          this.setState({
-            user: apiResponse.data.user,
-            isAdmin: apiResponse.data.isAdmin,
-            userId: profileId,
-          });
-          this.displayPosts();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.handlePostApi();
     }
   };
+
+  checkFollow = () => {
+    this.state.user.followers.forEach((userFollowing) => {
+      if (this.props.user._id === userFollowing) {
+        this.setState({ isFollowed: true });
+      }
+    });
+  };
+
+  handleFollow = () => {
+    if (!this.state.isFollowed) {
+      userService.follow(this.state.user._id).then((apiResponse) => {
+        console.log(apiResponse.data.following);
+        this.setState({ isFollowed: true });
+      });
+    } else if (this.state.isFollowed) {
+      userService.unfollow(this.state.user._id).then((apiResponse) => {
+        console.log(apiResponse.data.following);
+        this.setState({ isFollowed: false });
+      });
+    }
+  };
+
+  deletePost = () => {};
 
   displayPosts = () => {
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
@@ -72,12 +88,25 @@ class Profile extends Component {
         <p>
           {this.state.user.firstName} {this.state.user.lastName}
         </p>
-        {this.state.isAdmin ? <p>Is Admin</p> : <p>Is not Admin</p>}
+        {this.state.isAdmin ? null : (
+          <button onClick={this.handleFollow}>
+            {this.state.isFollowed ? "Unfollow" : "Follow"}
+          </button>
+        )}
 
         {this.state.showPosts
           ? this.state.user.posts &&
             this.state.user.posts.map((post) => {
-              return <Post key={post._id} post={post} />;
+              return (
+                <div key={post._id}>
+                  <Post post={post} />
+                  {this.state.isAdmin ? (
+                    <button onClick={() => this.deletePost(post._id)}>
+                      Delete
+                    </button>
+                  ) : null}
+                </div>
+              );
             })
           : null}
         {this.state.showLikes

@@ -8,9 +8,11 @@ class AuthService {
     });
   }
 
-  signup(email, password) {
+  signup(firstName, lastName, email, password) {
+    console.log(firstName, lastName, email, password);
+
     const pr = this.auth
-      .post("/auth/signup", { email, password })
+      .post("/auth/signup", { firstName, lastName, email, password })
       .then((response) => response.data);
     // .then(({ data }) => data); // Shorter way of `.then((response) => response.data);`
 

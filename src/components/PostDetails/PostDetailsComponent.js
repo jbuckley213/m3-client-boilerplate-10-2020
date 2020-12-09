@@ -3,10 +3,10 @@ import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
 
-import "./Post.css";
+import "./PostDetails.css";
 import "bulma/css/bulma.css";
 
-class Post extends Component {
+class PostDetails extends Component {
   state = {
     isliked: false,
   };
@@ -37,13 +37,13 @@ class Post extends Component {
 
   componentDidMount() {
     let isLiked = false;
-    if (this.props.post) {
-      this.props.post.likes.forEach((likeId) => {
-        if (likeId === this.props.user._id) {
-          isLiked = true;
-        }
-      });
-    }
+
+    this.props.post.likes.forEach((likeId) => {
+      if (likeId === this.props.user._id) {
+        isLiked = true;
+      }
+    });
+
     this.setState({ isLiked: isLiked });
   }
   render() {
@@ -94,4 +94,4 @@ class Post extends Component {
   }
 }
 
-export default withAuth(Post);
+export default withAuth(PostDetails);

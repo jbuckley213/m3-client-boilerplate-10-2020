@@ -57,6 +57,7 @@ class Search extends Component {
           name="searchInput"
           value={this.state.searchInput}
           onChange={this.handleInput}
+          autoComplete="off"
         />
         {this.state.searchInput === ""
           ? null

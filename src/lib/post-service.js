@@ -16,6 +16,11 @@ class PostService {
     return pr;
   };
 
+  getById = (postId) => {
+    const pr = this.api.get(`/posts/${postId}`);
+    return pr;
+  };
+
   createPost = (postedBy, postContent) => {
     const pr = this.api.post("/posts", { postedBy, postContent });
     return pr;
@@ -27,6 +32,17 @@ class PostService {
   };
   unlikePost = (postId) => {
     const pr = this.api.put(`/posts/${postId}/unlikes`);
+    return pr;
+  };
+
+  comment = (postId, commentContent) => {
+    const pr = this.api.post(`/posts/${postId}/comment`, {
+      commentContent,
+    });
+    return pr;
+  };
+  delete = (postId) => {
+    const pr = this.api.delete(`/posts/${postId}/delete`);
     return pr;
   };
 }

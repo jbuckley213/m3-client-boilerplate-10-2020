@@ -12,6 +12,10 @@ class Private extends Component {
   };
 
   componentDidMount() {
+    this.handlePostsFollowedApi();
+  }
+
+  handlePostsFollowedApi = () => {
     postService
       .getAllPostsByFollowedUsers()
       .then((apiResponse) => {
@@ -19,7 +23,7 @@ class Private extends Component {
         this.orderPosts();
       })
       .catch((err) => this.setState({ users: [] }));
-  }
+  };
 
   orderPosts = () => {
     const postsArr = [...this.props.user.posts];
@@ -47,9 +51,7 @@ class Private extends Component {
     event.preventDefault();
     postService
       .createPost(this.props.user._id, this.state.post)
-      .then((createdPost) => {
-        console.log(createdPost);
-      })
+      .then((createdPost) => {})
       .catch((err) => {
         console.log(err);
       });
