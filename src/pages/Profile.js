@@ -3,12 +3,15 @@ import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
 import { Link } from "react-router-dom";
+import postService from "../lib/post-service";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 class Profile extends Component {
   state = {
     user: {},
     isAdmin: false,
     isFollowed: false,
+    showDelete: false,
     userId: "",
     showPosts: true,
     showLikes: false,
@@ -58,14 +61,43 @@ class Profile extends Component {
         this.setState({ isFollowed: true });
       });
     } else if (this.state.isFollowed) {
-      userService.unfollow(this.state.user._id).then((apiResponse) => {
-        console.log(apiResponse.data.following);
-        this.setState({ isFollowed: false });
-      });
+      userService
+        .unfollow(this.state.user._id)
+        .then((apiResponse) => {
+          console.log(apiResponse.data.following);
+          this.setState({ isFollowed: false });
+        })
+        .catch((err) => console.log(err));
     }
   };
 
-  deletePost = () => {};
+  deletePost = (postId) => {
+    postService
+      .delete(postId)
+      .then((apiResponse) => {
+        this.handlePostApi();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  handleAdmin = (postId) => {
+    return (
+      <div>
+        {this.state.isAdmin ? (
+          this.state.showDelete ? (
+            <div>
+              <button onClick={() => this.deletePost(postId)}>
+                Confirm Delete
+              </button>
+              <button onClick={this.toggleDelete}>Cancel</button>
+            </div>
+          ) : (
+            <button onClick={this.toggleDelete}>Delete</button>
+          )
+        ) : null}
+      </div>
+    );
+  };
 
   displayPosts = () => {
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
@@ -75,6 +107,9 @@ class Profile extends Component {
   };
   displayFollowing = () => {
     this.setState({ showPosts: false, showLikes: false, showFollowing: true });
+  };
+  toggleDelete = () => {
+    this.setState({ showDelete: !this.state.showDelete });
   };
 
   render() {
@@ -100,11 +135,7 @@ class Profile extends Component {
               return (
                 <div key={post._id}>
                   <Post post={post} />
-                  {this.state.isAdmin ? (
-                    <button onClick={() => this.deletePost(post._id)}>
-                      Delete
-                    </button>
-                  ) : null}
+                  {this.handleAdmin(post._id)}
                 </div>
               );
             })
@@ -119,11 +150,15 @@ class Profile extends Component {
         {this.state.showFollowing
           ? this.state.user.following &&
             this.state.user.following.map((user) => {
-              return (
-                <Link key={user._id} to={`/profile/${user._id}`}>
-                  {user.firstName} {user.lastName}
-                </Link>
-              );
+              if (user._id === this.props.user._id) {
+                return null;
+              } else {
+                return (
+                  <Link key={user._id} to={`/profile/${user._id}`}>
+                    {user.firstName} {user.lastName}
+                  </Link>
+                );
+              }
             })
           : null}
       </div>

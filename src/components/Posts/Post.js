@@ -65,7 +65,7 @@ class Post extends Component {
             </span>
           </a>
         </header>
-        <Link to={`postdetails/${post._id}`}>
+        <Link to={`/postdetails/${post._id}`}>
           <div className="card-content">
             <div className="content">
               {post.postContent}
