@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
+import { withTheme } from "./../context/theme-context";
 import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
+import { Theme } from "./../styles/themes";
 
 import axios from "axios";
 
@@ -89,40 +91,43 @@ class Private extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="dashboard">
-        <h1>Private Route</h1>
-        <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
-        <img src={this.props.user.image} alt="user profile" />
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name="postPhoto"
-            type="file"
-            // value={this.state.image}
-            onChange={this.handleFileUpload}
-            required
-          />
+        <Theme dark={this.props.isDark}>
+          <h1>Private Route</h1>
+          <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
+          <img src={this.props.user.image} alt="user profile" />
+          <form onSubmit={this.handleSubmit}>
+            <input
+              name="postPhoto"
+              type="file"
+              // value={this.state.image}
+              onChange={this.handleFileUpload}
+              required
+            />
 
-          {this.state.postPhoto === "" ? null : (
-            <span>
-              <img
-                style={{ width: "100px" }}
-                src={this.state.postPhoto && this.state.postPhoto}
-                alt=""
-              ></img>
-            </span>
-          )}
-          <br />
-          <input
-            name="post"
-            value={this.state.post}
-            onChange={this.handleInput}
-          />
-          <button type="submit">Post</button>
-        </form>
-        {this.state.posts.map((post) => {
-          return <Post key={post._id} post={post} />;
-        })}
+            {this.state.postPhoto === "" ? null : (
+              <span>
+                <img
+                  style={{ width: "100px" }}
+                  src={this.state.postPhoto && this.state.postPhoto}
+                  alt=""
+                ></img>
+              </span>
+            )}
+            <br />
+            <input
+              name="post"
+              value={this.state.post}
+              onChange={this.handleInput}
+            />
+            <button type="submit">Post</button>
+          </form>
+          {this.state.posts.map((post) => {
+            return <Post key={post._id} post={post} />;
+          })}
+        </Theme>
       </div>
     );
   }

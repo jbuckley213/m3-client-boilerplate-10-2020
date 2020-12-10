@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
+import { Theme } from "./../../styles/themes";
 
 // import "./../Posts/Post.css";
 import "bulma/css/bulma.css";
@@ -79,57 +80,63 @@ class Post extends Component {
     }
     return (
       <div className="card">
-        <header className="card-header">
-          <p className="card-header-title">
-            {post.postedBy && post.postedBy.firstName}{" "}
-            {post.postedBy && post.postedBy.lastName}
-          </p>
-          <p href="#" className="card-header-icon" aria-label="more options">
-            <span className="icon">
-              <i className="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </p>
-        </header>
-        {post.postPhoto ? (
-          <img
-            style={{ width: "100px" }}
-            src={post.postPhoto && post.postPhoto}
-            alt=""
-          ></img>
-        ) : null}
-
-        <Link to={`/postdetails/${post._id}`}>
-          <div className="card-content">
-            <div className="content">
-              {post.postContent}
-
-              <br />
-              <time dateTime="2016-1-1">
-                {post.data && post.date.toLocaleString()}
-              </time>
-            </div>
-          </div>
-        </Link>
-        <footer className="card-footer">
-          <p
-            onClick={this.handleLike}
-            className={`card-footer-item ${classes}`}
-          >
-            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
-          </p>
-
-          <p onClick={this.toggleDelete} href="#" className="card-footer-item">
-            Delete {this.state.comments}
-          </p>
-          {this.state.showDelete ? (
-            <div>
-              <button onClick={() => this.props.deletePost(post._id)}>
-                Confirm Delete
-              </button>
-              <button onClick={this.toggleDelete}>Cancel</button>
-            </div>
+        <Theme dark={this.props.isDark}>
+          <header className="card-header">
+            <p className="card-header-title">
+              {post.postedBy && post.postedBy.firstName}{" "}
+              {post.postedBy && post.postedBy.lastName}
+            </p>
+            <p href="#" className="card-header-icon" aria-label="more options">
+              <span className="icon">
+                <i className="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </p>
+          </header>
+          {post.postPhoto ? (
+            <img
+              style={{ width: "100px" }}
+              src={post.postPhoto && post.postPhoto}
+              alt=""
+            ></img>
           ) : null}
-        </footer>
+
+          <Link to={`/postdetails/${post._id}`}>
+            <div className="card-content">
+              <div className="content">
+                {post.postContent}
+
+                <br />
+                <time dateTime="2016-1-1">
+                  {post.data && post.date.toLocaleString()}
+                </time>
+              </div>
+            </div>
+          </Link>
+          <footer className="card-footer">
+            <p
+              onClick={this.handleLike}
+              className={`card-footer-item ${classes}`}
+            >
+              {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+            </p>
+
+            <p
+              onClick={this.toggleDelete}
+              href="#"
+              className="card-footer-item"
+            >
+              Delete {this.state.comments}
+            </p>
+            {this.state.showDelete ? (
+              <div>
+                <button onClick={() => this.props.deletePost(post._id)}>
+                  Confirm Delete
+                </button>
+                <button onClick={this.toggleDelete}>Cancel</button>
+              </div>
+            ) : null}
+          </footer>
+        </Theme>
       </div>
     );
   }

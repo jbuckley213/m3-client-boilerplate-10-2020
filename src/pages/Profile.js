@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
+import { Theme } from "./../styles/themes";
 import Notifications from "./../components/Notifications/Notifications";
 import UserPost from "./../components/UserPost/UserPost";
 import axios from "axios";
@@ -215,117 +216,120 @@ class Profile extends Component {
     // }
     return (
       <div className="profile">
-        <p>
-          {this.state.user.firstName} {this.state.user.lastName}
-        </p>
-        <img src={this.state.user.image} alt="user profile" />
+        <Theme dark={this.props.isDark}>
+          <p>
+            {this.state.user.firstName} {this.state.user.lastName}
+          </p>
+          <img src={this.state.user.image} alt="user profile" />
 
-        {this.state.isAdmin ? (
-          <button onClick={this.toggleNotifications}>
-            Notification {this.state.numberOfNotifications}
-          </button>
-        ) : null}
-        {this.state.showNotifications ? (
-          <Notifications
-            notifications={this.state.user.notifications}
-            reduceNotifications={this.reduceNotifications}
-          />
-        ) : null}
+          {this.state.isAdmin ? (
+            <button onClick={this.toggleNotifications}>
+              Notification {this.state.numberOfNotifications}
+            </button>
+          ) : null}
+          {this.state.showNotifications ? (
+            <Notifications
+              notifications={this.state.user.notifications}
+              reduceNotifications={this.reduceNotifications}
+            />
+          ) : null}
 
-        {this.showAdminFollowButton()}
+          {this.showAdminFollowButton()}
+          <button onClick={this.props.toggleTheme}>Toggle dark mode</button>
 
-        <div className="button-group">
-          <button className="button is-white" onClick={this.displayPosts}>
-            Posts
-          </button>
-          <button className="button is-white" onClick={this.displayLikes}>
-            Likes
-          </button>
-          <button className="button is-white" onClick={this.displayFollowing}>
-            Following
-          </button>
-        </div>
-
-        {this.state.showPosts ? (
-          <div>
-            <form onSubmit={this.handleSubmit}>
-              <input
-                name="postPhoto"
-                type="file"
-                // value={this.state.image}
-                onChange={this.handleFileUpload}
-                required
-              />
-              {this.state.postPhoto === "" ? null : (
-                <span>
-                  <img
-                    style={{ width: "100px" }}
-                    src={this.state.postPhoto && this.state.postPhoto}
-                    alt=""
-                  ></img>
-                </span>
-              )}
-
-              <input
-                name="postInput"
-                value={this.state.postInput}
-                onChange={this.handleInput}
-              />
-              <button type="submit">Post</button>
-            </form>
-            {this.state.posts &&
-              this.state.posts.map((post) => {
-                return (
-                  <div key={post._id}>
-                    {this.state.isAdmin ? (
-                      <UserPost post={post} deletePost={this.deletePost} />
-                    ) : (
-                      <Post post={post} />
-                    )}
-                  </div>
-                );
-              })}{" "}
+          <div className="button-group">
+            <button className="button is-white" onClick={this.displayPosts}>
+              Posts
+            </button>
+            <button className="button is-white" onClick={this.displayLikes}>
+              Likes
+            </button>
+            <button className="button is-white" onClick={this.displayFollowing}>
+              Following
+            </button>
           </div>
-        ) : null}
 
-        {this.state.showLikes
-          ? this.state.user.likes &&
-            this.state.user.likes.map((post) => {
-              return <Post key={post._id} post={post} />;
-            })
-          : null}
+          {this.state.showPosts ? (
+            <div>
+              <form onSubmit={this.handleSubmit}>
+                <input
+                  name="postPhoto"
+                  type="file"
+                  // value={this.state.image}
+                  onChange={this.handleFileUpload}
+                  required
+                />
+                {this.state.postPhoto === "" ? null : (
+                  <span>
+                    <img
+                      style={{ width: "100px" }}
+                      src={this.state.postPhoto && this.state.postPhoto}
+                      alt=""
+                    ></img>
+                  </span>
+                )}
 
-        {this.state.showFollowing ? (
-          this.state.user.following.length === 0 ? (
-            <h3>Not following anyone</h3>
-          ) : (
-            <table>
-              <tbody>
-                {this.state.user.following.map((user) => {
-                  if (user._id === this.props.user._id) {
-                    return null;
-                  } else {
-                    return (
-                      <tr key={user._id} className="profile-link">
-                        <td>
-                          <img src={user.image} alt="user profile" />
-                        </td>
+                <input
+                  name="postInput"
+                  value={this.state.postInput}
+                  onChange={this.handleInput}
+                />
+                <button type="submit">Post</button>
+              </form>
+              {this.state.posts &&
+                this.state.posts.map((post) => {
+                  return (
+                    <div key={post._id}>
+                      {this.state.isAdmin ? (
+                        <UserPost post={post} deletePost={this.deletePost} />
+                      ) : (
+                        <Post post={post} />
+                      )}
+                    </div>
+                  );
+                })}{" "}
+            </div>
+          ) : null}
 
-                        <td>
-                          <p>
-                            <Link to={`/profile/${user._id}`}>
-                              {user.firstName} {user.lastName}
-                            </Link>
-                          </p>
-                        </td>
-                      </tr>
-                    );
-                  }
-                })}
-              </tbody>
-            </table>
-          )
-        ) : null}
+          {this.state.showLikes
+            ? this.state.user.likes &&
+              this.state.user.likes.map((post) => {
+                return <Post key={post._id} post={post} />;
+              })
+            : null}
+
+          {this.state.showFollowing ? (
+            this.state.user.following.length === 0 ? (
+              <h3>Not following anyone</h3>
+            ) : (
+              <table>
+                <tbody>
+                  {this.state.user.following.map((user) => {
+                    if (user._id === this.props.user._id) {
+                      return null;
+                    } else {
+                      return (
+                        <tr key={user._id} className="profile-link">
+                          <td>
+                            <img src={user.image} alt="user profile" />
+                          </td>
+
+                          <td>
+                            <p>
+                              <Link to={`/profile/${user._id}`}>
+                                {user.firstName} {user.lastName}
+                              </Link>
+                            </p>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  })}
+                </tbody>
+              </table>
+            )
+          ) : null}
+        </Theme>
       </div>
     );
   }

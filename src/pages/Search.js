@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import { Link } from "react-router-dom";
+import { Theme } from "./../styles/themes";
 
 class Search extends Component {
   state = {
@@ -53,35 +54,37 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <input
-          name="searchInput"
-          value={this.state.searchInput}
-          onChange={this.handleInput}
-          autoComplete="off"
-        />
-        {this.state.searchInput === "" ? null : (
-          <table>
-            <tbody>
-              {this.state.searchResults.map((user) => {
-                return (
-                  <tr key={user._id} className="profile-link">
-                    <td>
-                      <img src={user.image} alt="user profile" />
-                    </td>
+        <Theme dark={this.props.isDark}>
+          <input
+            name="searchInput"
+            value={this.state.searchInput}
+            onChange={this.handleInput}
+            autoComplete="off"
+          />
+          {this.state.searchInput === "" ? null : (
+            <table>
+              <tbody>
+                {this.state.searchResults.map((user) => {
+                  return (
+                    <tr key={user._id} className="profile-link">
+                      <td>
+                        <img src={user.image} alt="user profile" />
+                      </td>
 
-                    <td>
-                      <p>
-                        <Link to={`/profile/${user._id}`}>
-                          {user.firstName} {user.lastName}{" "}
-                        </Link>
-                      </p>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+                      <td>
+                        <p>
+                          <Link to={`/profile/${user._id}`}>
+                            {user.firstName} {user.lastName}{" "}
+                          </Link>
+                        </p>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </Theme>
       </div>
     );
   }

@@ -9,21 +9,21 @@ class Notifications extends Component {
   };
   //   this.props.user.notifications.reverse().slice(0, 5)
   componentDidMount() {
-    this.filterLikes();
-    // this.setState({
-    //   notifications: this.props.notifications.reverse().slice(0, 5),
-    // });
-  }
-  filterLikes = () => {
-    const filteredLikes = this.props.notifications.filter((notification) => {
-      if (notification.userActivity._id === this.props.user._id) {
-        return false;
-      } else {
-        return true;
-      }
+    //this.filterLikes();
+    this.setState({
+      notifications: this.props.notifications.reverse().slice(0, 5),
     });
-    this.setState({ notifications: filteredLikes.reverse().slice(0, 5) });
-  };
+  }
+  // filterLikes = () => {
+  //   const filteredLikes = this.props.notifications.filter((notification) => {
+  //     if (notification.userActivity._id === this.props.user._id) {
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   });
+  //   this.setState({ notifications: filteredLikes.reverse().slice(0, 5) });
+  // };
 
   filterNotifications = (notificationId) => {
     const filteredNotifications = this.state.notifications.filter(
@@ -73,6 +73,11 @@ class Notifications extends Component {
                   {notification.userActivity.firstName}{" "}
                   {notification.userActivity.lastName} commented on your post
                 </p>
+                <button
+                  onClick={() => this.deleteNotification(notification._id)}
+                >
+                  Delete
+                </button>
               </Link>
             </div>
           );

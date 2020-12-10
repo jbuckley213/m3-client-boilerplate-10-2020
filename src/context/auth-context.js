@@ -8,6 +8,7 @@ class AuthProvider extends React.Component {
     isLoggedIn: false,
     isLoading: true,
     user: null,
+    isDark: false,
   };
 
   componentDidMount() {
@@ -47,7 +48,6 @@ class AuthProvider extends React.Component {
   };
 
   me = () => {
-    console.log("me called");
     authService
       .me()
       .then((user) => this.setState({ user }))
@@ -56,15 +56,29 @@ class AuthProvider extends React.Component {
       });
   };
 
+  toggleTheme = () => {
+    this.setState({ isDark: !this.state.isDark });
+  };
+
   render() {
-    const { isLoggedIn, isLoading, user } = this.state;
-    const { signup, login, logout, me } = this;
+    const { isDark, isLoggedIn, isLoading, user } = this.state;
+    const { toggleTheme, signup, login, logout, me } = this;
 
     if (isLoading) return <p>Loading</p>;
 
     return (
       <Provider
-        value={{ isLoggedIn, isLoading, user, signup, login, logout, me }}
+        value={{
+          isDark,
+          isLoggedIn,
+          isLoading,
+          user,
+          signup,
+          login,
+          logout,
+          me,
+          toggleTheme,
+        }}
       >
         {this.props.children}
       </Provider>
@@ -81,17 +95,20 @@ const withAuth = (WrappedComponent) => {
           {(value) => {
             const {
               isLoggedIn,
+              isDark,
               isLoading,
               user,
               signup,
               login,
               logout,
               me,
+              toggleTheme,
             } = value;
 
             return (
               <WrappedComponent
                 {...this.props}
+                isDark={isDark}
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 user={user}
@@ -99,6 +116,7 @@ const withAuth = (WrappedComponent) => {
                 login={login}
                 logout={logout}
                 me={me}
+                toggleTheme={toggleTheme}
               />
             );
           }}

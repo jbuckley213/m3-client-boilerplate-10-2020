@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
+import { Theme } from "./../../styles/themes";
 
 import "./Post.css";
 import "bulma/css/bulma.css";
@@ -111,49 +112,51 @@ class Post extends Component {
     }
     return (
       <div className="card">
-        <header className="card-header">
-          <img src={post.postedBy.image} alt="user profile" />
-          <p className="card-header-title">
-            {post.postedBy && post.postedBy.firstName}{" "}
-            {post.postedBy && post.postedBy.lastName}
-          </p>
-          <p href="#" className="card-header-icon" aria-label="more options">
-            <span className="icon">
-              <i className="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </p>
-        </header>
-        <Link to={`/postdetails/${post._id}`}>
-          <div className="card-content">
-            <div className="content">
-              {post.postPhoto ? (
-                <img
-                  style={{ width: "100px" }}
-                  src={post.postPhoto && post.postPhoto}
-                  alt=""
-                ></img>
-              ) : null}
-              {post.postContent}
+        <Theme dark={this.props.isDark}>
+          <header className="card-header">
+            <img src={post.postedBy.image} alt="user profile" />
+            <p className="card-header-title">
+              {post.postedBy && post.postedBy.firstName}{" "}
+              {post.postedBy && post.postedBy.lastName}
+            </p>
+            <p href="#" className="card-header-icon" aria-label="more options">
+              <span className="icon">
+                <i className="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </p>
+          </header>
+          <Link to={`/postdetails/${post._id}`}>
+            <div className="card-content">
+              <div className="content">
+                {post.postPhoto ? (
+                  <img
+                    style={{ width: "100px" }}
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}
+                {post.postContent}
 
-              <br />
-              <time dateTime="2016-1-1">
-                {post.data && post.date.toLocaleString()}
-              </time>
+                <br />
+                <time dateTime="2016-1-1">
+                  {post.data && post.date.toLocaleString()}
+                </time>
+              </div>
             </div>
-          </div>
-        </Link>
-        <footer className="card-footer">
-          <p
-            onClick={this.handleLike}
-            className={`card-footer-item ${classes}`}
-          >
-            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
-          </p>
+          </Link>
+          <footer className="card-footer">
+            <p
+              onClick={this.handleLike}
+              className={`card-footer-item ${classes}`}
+            >
+              {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+            </p>
 
-          <p href="#" className="card-footer-item">
-            Comment {this.state.numberOfComments}
-          </p>
-        </footer>
+            <p href="#" className="card-footer-item">
+              Comment {this.state.numberOfComments}
+            </p>
+          </footer>
+        </Theme>
       </div>
     );
   }
