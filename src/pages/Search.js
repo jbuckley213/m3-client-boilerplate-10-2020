@@ -61,23 +61,25 @@ class Search extends Component {
         />
         {this.state.searchInput === "" ? null : (
           <table>
-            {this.state.searchResults.map((user) => {
-              return (
-                <Link key={user._id} to={`/profile/${user._id}`}>
-                  <tr className="profile-link">
+            <tbody>
+              {this.state.searchResults.map((user) => {
+                return (
+                  <tr key={user._id} className="profile-link">
                     <td>
                       <img src={user.image} />
                     </td>
 
                     <td>
                       <p>
-                        {user.firstName} {user.lastName}
-                      </p>{" "}
+                        <Link to={`/profile/${user._id}`}>
+                          {user.firstName} {user.lastName}{" "}
+                        </Link>
+                      </p>
                     </td>
                   </tr>
-                </Link>
-              );
-            })}
+                );
+              })}
+            </tbody>
           </table>
         )}
       </div>
