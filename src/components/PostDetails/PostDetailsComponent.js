@@ -46,6 +46,27 @@ class PostDetails extends Component {
 
     this.setState({ isLiked: isLiked });
   }
+
+  handlePostLinks = () => {
+    const postContent = this.props.post.postContent.split(" ");
+    console.log(postContent);
+
+    const postContentWithLinkSplit = postContent.map((word) => {
+      if (word.startsWith("http") || word.startsWith("https")) {
+        return "<a href={`${word}`}>{word}</a>";
+      } else {
+        return word;
+      }
+    });
+    console.log(postContentWithLinkSplit);
+
+    const postContentWithLink = postContentWithLinkSplit.join(" ");
+
+    console.log(postContentWithLink);
+
+    return <p>{postContentWithLink}</p>;
+  };
+
   render() {
     const { post } = this.props;
     let classes = "";
@@ -68,7 +89,7 @@ class PostDetails extends Component {
         <Link to={`postdetails/${post._id}`}>
           <div className="card-content">
             <div className="content">
-              {post.postContent}
+              {this.handlePostLinks()}
 
               <br />
               <time dateTime="2016-1-1">

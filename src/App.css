@@ -102,3 +102,12 @@ button.navbar-button {
 .card-details {
   height: 800px;
 }
+
+.search input {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.card {
+  margin: 20px 0;
+}

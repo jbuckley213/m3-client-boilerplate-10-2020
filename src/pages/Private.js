@@ -5,6 +5,7 @@ import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
 import { Theme } from "./../styles/themes";
+import { Fade } from "./../styles/fade";
 
 import axios from "axios";
 
@@ -104,7 +105,6 @@ class Private extends Component {
               type="file"
               // value={this.state.image}
               onChange={this.handleFileUpload}
-              required
             />
 
             {this.state.postPhoto === "" ? null : (
@@ -121,12 +121,15 @@ class Private extends Component {
               name="post"
               value={this.state.post}
               onChange={this.handleInput}
+              required
             />
             <button type="submit">Post</button>
           </form>
-          {this.state.posts.map((post) => {
-            return <Post key={post._id} post={post} />;
-          })}
+          <Fade>
+            {this.state.posts.map((post) => {
+              return <Post key={post._id} post={post} />;
+            })}
+          </Fade>
         </Theme>
       </div>
     );

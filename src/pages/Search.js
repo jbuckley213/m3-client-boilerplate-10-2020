@@ -53,8 +53,9 @@ class Search extends Component {
   };
   render() {
     return (
-      <div>
+      <div className="search">
         <Theme dark={this.props.isDark}>
+          <h1>Search For A Fellow Developer</h1>
           <input
             name="searchInput"
             value={this.state.searchInput}

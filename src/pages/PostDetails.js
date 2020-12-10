@@ -133,12 +133,33 @@ class PostDetails extends Component {
     );
   };
 
+  handlePostLinks = () => {
+    const postContent = this.state.post.postContent.split(" ");
+    console.log(postContent);
+
+    const postContentWithLinkSplit = postContent.map((word) => {
+      if (word.startsWith("http") || word.startsWith("https")) {
+        return <a href={`${word}`}>{word}</a>;
+      } else {
+        return word;
+      }
+    });
+    console.log(postContentWithLinkSplit);
+
+    const postContentWithLink = postContentWithLinkSplit.join(" ");
+
+    console.log(postContentWithLink);
+
+    return <p>{postContentWithLinkSplit}</p>;
+  };
+
   render() {
     let classes = "";
     if (this.state.isLiked) {
       classes = "liked";
     }
     const post = this.state.post;
+    let spilt = [];
 
     return (
       <div className="card card-details">
@@ -167,8 +188,7 @@ class PostDetails extends Component {
         ) : null}
         <div className="card-content">
           <div className="content">
-            {post.postContent}
-
+            <p>{post.postContent}</p>
             <br />
             <time dateTime="2016-1-1">
               {post.data && post.date.toLocaleString()}

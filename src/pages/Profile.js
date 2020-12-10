@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
-import { Theme } from "./../styles/themes";
 import Notifications from "./../components/Notifications/Notifications";
+
+import { Theme } from "./../styles/themes";
+import { Fade } from "./../styles/fade";
+
 import UserPost from "./../components/UserPost/UserPost";
 import axios from "axios";
 import "bulma/css/bulma.css";
@@ -251,83 +254,89 @@ class Profile extends Component {
 
           {this.state.showPosts ? (
             <div>
-              <form onSubmit={this.handleSubmit}>
-                <input
-                  name="postPhoto"
-                  type="file"
-                  // value={this.state.image}
-                  onChange={this.handleFileUpload}
-                  required
-                />
-                {this.state.postPhoto === "" ? null : (
-                  <span>
-                    <img
-                      style={{ width: "100px" }}
-                      src={this.state.postPhoto && this.state.postPhoto}
-                      alt=""
-                    ></img>
-                  </span>
-                )}
+              <Fade>
+                <form onSubmit={this.handleSubmit}>
+                  <input
+                    name="postPhoto"
+                    type="file"
+                    // value={this.state.image}
+                    onChange={this.handleFileUpload}
+                    required
+                  />
+                  {this.state.postPhoto === "" ? null : (
+                    <span>
+                      <img
+                        style={{ width: "100px" }}
+                        src={this.state.postPhoto && this.state.postPhoto}
+                        alt=""
+                      ></img>
+                    </span>
+                  )}
 
-                <input
-                  name="postInput"
-                  value={this.state.postInput}
-                  onChange={this.handleInput}
-                />
-                <button type="submit">Post</button>
-              </form>
-              {this.state.posts &&
-                this.state.posts.map((post) => {
-                  return (
-                    <div key={post._id}>
-                      {this.state.isAdmin ? (
-                        <UserPost post={post} deletePost={this.deletePost} />
-                      ) : (
-                        <Post post={post} />
-                      )}
-                    </div>
-                  );
-                })}{" "}
+                  <input
+                    name="postInput"
+                    value={this.state.postInput}
+                    onChange={this.handleInput}
+                  />
+                  <button type="submit">Post</button>
+                </form>
+                {this.state.posts &&
+                  this.state.posts.map((post) => {
+                    return (
+                      <div key={post._id}>
+                        {this.state.isAdmin ? (
+                          <UserPost post={post} deletePost={this.deletePost} />
+                        ) : (
+                          <Post post={post} />
+                        )}
+                      </div>
+                    );
+                  })}{" "}
+              </Fade>
             </div>
           ) : null}
 
-          {this.state.showLikes
-            ? this.state.user.likes &&
-              this.state.user.likes.map((post) => {
-                return <Post key={post._id} post={post} />;
-              })
-            : null}
+          {this.state.showLikes ? (
+            <Fade>
+              {this.state.user.likes &&
+                this.state.user.likes.map((post) => {
+                  return <Post key={post._id} post={post} />;
+                })}
+            </Fade>
+          ) : null}
 
           {this.state.showFollowing ? (
-            this.state.user.following.length === 0 ? (
-              <h3>Not following anyone</h3>
-            ) : (
-              <table>
-                <tbody>
-                  {this.state.user.following.map((user) => {
-                    if (user._id === this.props.user._id) {
-                      return null;
-                    } else {
-                      return (
-                        <tr key={user._id} className="profile-link">
-                          <td>
-                            <img src={user.image} alt="user profile" />
-                          </td>
+            <Fade>
+              {this.state.user.following.length === 0 ? (
+                <h3>Not following anyone</h3>
+              ) : (
+                <table>
+                  <tbody>
+                    {this.state.user.following.map((user) => {
+                      if (user._id === this.props.user._id) {
+                        return null;
+                      } else {
+                        return (
+                          <tr key={user._id} className="profile-link">
+                            <td>
+                              <img src={user.image} alt="user profile" />
+                            </td>
 
-                          <td>
-                            <p>
-                              <Link to={`/profile/${user._id}`}>
-                                {user.firstName} {user.lastName}
-                              </Link>
-                            </p>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  })}
-                </tbody>
-              </table>
-            )
+                            <td>
+                              <p>
+                                <Link to={`/profile/${user._id}`}>
+                                  {user.firstName} {user.lastName}
+                                </Link>
+                              </p>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    })}
+                  </tbody>
+                </table>
+              )}
+            </Fade>
           ) : null}
         </Theme>
       </div>

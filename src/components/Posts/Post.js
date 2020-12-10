@@ -82,6 +82,26 @@ class Post extends Component {
     this.countNumberOfComments();
   }
 
+  handlePostLinks = () => {
+    const postContent = this.props.post.postContent.split(" ");
+    console.log(postContent);
+
+    const postContentWithLinkSplit = postContent.map((word) => {
+      if (word.startsWith("http") || word.startsWith("https")) {
+        return "<a href={`${word}`}>{word}</a>";
+      } else {
+        return word;
+      }
+    });
+    console.log(postContentWithLinkSplit);
+
+    const postContentWithLink = postContentWithLinkSplit.join(" ");
+
+    console.log(postContentWithLink);
+
+    return <p>{postContentWithLink}</p>;
+  };
+
   // componentWillUnmount() {
   //   if (!this.state.isLiked) {
   //     postService
@@ -135,7 +155,7 @@ class Post extends Component {
                     alt=""
                   ></img>
                 ) : null}
-                {post.postContent}
+                {this.handlePostLinks()}
 
                 <br />
                 <time dateTime="2016-1-1">
