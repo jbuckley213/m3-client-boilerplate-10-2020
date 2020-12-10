@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
-import userService from "./../lib/user-service";
+// import userService from "./../lib/user-service";
 
 class Signup extends Component {
   state = { firstName: "", lastName: "", image: "", email: "", password: "" };

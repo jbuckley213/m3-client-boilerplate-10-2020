@@ -112,16 +112,16 @@ class Post extends Component {
     return (
       <div className="card">
         <header className="card-header">
-          <img src={post.postedBy.image} />
+          <img src={post.postedBy.image} alt="user profile" />
           <p className="card-header-title">
             {post.postedBy && post.postedBy.firstName}{" "}
             {post.postedBy && post.postedBy.lastName}
           </p>
-          <a href="#" className="card-header-icon" aria-label="more options">
+          <p href="#" className="card-header-icon" aria-label="more options">
             <span className="icon">
               <i className="fas fa-angle-down" aria-hidden="true"></i>
             </span>
-          </a>
+          </p>
         </header>
         <Link to={`/postdetails/${post._id}`}>
           <div className="card-content">

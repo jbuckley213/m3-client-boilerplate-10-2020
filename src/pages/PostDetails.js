@@ -152,11 +152,11 @@ class PostDetails extends Component {
             </Link>
           )}
 
-          <a href="#" className="card-header-icon" aria-label="more options">
+          <p href="#" className="card-header-icon" aria-label="more options">
             <span className="icon">
               <i className="fas fa-angle-down" aria-hidden="true"></i>
             </span>
-          </a>
+          </p>
         </header>
         {post.postPhoto ? (
           <img

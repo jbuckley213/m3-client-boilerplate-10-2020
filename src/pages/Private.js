@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
-import userService from "./../lib/user-service";
 import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
@@ -94,7 +93,7 @@ class Private extends Component {
       <div className="dashboard">
         <h1>Private Route</h1>
         <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
-        <img src={this.props.user.image} />
+        <img src={this.props.user.image} alt="user profile" />
         <form onSubmit={this.handleSubmit}>
           <input
             name="postPhoto"

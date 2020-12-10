@@ -9,7 +9,6 @@ import "bulma/css/bulma.css";
 
 import { Link } from "react-router-dom";
 import postService from "../lib/post-service";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 
 class Profile extends Component {
   state = {
@@ -25,6 +24,7 @@ class Profile extends Component {
     postInput: "",
     postPhoto: "",
     showNotifications: false,
+    numberOfNotifications: 0,
   };
 
   componentDidMount() {
@@ -47,6 +47,7 @@ class Profile extends Component {
 
         this.checkFollow();
         this.orderPosts();
+        this.setNumberOfNotifications();
       })
       .catch((err) => {
         console.log(err);
@@ -111,6 +112,8 @@ class Profile extends Component {
   };
 
   displayPosts = () => {
+    this.handlePostApi(false);
+
     this.setState({ showPosts: true, showLikes: false, showFollowing: false });
   };
   displayLikes = () => {
@@ -194,27 +197,39 @@ class Profile extends Component {
     this.setState({ showNotifications: !this.state.showNotifications });
   };
 
+  reduceNotifications = () => {
+    let notifications = this.state.numberOfNotifications;
+
+    notifications--;
+    this.setState({ numberOfNotifications: notifications });
+  };
+
+  setNumberOfNotifications = () => {
+    const numberOfNotifications = this.state.user.notifications.length;
+    this.setState({ numberOfNotifications });
+  };
   render() {
     // console.log(this.state.user);
     // if (this.state.user.following) {
     //   console.log(this.state.user.following.length);
     // }
-    const notifications = this.props.user.notifications;
-    console.log(this.state.user);
     return (
       <div className="profile">
         <p>
           {this.state.user.firstName} {this.state.user.lastName}
         </p>
-        <img src={this.state.user.image} />
+        <img src={this.state.user.image} alt="user profile" />
 
         {this.state.isAdmin ? (
           <button onClick={this.toggleNotifications}>
-            Notification {this.state.user.notifications.length}
+            Notification {this.state.numberOfNotifications}
           </button>
         ) : null}
         {this.state.showNotifications ? (
-          <Notifications notifications={this.state.user.notifications} />
+          <Notifications
+            notifications={this.state.user.notifications}
+            reduceNotifications={this.reduceNotifications}
+          />
         ) : null}
 
         {this.showAdminFollowButton()}
@@ -293,7 +308,7 @@ class Profile extends Component {
                     return (
                       <tr key={user._id} className="profile-link">
                         <td>
-                          <img src={user.image} />
+                          <img src={user.image} alt="user profile" />
                         </td>
 
                         <td>

@@ -66,7 +66,7 @@ class Search extends Component {
                 return (
                   <tr key={user._id} className="profile-link">
                     <td>
-                      <img src={user.image} />
+                      <img src={user.image} alt="user profile" />
                     </td>
 
                     <td>

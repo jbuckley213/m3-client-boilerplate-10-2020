@@ -25,18 +25,32 @@ class Notifications extends Component {
     this.setState({ notifications: filteredLikes.reverse().slice(0, 5) });
   };
 
+  filterNotifications = (notificationId) => {
+    const filteredNotifications = this.state.notifications.filter(
+      (notification) => {
+        if (notificationId === notification._id) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    );
+
+    this.setState({ notifications: filteredNotifications });
+  };
+
   deleteNotification = (notificationId) => {
     userService
       .deleteNotification(notificationId)
       .then((apiResponse) => {
-        console.log(this.state.notifications.indexOf(apiResponse.data));
+        this.filterNotifications(notificationId);
+        this.props.reduceNotifications();
       })
       .catch((err) => console.log(err));
   };
 
   render() {
     const notifications = this.state.notifications;
-    console.log(notifications);
     return (
       <div>
         {notifications.map((notification) => {
