@@ -37,7 +37,7 @@ class UserService {
   };
 
   seenNotification = () => {
-    const pr = this.api.put("/users/notifications/seen");
+    const pr = this.api.get("/users/notifications/seen");
     return pr;
   };
 }

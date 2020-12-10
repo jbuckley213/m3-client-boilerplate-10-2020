@@ -44,7 +44,7 @@ class Conversation extends Component {
         {conversations.map((conversation) => {
           const user = this.filterCurrentUser(conversation.users);
           return (
-            <div>
+            <div key={conversation._id}>
               <p>
                 <Link to={`/conversation-details/${conversation._id}`}>
                   {user && user.firstName} {user && user.lastName}

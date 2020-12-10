@@ -204,7 +204,7 @@ class Profile extends Component {
       userService
         .seenNotification()
         .then((apiResponse) => {
-          console.log(apiResponse);
+          this.setState({ newNotification: false });
         })
         .catch((err) => console.log(err));
     }

@@ -32,7 +32,10 @@ class SearchResult extends Component {
     const currentUserConversations = this.props.user.conversations;
     const userSearchId = this.props.userSearch._id;
     let hasConversation = false;
-
+    if (currentUserConversations.length === 0) {
+      this.setState({ hasConversation });
+      return;
+    }
     currentUserConversations.forEach((conversation) => {
       console.log(conversation.users, userSearchId);
       if (conversation.users.includes(userSearchId)) {

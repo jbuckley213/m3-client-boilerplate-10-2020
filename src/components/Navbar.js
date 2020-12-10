@@ -27,6 +27,13 @@ class Navbar extends Component {
             >
               <h4>{this.props.user && this.props.user.firstName}</h4>
             </NavLink>
+            <NavLink
+              className="btn"
+              activeClassName="nav-link"
+              to={"/conversations"}
+            >
+              <h4>Chat</h4>
+            </NavLink>
           </>
         ) : (
           <>
