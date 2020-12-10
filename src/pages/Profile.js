@@ -29,6 +29,7 @@ class Profile extends Component {
     postPhoto: "",
     showNotifications: false,
     numberOfNotifications: 0,
+    newNotification: false,
   };
 
   componentDidMount() {
@@ -44,6 +45,7 @@ class Profile extends Component {
           user: apiResponse.data.user,
           isAdmin: apiResponse.data.isAdmin,
           userId: profileId,
+          newNotification: apiResponse.data.user.newNotification,
         });
         if (mount) {
           this.displayPosts();
@@ -198,6 +200,14 @@ class Profile extends Component {
   };
 
   toggleNotifications = () => {
+    if (this.state.newNotification) {
+      userService
+        .seenNotification()
+        .then((apiResponse) => {
+          console.log(apiResponse);
+        })
+        .catch((err) => console.log(err));
+    }
     this.setState({ showNotifications: !this.state.showNotifications });
   };
 
@@ -218,6 +228,7 @@ class Profile extends Component {
     //   console.log(this.state.user.following.length);
     // }
     console.log(this.state.user);
+    const user = this.state.user;
     return (
       <div className="profile">
         <Theme dark={this.props.isDark}>
@@ -228,8 +239,7 @@ class Profile extends Component {
 
           {this.state.isAdmin ? (
             <div>
-              {" "}
-              {"You have a New Notification"}
+              {this.state.newNotification ? "You have new notifications" : null}
               <button onClick={this.toggleNotifications}>
                 Notification {this.state.numberOfNotifications}
               </button>

@@ -35,6 +35,11 @@ class UserService {
     const pr = this.api.put(`/users/notifications/${notificationId}`);
     return pr;
   };
+
+  seenNotification = () => {
+    const pr = this.api.put("/users/notifications/seen");
+    return pr;
+  };
 }
 
 const userService = new UserService();

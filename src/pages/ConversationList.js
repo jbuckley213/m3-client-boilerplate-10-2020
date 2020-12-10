@@ -47,7 +47,7 @@ class Conversation extends Component {
             <div>
               <p>
                 <Link to={`/conversation-details/${conversation._id}`}>
-                  {user.firstName} {user.lastName}
+                  {user && user.firstName} {user && user.lastName}
                 </Link>
               </p>
             </div>

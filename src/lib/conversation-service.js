@@ -22,12 +22,12 @@ class PostService {
   };
 
   getConversationOne = (conversationId) => {
-    const pr = this.api.post(`/conversation/${conversationId}`);
+    const pr = this.api.get(`/conversations/${conversationId}`);
     return pr;
   };
 
   sendMessage = (conversationId, messageContent) => {
-    const pr = this.api.put(`/posts/${conversationId}/message`, {
+    const pr = this.api.post(`/conversations/${conversationId}/message`, {
       messageContent,
     });
     return pr;
