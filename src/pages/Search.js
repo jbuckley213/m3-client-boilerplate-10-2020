@@ -3,6 +3,8 @@ import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import { Link } from "react-router-dom";
 import { Theme } from "./../styles/themes";
+import SearchResult from "./../components/SeachResult/SearchResult";
+import { Fade } from "./../styles/fade";
 
 class Search extends Component {
   state = {
@@ -51,6 +53,7 @@ class Search extends Component {
     this.handleSearchResults(value);
     this.setState({ [name]: value });
   };
+
   render() {
     return (
       <div className="search">
@@ -63,27 +66,15 @@ class Search extends Component {
             autoComplete="off"
           />
           {this.state.searchInput === "" ? null : (
-            <table>
-              <tbody>
-                {this.state.searchResults.map((user) => {
-                  return (
-                    <tr key={user._id} className="profile-link">
-                      <td>
-                        <img src={user.image} alt="user profile" />
-                      </td>
-
-                      <td>
-                        <p>
-                          <Link to={`/profile/${user._id}`}>
-                            {user.firstName} {user.lastName}{" "}
-                          </Link>
-                        </p>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <Fade>
+              <table>
+                <tbody>
+                  {this.state.searchResults.map((user) => {
+                    return <SearchResult key={user._id} userSearch={user} />;
+                  })}
+                </tbody>
+              </table>
+            </Fade>
           )}
         </Theme>
       </div>

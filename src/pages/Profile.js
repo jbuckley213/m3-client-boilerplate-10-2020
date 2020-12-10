@@ -217,6 +217,7 @@ class Profile extends Component {
     // if (this.state.user.following) {
     //   console.log(this.state.user.following.length);
     // }
+    console.log(this.state.user);
     return (
       <div className="profile">
         <Theme dark={this.props.isDark}>
@@ -226,9 +227,13 @@ class Profile extends Component {
           <img src={this.state.user.image} alt="user profile" />
 
           {this.state.isAdmin ? (
-            <button onClick={this.toggleNotifications}>
-              Notification {this.state.numberOfNotifications}
-            </button>
+            <div>
+              {" "}
+              {"You have a New Notification"}
+              <button onClick={this.toggleNotifications}>
+                Notification {this.state.numberOfNotifications}
+              </button>
+            </div>
           ) : null}
           {this.state.showNotifications ? (
             <Notifications

@@ -10,6 +10,7 @@ import Private from "./pages/Private";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import PostDetails from "./pages/PostDetails";
+import ConversationList from "./pages/ConversationList";
 
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,6 +32,11 @@ class App extends Component {
             exact
             path="/postdetails/:postId"
             component={PostDetails}
+          />
+          <PrivateRoute
+            exact
+            path="/conversations"
+            component={ConversationList}
           />
         </Switch>
         <Navbar />
