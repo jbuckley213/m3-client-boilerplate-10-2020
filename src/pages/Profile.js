@@ -200,6 +200,7 @@ class Profile extends Component {
     //   console.log(this.state.user.following.length);
     // }
     const notifications = this.props.user.notifications;
+    console.log(this.state.user);
     return (
       <div className="profile">
         <p>
@@ -208,9 +209,13 @@ class Profile extends Component {
         <img src={this.state.user.image} />
 
         {this.state.isAdmin ? (
-          <button onClick={this.toggleNotifications}>Notification</button>
+          <button onClick={this.toggleNotifications}>
+            Notification {this.state.user.notifications.length}
+          </button>
         ) : null}
-        {this.state.showNotifications ? <Notifications /> : null}
+        {this.state.showNotifications ? (
+          <Notifications notifications={this.state.user.notifications} />
+        ) : null}
 
         {this.showAdminFollowButton()}
 

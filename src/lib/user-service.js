@@ -30,6 +30,11 @@ class UserService {
     const pr = this.api.put(`/users/${id}/unfollow`);
     return pr;
   };
+
+  deleteNotification = (notificationId) => {
+    const pr = this.api.put(`/users/notifications/${notificationId}`);
+    return pr;
+  };
 }
 
 const userService = new UserService();
