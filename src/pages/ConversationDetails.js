@@ -12,6 +12,8 @@ class ConversationDetails extends Component {
   };
 
   componentDidMount() {
+    this.getConversation();
+
     this.setTimerFromApiCall();
   }
 
@@ -95,13 +97,17 @@ class ConversationDetails extends Component {
           return (
             <div key={message._id}>
               {this.isAdmin(message.userSent._id) ? (
-                <p className="admin-message">
-                  {message.userSent.firstName}:{message.messageContent}
-                </p>
+                <div className="admin-message">
+                  <p>
+                    {message.userSent.firstName}: {message.messageContent}
+                  </p>
+                </div>
               ) : (
-                <p className="user-message">
-                  {message.userSent.firstName}:{message.messageContent}
-                </p>
+                <div className="user-message">
+                  <p>
+                    {message.userSent.firstName}: {message.messageContent}
+                  </p>
+                </div>
               )}
             </div>
           );

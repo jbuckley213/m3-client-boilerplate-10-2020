@@ -92,7 +92,6 @@ class Private extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="dashboard">
         <Theme dark={this.props.isDark}>

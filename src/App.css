@@ -114,6 +114,34 @@ button.navbar-button {
 }
 
 .admin-message {
-  margin: 20px 0;
-  margin-left: 300px;
+  display: flex;
+  justify-content: flex-end;
+}
+.admin-message p {
+  margin: 10px;
+  height: auto;
+  width: 200px;
+  padding: 15px;
+  background-color: #57ba98;
+
+  border-radius: 15px;
+}
+
+.user-message {
+  display: flex;
+  justify-content: flex-start;
+}
+.user-message p {
+  margin: 10px;
+  height: auto;
+  width: 200px;
+  padding: 15px;
+  background-color: #f2f2f2;
+
+  border-radius: 15px;
+}
+
+.message-preview {
+  display: flex;
+  align-items: center;
 }

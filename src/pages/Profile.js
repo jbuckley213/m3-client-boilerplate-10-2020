@@ -214,7 +214,6 @@ class Profile extends Component {
     // if (this.state.user.following) {
     //   console.log(this.state.user.following.length);
     // }
-    console.log(this.state.user);
     const user = this.state.user;
     return (
       <div className="profile">
