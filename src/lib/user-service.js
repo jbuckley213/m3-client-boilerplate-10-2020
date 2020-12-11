@@ -40,6 +40,12 @@ class UserService {
     const pr = this.api.get("/users/notifications/seen");
     return pr;
   };
+
+  editPhoto = (image) => {
+    console.log(image);
+    const pr = this.api.post("/users/edit", { image });
+    return pr;
+  };
 }
 
 const userService = new UserService();

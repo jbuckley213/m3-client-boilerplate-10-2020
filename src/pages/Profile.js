@@ -3,6 +3,8 @@ import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
 import Notifications from "./../components/Notifications/Notifications";
+import EditProfile from "./../components/EditProfile/EditProfile";
+import Settings from "./../components/Settings/Settings";
 
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
@@ -30,6 +32,7 @@ class Profile extends Component {
     showNotifications: false,
     numberOfNotifications: 0,
     newNotification: false,
+    showSettings: false,
   };
 
   componentDidMount() {
@@ -156,6 +159,7 @@ class Profile extends Component {
   };
 
   showAdminFollowButton = () => {
+    //////Not USED but backup if settings don't work
     return (
       <div>
         {this.state.isAdmin ? (
@@ -175,28 +179,6 @@ class Profile extends Component {
         )}
       </div>
     );
-  };
-  handleFileUpload = (e) => {
-    console.log("The file to be uploaded is: ", e.target.files);
-    const file = e.target.files[0];
-
-    const uploadData = new FormData();
-    // image => this name has to be the same as in the model since we pass
-    // req.body to .create() method when creating a new project in '/api/projects' POST route
-    uploadData.append("image", file);
-
-    axios
-      .post("http://localhost:5000/api/posts/upload", uploadData, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log("response is: ", response);
-        // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ postPhoto: response.data.secure_url });
-      })
-      .catch((err) => {
-        console.log("Error while uploading the file: ", err);
-      });
   };
 
   toggleNotifications = () => {
@@ -222,6 +204,11 @@ class Profile extends Component {
     const numberOfNotifications = this.state.user.notifications.length;
     this.setState({ numberOfNotifications });
   };
+
+  toggleSettings = () => {
+    this.setState({ showSettings: !this.state.showSettings });
+  };
+
   render() {
     // console.log(this.state.user);
     // if (this.state.user.following) {
@@ -237,6 +224,17 @@ class Profile extends Component {
           </p>
           <img src={this.state.user.image} alt="user profile" />
 
+          <button onClick={this.toggleSettings}>Settings</button>
+          {this.state.isAdmin ? (
+            this.state.showSettings ? (
+              <Settings userProfile={this.state.user} />
+            ) : null
+          ) : (
+            <button onClick={this.handleFollow}>
+              {this.state.isFollowed ? "Unfollow" : "Follow"}
+            </button>
+          )}
+
           {this.state.isAdmin ? (
             <div>
               {this.state.newNotification ? "You have new notifications" : null}
@@ -251,9 +249,6 @@ class Profile extends Component {
               reduceNotifications={this.reduceNotifications}
             />
           ) : null}
-
-          {this.showAdminFollowButton()}
-          <button onClick={this.props.toggleTheme}>Toggle dark mode</button>
 
           <div className="button-group">
             <button className="button is-white" onClick={this.displayPosts}>
