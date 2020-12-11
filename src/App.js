@@ -45,6 +45,7 @@ class App extends Component {
             component={ConversationDetails}
           />
         </Switch>
+        <div id="nav-space"></div>
         <Navbar />
       </div>
     );

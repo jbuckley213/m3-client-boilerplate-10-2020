@@ -145,3 +145,15 @@ button.navbar-button {
   display: flex;
   align-items: center;
 }
+
+html,
+body,
+#root,
+#root > div,
+.search {
+  height: 100%;
+}
+
+#nav-space {
+  height: 100px;
+}

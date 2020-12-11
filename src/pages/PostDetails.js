@@ -17,6 +17,9 @@ class PostDetails extends Component {
     this.handlePostById();
   }
 
+  componentWillUnmount() {
+    console.log("unmount");
+  }
   countNumberOfLikes = () => {
     let numberOfLikes = this.state.post.likes.length;
     this.setState({ numberOfLikes });

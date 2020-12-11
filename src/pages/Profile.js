@@ -209,6 +209,14 @@ class Profile extends Component {
     this.setState({ showSettings: !this.state.showSettings });
   };
 
+  getNumberOfFollowers = () => {
+    if (this.state.isFollowed) {
+      return this.state.user.following.length - 1;
+    } else {
+      return this.state.user.following.length;
+    }
+  };
+
   render() {
     // console.log(this.state.user);
     // if (this.state.user.following) {
@@ -251,13 +259,14 @@ class Profile extends Component {
 
           <div className="button-group">
             <button className="button is-white" onClick={this.displayPosts}>
-              Posts
+              Posts {this.state.posts && this.state.posts.length}
             </button>
             <button className="button is-white" onClick={this.displayLikes}>
-              Likes
+              Likes {this.state.user.likes && this.state.user.likes.length}
             </button>
             <button className="button is-white" onClick={this.displayFollowing}>
-              Following
+              Following{" "}
+              {this.state.user.following && this.getNumberOfFollowers()}
             </button>
           </div>
 
@@ -271,7 +280,6 @@ class Profile extends Component {
                       type="file"
                       // value={this.state.image}
                       onChange={this.handleFileUpload}
-                      required
                     />
                     {this.state.postPhoto === "" ? null : (
                       <span>
@@ -287,6 +295,7 @@ class Profile extends Component {
                       name="postInput"
                       value={this.state.postInput}
                       onChange={this.handleInput}
+                      required
                     />
                     <button type="submit">Post</button>
                   </form>
@@ -318,7 +327,7 @@ class Profile extends Component {
 
           {this.state.showFollowing ? (
             <Fade>
-              {this.state.user.following.length === 0 ? (
+              {this.getNumberOfFollowers() === 0 ? (
                 <h3>Not following anyone</h3>
               ) : (
                 <table>

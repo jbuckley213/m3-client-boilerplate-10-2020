@@ -26,10 +26,16 @@ class PostService {
     return pr;
   };
 
-  sendMessage = (conversationId, messageContent) => {
+  sendMessage = (conversationId, messageContent, userSentToId) => {
     const pr = this.api.post(`/conversations/${conversationId}/message`, {
       messageContent,
+      userSentToId,
     });
+    return pr;
+  };
+
+  messageSeen = (conversationId) => {
+    const pr = this.api.get(`/conversations/${conversationId}/message-seen`);
     return pr;
   };
 }
