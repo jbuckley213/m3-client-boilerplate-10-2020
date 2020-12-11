@@ -50,7 +50,9 @@ class AuthProvider extends React.Component {
   me = () => {
     authService
       .me()
-      .then((user) => this.setState({ user }))
+      .then((user) => {
+        this.setState({ user });
+      })
       .catch((err) => {
         console.log(err);
       });

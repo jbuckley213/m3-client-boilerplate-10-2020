@@ -270,31 +270,33 @@ class Profile extends Component {
           {this.state.showPosts ? (
             <div>
               <Fade>
-                <form onSubmit={this.handleSubmit}>
-                  <input
-                    name="postPhoto"
-                    type="file"
-                    // value={this.state.image}
-                    onChange={this.handleFileUpload}
-                    required
-                  />
-                  {this.state.postPhoto === "" ? null : (
-                    <span>
-                      <img
-                        style={{ width: "100px" }}
-                        src={this.state.postPhoto && this.state.postPhoto}
-                        alt=""
-                      ></img>
-                    </span>
-                  )}
+                {this.state.isAdmin ? (
+                  <form onSubmit={this.handleSubmit}>
+                    <input
+                      name="postPhoto"
+                      type="file"
+                      // value={this.state.image}
+                      onChange={this.handleFileUpload}
+                      required
+                    />
+                    {this.state.postPhoto === "" ? null : (
+                      <span>
+                        <img
+                          style={{ width: "100px" }}
+                          src={this.state.postPhoto && this.state.postPhoto}
+                          alt=""
+                        ></img>
+                      </span>
+                    )}
 
-                  <input
-                    name="postInput"
-                    value={this.state.postInput}
-                    onChange={this.handleInput}
-                  />
-                  <button type="submit">Post</button>
-                </form>
+                    <input
+                      name="postInput"
+                      value={this.state.postInput}
+                      onChange={this.handleInput}
+                    />
+                    <button type="submit">Post</button>
+                  </form>
+                ) : null}
                 {this.state.posts &&
                   this.state.posts.map((post) => {
                     return (

@@ -14,6 +14,6 @@ export const Fade = styled.div`
   border-radius: 3px;
   color: palevioletred;
   margin: 0 1em;
-  padding: 0.25em 1em;
+
   animation: ${fadeIn} 1s linear;
 `;

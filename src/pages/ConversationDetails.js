@@ -8,10 +8,11 @@ class ConversationDetails extends Component {
     conversation: {},
     messages: [],
     sendMessage: "",
+    intervalId: "",
   };
 
   componentDidMount() {
-    this.getConversation();
+    this.setTimerFromApiCall();
   }
 
   getConversation = () => {
@@ -66,6 +67,17 @@ class ConversationDetails extends Component {
       return false;
     }
   };
+
+  setTimerFromApiCall = () => {
+    const intervalId = setInterval(() => {
+      this.getConversation();
+    }, 1000);
+    this.setState({ intervalId: intervalId });
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
 
   render() {
     let user;

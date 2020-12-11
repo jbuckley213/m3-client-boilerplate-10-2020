@@ -4,18 +4,21 @@ import UserService from "./../../lib/user-service";
 import conversationService from "./../../lib/conversation-service";
 
 import { Link } from "react-router-dom";
+import authService from "../../lib/auth-service";
 
 class SearchResult extends Component {
   state = {
     isFollowing: false,
     hasConversation: false,
     conversationId: "",
+    user: {},
   };
 
   componentDidMount() {
     this.checkFollow();
     this.checkConversation();
   }
+
   checkFollow = () => {
     const currentUserFollowing = this.props.user.following;
     const userSearchId = this.props.userSearch._id;
@@ -30,19 +33,23 @@ class SearchResult extends Component {
 
   checkConversation = () => {
     const currentUserConversations = this.props.user.conversations;
+    console.log(currentUserConversations);
     const userSearchId = this.props.userSearch._id;
+
     let hasConversation = false;
+
     if (currentUserConversations.length === 0) {
       this.setState({ hasConversation });
       return;
     }
+
     currentUserConversations.forEach((conversation) => {
-      console.log(conversation.users, userSearchId);
       if (conversation.users.includes(userSearchId)) {
         hasConversation = true;
         this.setState({ conversationId: conversation._id });
       }
     });
+
     this.setState({ hasConversation });
   };
   handleFollow = () => {
@@ -64,8 +71,9 @@ class SearchResult extends Component {
 
     conversationService.createConversation(userSearchId).then((apiResponse) => {
       console.log(apiResponse);
-      this.checkFollow();
-      this.checkConversation();
+      const conversationId = apiResponse.data;
+
+      this.setState({ hasConversation: true, conversationId });
     });
   };
 
