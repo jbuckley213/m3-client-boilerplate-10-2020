@@ -14,6 +14,7 @@ let socket = io(ENDPOINT);
 class Conversation extends Component {
   state = {
     conversations: [],
+    online: [],
   };
 
   componentDidMount() {
@@ -23,9 +24,12 @@ class Conversation extends Component {
         console.log(error);
       }
     });
-    socket.on("online", (user) => {
+    socket.on("online", (users) => {
       console.log("online");
-      console.log(user);
+      // console.log(users);
+      const userIdArr = Object.values(users.users);
+      console.log(userIdArr);
+      this.setState({ online: userIdArr });
     });
   }
 
@@ -63,6 +67,7 @@ class Conversation extends Component {
 
   render() {
     const conversations = this.state.conversations;
+    console.log(this.state.online);
     return (
       <Theme dark={this.props.isDark}>
         <h1>Conversations</h1>
@@ -76,6 +81,7 @@ class Conversation extends Component {
               <Link to={`/conversation-details/${conversation._id}`}>
                 <MessagePreview>
                   <ConversationListItem
+                    online={this.state.online}
                     conversation={conversation}
                     messageArrLength={messageArrLength}
                     receiverUser={user}

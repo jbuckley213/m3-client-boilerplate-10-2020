@@ -56,8 +56,8 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="search">
-        <Theme dark={this.props.isDark}>
+      <Theme dark={this.props.isDark}>
+        <div className="search">
           <h1>Search For A Fellow Developer</h1>
           <input
             name="searchInput"
@@ -76,8 +76,8 @@ class Search extends Component {
               </table>
             </Fade>
           )}
-        </Theme>
-      </div>
+        </div>
+      </Theme>
     );
   }
 }

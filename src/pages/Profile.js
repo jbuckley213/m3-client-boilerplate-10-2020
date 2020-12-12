@@ -247,7 +247,11 @@ class Profile extends Component {
               {this.state.isAdmin ? (
                 <div>
                   {this.state.newNotification ? (
-                    <div class="notification is-primary">
+                    <div
+                      onMouseEnter={this.toggleNotifications}
+                      id="new-notification"
+                      className="notification is-primary"
+                    >
                       You have a new notification
                     </div>
                   ) : null}
@@ -307,12 +311,15 @@ class Profile extends Component {
                     )}
 
                     <input
+                      className="post"
                       name="postInput"
                       value={this.state.postInput}
                       onChange={this.handleInput}
                       required
                     />
-                    <button type="submit">Post</button>
+                    <button className="button is-white s-size-7" type="submit">
+                      Post
+                    </button>
                   </form>
                 ) : null}
                 {this.state.posts &&

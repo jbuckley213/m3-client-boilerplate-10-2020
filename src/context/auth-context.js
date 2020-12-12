@@ -1,5 +1,6 @@
 import React from "react";
 import authService from "./../lib/auth-service";
+import userService from "./../lib/user-service";
 
 const { Consumer, Provider } = React.createContext();
 
@@ -15,7 +16,12 @@ class AuthProvider extends React.Component {
     authService
       .me()
       .then((user) =>
-        this.setState({ isLoggedIn: true, user: user, isLoading: false })
+        this.setState({
+          isLoggedIn: true,
+          user: user,
+          isLoading: false,
+          isDark: user.darkMode,
+        })
       )
       .catch((err) =>
         this.setState({ isLoggedIn: false, user: null, isLoading: false })
@@ -59,7 +65,23 @@ class AuthProvider extends React.Component {
   };
 
   toggleTheme = () => {
-    this.setState({ isDark: !this.state.isDark });
+    const isDark = this.state.isDark;
+    let mode = "";
+    if (isDark) {
+      mode = "light";
+    } else {
+      mode = "dark";
+    }
+
+    userService
+      .darkView(mode)
+      .then((apiResponse) => {
+        console.log(apiResponse);
+        this.setState({ isDark: !this.state.isDark });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {

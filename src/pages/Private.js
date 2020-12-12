@@ -6,8 +6,11 @@ import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
-
 import axios from "axios";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+let socket = io(ENDPOINT);
 
 class Private extends Component {
   state = {
@@ -19,6 +22,15 @@ class Private extends Component {
 
   componentDidMount() {
     this.handlePostsFollowedApi();
+    socket.emit("join-main", { user: this.props.user._id }, (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+    socket.on("online", (user) => {
+      console.log("online");
+      console.log(user);
+    });
   }
 
   handlePostsFollowedApi = () => {
@@ -78,8 +90,23 @@ class Private extends Component {
       });
   };
 
+  componentDidUpdate() {
+    console.log("update");
+    socket.on("postIncoming", () => {
+      console.log("new post");
+      this.handlePostsFollowedApi();
+    });
+  }
+
+  postWithSocket = () => {
+    socket.emit("post", {}, () => {});
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
+
+    this.postWithSocket();
+
     postService
       .createPost(this.props.user._id, this.state.post, this.state.image)
       .then((createdPost) => {
@@ -95,9 +122,13 @@ class Private extends Component {
     return (
       <div className="dashboard">
         <Theme dark={this.props.isDark}>
-          <h1>Private Route</h1>
-          <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
-          <img src={this.props.user.image} alt="user profile" />
+          <div className="dashboard-header">
+            <img src={this.props.user.image} alt="user profile" />
+            <div>
+              <h2>Welcome {this.props.user && this.props.user.firstName}</h2>
+              <p>See New Posts Here!</p>
+            </div>
+          </div>
           <form onSubmit={this.handleSubmit}>
             <input
               name="postPhoto"

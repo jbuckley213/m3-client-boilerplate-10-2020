@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import conversationService from "./../lib/conversation-service";
 import ConversationList from "./ConversationList";
 import { withAuth } from "./../context/auth-context";
-import { Theme } from "./../styles/themes";
+import { Theme, ThemeConversation } from "./../styles/themes";
 import { MessageHeader } from "./../styles/message-header";
 import io from "socket.io-client";
 
@@ -41,10 +41,12 @@ class ConversationDetails extends Component {
   componentDidUpdate() {
     const messages = this.state.newMessages;
     socket.once("message", (message) => {
+      console.log("socket called");
       // console.log(message.text);
       // messages.push(message.text);
       // this.setState({ newMessages: messages });
       this.getConversation();
+      this.seenMessage();
     });
 
     socket.on("online", (user) => {
@@ -57,7 +59,6 @@ class ConversationDetails extends Component {
   }
 
   seenMessage = () => {
-    console.log("seen");
     const { conversationId } = this.props.match.params;
 
     conversationService
@@ -75,7 +76,7 @@ class ConversationDetails extends Component {
         this.getMessages();
         this.filterCurrentUser(); //maybe don't need
 
-        this.seenMessage();
+        // this.seenMessage();
       });
   };
 
@@ -88,7 +89,7 @@ class ConversationDetails extends Component {
         this.getMessages();
         this.filterCurrentUser();
         this.startSocket();
-        this.seenMessage();
+        // this.seenMessage();
       });
   };
 
@@ -99,6 +100,7 @@ class ConversationDetails extends Component {
     const sendObj = { conversationId, message };
     if (message) {
       socket.emit("sendMessage", sendObj, () => {
+        console.log("MessageSent");
         this.setState({ sendMessage: "" });
       });
     }
@@ -130,7 +132,7 @@ class ConversationDetails extends Component {
         // this.setState({ sendMessage: "" });
         this.sendMessage();
 
-        this.getConversation();
+        // this.getConversation();
       })
       .catch((err) => console.log(err));
   };
@@ -179,11 +181,12 @@ class ConversationDetails extends Component {
   checkSeen = () => {
     const notificationsArr = this.state.conversation.notifications;
     const messagesArr = this.state.conversation.messages;
+    const lastMessage = this.state.conversation.messages.length - 1;
 
     if (
       notificationsArr.length === 0 &&
       messagesArr.length !== 0 &&
-      messagesArr[messagesArr.length - 1].userSent._id === this.props.user._id
+      messagesArr[lastMessage].userSent._id === this.props.user._id
     ) {
       return "Seen";
     } else {
@@ -198,7 +201,7 @@ class ConversationDetails extends Component {
     // }
 
     return (
-      <Theme dark={this.props.isDark}>
+      <ThemeConversation dark={this.props.isDark} className="isMessages">
         <MessageHeader>
           <img src={this.state.userContact.image} />
           <h3>
@@ -255,7 +258,7 @@ class ConversationDetails extends Component {
             Send
           </button>
         </form>
-      </Theme>
+      </ThemeConversation>
     );
   }
 }

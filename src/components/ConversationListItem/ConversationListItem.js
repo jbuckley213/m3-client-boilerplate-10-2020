@@ -18,6 +18,20 @@ class ConversationListItem extends Component {
     this.checkNotifications();
   }
 
+  checkOnline = () => {
+    const onlineArr = this.props.online;
+    console.log(onlineArr);
+    let online = false;
+    const receiverUserId = this.props.receiverUser;
+    onlineArr.forEach((onlineUser) => {
+      console.log(onlineUser);
+      if ((onlineUser = receiverUserId)) {
+        online = true;
+      }
+    });
+    return online;
+  };
+
   checkNotifications = () => {
     const currentUserId = this.props.user._id;
     const conversation = this.props.conversation;
@@ -35,6 +49,8 @@ class ConversationListItem extends Component {
   };
   render() {
     const { conversation, messageArrLength, receiverUser } = this.props;
+    console.log(this.state.unreadMessages);
+    console.log("isOnline", this.checkOnline());
     return (
       <div className="message-preview">
         <img

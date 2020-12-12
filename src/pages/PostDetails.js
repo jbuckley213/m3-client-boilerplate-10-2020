@@ -105,14 +105,16 @@ class PostDetails extends Component {
 
   showCommentInput = () => {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="post">
         <input
           name="commentInput"
           value={this.state.commentInput}
           onChange={this.handleInput}
           autoComplete="off"
         />
-        <button type="submit">Submit</button>
+        <button className="button is-white s-size-7" type="submit">
+          Submit
+        </button>
       </form>
     );
   };
@@ -123,12 +125,15 @@ class PostDetails extends Component {
         {this.state.post.comments &&
           this.state.post.comments.map((comment) => {
             return (
-              <div key={comment._id}>
-                <p>
-                  {comment.createdBy.firstName} {comment.createdBy.lastName}
-                </p>
+              <div className="comment-header" key={comment._id}>
+                <img src={`${comment.createdBy.image}`} />
+                <div className="comment-body">
+                  <h3>
+                    {comment.createdBy.firstName} {comment.createdBy.lastName}
+                  </h3>
 
-                <p>{comment.commentContent}</p>
+                  <p>{comment.commentContent}</p>
+                </div>
               </div>
             );
           })}
@@ -213,8 +218,7 @@ class PostDetails extends Component {
           </p>
         </footer>
 
-        <section>
-          <h3>Comments:</h3>
+        <section className="comments">
           {this.displayComments()}
 
           {this.showCommentInput()}

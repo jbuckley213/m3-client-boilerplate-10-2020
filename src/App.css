@@ -78,6 +78,14 @@ button.navbar-button {
   display: flex;
   flex-direction: column;
 }
+
+#new-notification {
+  position: absolute;
+  left: 100px;
+  width: 70%;
+  z-index: 1;
+}
+
 .notifications-menu {
   position: fixed;
   left: 10vw;
@@ -123,6 +131,12 @@ button.navbar-button {
 .search input {
   width: 80%;
   margin: 20px auto;
+}
+.search {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
@@ -248,4 +262,62 @@ body,
 
 #nav-space {
   height: 130px;
+}
+
+.comments h3 {
+  font-size: 1rem;
+  margin-left: 10px;
+  font-weight: bold;
+}
+.comments p {
+  font-size: 1rem;
+  margin: 5px 10px 10px 10px;
+}
+
+.comments .comment-header img {
+  width: 40px;
+  border-radius: 50%;
+}
+.comments .comment-header {
+  display: flex;
+  align-items: center;
+  /* border-bottom: 0.1rem solid rgb(59, 148, 94, 0.3); */
+}
+.comment-body {
+  margin: 10px 5px;
+  height: auto;
+  width: 80%;
+  padding: 5px;
+  background-color: #f2f2f2;
+  word-wrap: break-word;
+  border-radius: 15px;
+}
+.comments {
+  margin: 10px 0 0 10px;
+}
+
+.post input {
+  width: 70%;
+}
+.post {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  overflow: hidden;
+
+  bottom: 75px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-around;
+}
+.dashboard-header img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.isMessages {
+  height: auto;
 }

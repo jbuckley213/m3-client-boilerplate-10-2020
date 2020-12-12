@@ -93,9 +93,19 @@ class SearchResult extends Component {
         </td>
         <td>
           {this.state.isFollowing ? (
-            <button onClick={this.handleUnfollow}>Unfollow</button>
+            <button
+              className="button is-info is-size-7"
+              onClick={this.handleUnfollow}
+            >
+              Unfollow
+            </button>
           ) : (
-            <button onClick={this.handleFollow}>Follow</button>
+            <button
+              className="button is-info is-size-7"
+              onClick={this.handleFollow}
+            >
+              Follow
+            </button>
           )}
         </td>
         <td>

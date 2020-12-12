@@ -46,6 +46,11 @@ class UserService {
     const pr = this.api.post("/users/edit", { image });
     return pr;
   };
+
+  darkView = (darkMode) => {
+    const pr = this.api.post("/users/dark-mode", { darkMode });
+    return pr;
+  };
 }
 
 const userService = new UserService();
