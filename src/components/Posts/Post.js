@@ -3,6 +3,8 @@ import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
 import { Theme } from "./../../styles/themes";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import InsertCommentIcon from "@material-ui/icons/InsertComment";
 
 import "./Post.css";
 import "bulma/css/bulma.css";
@@ -171,12 +173,18 @@ class Post extends Component {
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
             >
-              {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+              {this.state.isLiked ? (
+                <ThumbUpIcon color="primary" />
+              ) : (
+                <ThumbUpIcon color="disabled" />
+              )}{" "}
+              <div>{this.state.numberOfLikes}</div>
             </p>
 
-            <p href="#" className="card-footer-item">
-              Comment {this.state.numberOfComments}
-            </p>
+            <div className="card-footer-item">
+              <InsertCommentIcon />
+              <div>{this.state.numberOfComments}</div>
+            </div>
           </footer>
         </Theme>
       </div>

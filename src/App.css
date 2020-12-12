@@ -344,3 +344,11 @@ body,
   top: 5px;
   color: #57ba98;
 }
+
+.card-footer-item div {
+  margin: 5px;
+}
+
+.offline {
+  color: lightcoral;
+}

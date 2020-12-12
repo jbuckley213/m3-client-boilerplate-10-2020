@@ -134,27 +134,22 @@ class Post extends Component {
             </div>
           </Link>
           <footer className="card-footer">
-            <p
+            <div
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
             >
               {this.state.isLiked ? (
-                <div>
-                  <ThumbUpIcon color="primary" /> Like
-                </div>
+                <ThumbUpIcon color="primary" />
               ) : (
                 <ThumbUpIcon color="disabled" />
               )}{" "}
-              {this.state.numberOfLikes}
-            </p>
+              <div> {this.state.numberOfLikes}</div>
+            </div>
 
-            <p
-              onClick={this.toggleDelete}
-              href="#"
-              className="card-footer-item"
-            >
-              <InsertCommentIcon /> {this.state.numberOfComments}
-            </p>
+            <div className="card-footer-item">
+              <InsertCommentIcon />
+              <div>{this.state.numberOfComments}</div>
+            </div>
           </footer>
         </Theme>
       </div>

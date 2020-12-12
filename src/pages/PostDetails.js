@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import postService from "./../lib/post-service";
 import { Link } from "react-router-dom";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import InsertCommentIcon from "@material-ui/icons/InsertComment";
 
 class PostDetails extends Component {
   state = {
@@ -201,21 +203,27 @@ class PostDetails extends Component {
             <time dateTime="2016-1-1">
               {post.data && post.date.toLocaleString()}
             </time>
+            <p onClick={this.toggleLikes}>Likes</p>
           </div>
         </div>
 
         <footer className="card-footer">
-          <button onClick={this.toggleLikes}>Likes</button>
           <p
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
           >
-            {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+            {this.state.isLiked ? (
+              <ThumbUpIcon color="primary" />
+            ) : (
+              <ThumbUpIcon color="disabled" />
+            )}{" "}
+            <div>{this.state.numberOfLikes}</div>
           </p>
 
-          <p href="#" className="card-footer-item">
-            Comment {this.state.numberOfComments}
-          </p>
+          <div className="card-footer-item">
+            <InsertCommentIcon />
+            <div>{this.state.numberOfComments}</div>
+          </div>
         </footer>
 
         <section className="comments">

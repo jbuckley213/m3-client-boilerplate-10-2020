@@ -63,7 +63,11 @@ class ConversationListItem extends Component {
           <h3>
             {receiverUser && receiverUser.firstName}{" "}
             {receiverUser && receiverUser.lastName}{" "}
-            {this.checkOnline() ? <CheckIcon className="online" /> : "Offline"}
+            {this.checkOnline() ? (
+              <CheckIcon className="online" />
+            ) : (
+              <CheckIcon className="offline" />
+            )}
             {this.state.unreadMessages === 0 ? null : this.state.unreadMessages}
           </h3>
 
