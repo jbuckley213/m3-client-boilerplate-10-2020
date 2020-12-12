@@ -71,7 +71,7 @@ button.navbar-button {
   align-items: center;
 }
 .profile-link td {
-  margin: 0 20px;
+  margin: 15px 22px;
   width: 30px;
 }
 .notifications {
@@ -129,14 +129,22 @@ button.navbar-button {
 }
 
 .search input {
-  width: 80%;
+  width: 85%;
   margin: 20px auto;
 }
 .search {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+.search h1 {
+  margin: 0 auto;
+}
+
+.search table {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
 }
 
 .card {
@@ -320,4 +328,19 @@ body,
 
 .isMessages {
   height: auto;
+}
+
+.delete-icon {
+  margin: auto 0;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.online {
+  position: relative;
+  top: 5px;
+  color: #57ba98;
 }

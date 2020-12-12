@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { withAuth } from "./../../context/auth-context";
+import CheckIcon from "@material-ui/icons/Check";
 import "bulma/css/bulma.css";
 
 class ConversationListItem extends Component {
   state = {
     unreadMessages: 0,
+    isOnline: false,
   };
   outputDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,15 +22,15 @@ class ConversationListItem extends Component {
 
   checkOnline = () => {
     const onlineArr = this.props.online;
-    console.log(onlineArr);
     let online = false;
-    const receiverUserId = this.props.receiverUser;
+    const receiverUserId = this.props.receiverUser._id;
     onlineArr.forEach((onlineUser) => {
-      console.log(onlineUser);
-      if ((onlineUser = receiverUserId)) {
+      console.log(receiverUserId);
+      if (onlineUser === receiverUserId) {
         online = true;
       }
     });
+
     return online;
   };
 
@@ -49,8 +51,8 @@ class ConversationListItem extends Component {
   };
   render() {
     const { conversation, messageArrLength, receiverUser } = this.props;
-    console.log(this.state.unreadMessages);
-    console.log("isOnline", this.checkOnline());
+    // console.log(this.state.unreadMessages);
+    // console.log("isOnline", this.checkOnline());
     return (
       <div className="message-preview">
         <img
@@ -61,6 +63,7 @@ class ConversationListItem extends Component {
           <h3>
             {receiverUser && receiverUser.firstName}{" "}
             {receiverUser && receiverUser.lastName}{" "}
+            {this.checkOnline() ? <CheckIcon className="online" /> : "Offline"}
             {this.state.unreadMessages === 0 ? null : this.state.unreadMessages}
           </h3>
 

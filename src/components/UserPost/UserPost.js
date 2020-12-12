@@ -3,6 +3,8 @@ import { withAuth } from "./../../context/auth-context";
 import postService from "./../../lib/post-service";
 import { Link } from "react-router-dom";
 import { Theme } from "./../../styles/themes";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import InsertCommentIcon from "@material-ui/icons/InsertComment";
 
 // import "./../Posts/Post.css";
 import "bulma/css/bulma.css";
@@ -86,6 +88,11 @@ class Post extends Component {
               {post.postedBy && post.postedBy.firstName}{" "}
               {post.postedBy && post.postedBy.lastName}
             </p>
+            <p
+              onClick={this.toggleDelete}
+              href="#"
+              className="delete-icon delete"
+            ></p>
             <p href="#" className="card-header-icon" aria-label="more options">
               <span className="icon">
                 <i className="fas fa-angle-down" aria-hidden="true"></i>
@@ -99,13 +106,27 @@ class Post extends Component {
               alt=""
             ></img>
           ) : null}
+          {this.state.showDelete ? (
+            <div>
+              <button
+                className="button is-warning is-light is-size-7"
+                onClick={() => this.props.deletePost(post._id)}
+              >
+                Confirm Delete
+              </button>
+              <button
+                className="button is-info is-light is-size-7"
+                onClick={this.toggleDelete}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : null}
 
           <Link to={`/postdetails/${post._id}`}>
             <div className="card-content">
               <div className="content">
-                {post.postContent}
-
-                <br />
+                {post.postContent} <br />
                 <time dateTime="2016-1-1">
                   {post.data && post.date.toLocaleString()}
                 </time>
@@ -117,7 +138,14 @@ class Post extends Component {
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
             >
-              {this.state.isLiked ? "Liked" : "Like"} {this.state.numberOfLikes}
+              {this.state.isLiked ? (
+                <div>
+                  <ThumbUpIcon color="primary" /> Like
+                </div>
+              ) : (
+                <ThumbUpIcon color="disabled" />
+              )}{" "}
+              {this.state.numberOfLikes}
             </p>
 
             <p
@@ -125,16 +153,8 @@ class Post extends Component {
               href="#"
               className="card-footer-item"
             >
-              Delete {this.state.comments}
+              <InsertCommentIcon /> {this.state.numberOfComments}
             </p>
-            {this.state.showDelete ? (
-              <div>
-                <button onClick={() => this.props.deletePost(post._id)}>
-                  Confirm Delete
-                </button>
-                <button onClick={this.toggleDelete}>Cancel</button>
-              </div>
-            ) : null}
           </footer>
         </Theme>
       </div>

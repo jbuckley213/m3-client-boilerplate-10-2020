@@ -94,14 +94,14 @@ class SearchResult extends Component {
         <td>
           {this.state.isFollowing ? (
             <button
-              className="button is-info is-size-7"
+              className="button is-white is-light is-size-7"
               onClick={this.handleUnfollow}
             >
               Unfollow
             </button>
           ) : (
             <button
-              className="button is-info is-size-7"
+              className="button is-success is-light is-size-7"
               onClick={this.handleFollow}
             >
               Follow
@@ -110,11 +110,19 @@ class SearchResult extends Component {
         </td>
         <td>
           {this.state.hasConversation ? (
-            <Link to={`/conversation-details/${this.state.conversationId}`}>
+            <Link
+              className="button is-success is-light is-size-7"
+              to={`/conversation-details/${this.state.conversationId}`}
+            >
               Go to chat
             </Link>
           ) : (
-            <button onClick={this.createConversation}>Start Chat</button>
+            <button
+              className="button is-white is-light is-size-7"
+              onClick={this.createConversation}
+            >
+              Start Chat
+            </button>
           )}
         </td>
       </tr>

@@ -67,7 +67,7 @@ class Conversation extends Component {
 
   render() {
     const conversations = this.state.conversations;
-    console.log(this.state.online);
+
     return (
       <Theme dark={this.props.isDark}>
         <h1>Conversations</h1>

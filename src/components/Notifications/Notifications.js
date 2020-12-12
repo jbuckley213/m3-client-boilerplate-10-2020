@@ -11,7 +11,7 @@ class Notifications extends Component {
   componentDidMount() {
     //this.filterLikes();
     this.setState({
-      notifications: this.props.notifications.reverse().slice(0, 5),
+      notifications: [...this.props.notifications].reverse().slice(0, 5),
     });
   }
   // filterLikes = () => {
@@ -55,30 +55,32 @@ class Notifications extends Component {
       <div className="notifications-menu">
         {notifications.map((notification) => {
           return notification.notificationInfo === "like" ? (
-            <div key={notification._id}>
+            <div className="notification-item" key={notification._id}>
               <Link to={`/postdetails/${notification.post}`}>
                 <p>
                   {notification.userActivity.firstName}{" "}
                   {notification.userActivity.lastName} liked your post
                 </p>
               </Link>
-              <button onClick={() => this.deleteNotification(notification._id)}>
-                Delete
-              </button>
+              <button
+                className="delete"
+                onClick={() => this.deleteNotification(notification._id)}
+              ></button>
             </div>
           ) : (
-            <div key={notification._id}>
+            <div className="notification-item" key={notification._id}>
               <Link to={`/postdetails/${notification.post}`}>
                 <p>
                   {notification.userActivity.firstName}{" "}
                   {notification.userActivity.lastName} commented on your post
                 </p>
-                <button
-                  onClick={() => this.deleteNotification(notification._id)}
-                >
-                  Delete
-                </button>
               </Link>
+              <button
+                className="delete"
+                onClick={() => this.deleteNotification(notification._id)}
+              >
+                Delete
+              </button>
             </div>
           );
         })}
