@@ -52,7 +52,7 @@ class Notifications extends Component {
   render() {
     const notifications = this.state.notifications;
     return (
-      <div>
+      <div className="notifications-menu">
         {notifications.map((notification) => {
           return notification.notificationInfo === "like" ? (
             <div key={notification._id}>

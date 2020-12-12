@@ -6,6 +6,10 @@ import Notifications from "./../components/Notifications/Notifications";
 import EditProfile from "./../components/EditProfile/EditProfile";
 import Settings from "./../components/Settings/Settings";
 
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import SettingsIcon from "@material-ui/icons/Settings";
+
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
 
@@ -226,36 +230,47 @@ class Profile extends Component {
     return (
       <div className="profile">
         <Theme dark={this.props.isDark}>
-          <p>
-            {this.state.user.firstName} {this.state.user.lastName}
-          </p>
-          <img src={this.state.user.image} alt="user profile" />
+          <div className="profile-header">
+            <img src={this.state.user.image} alt="user profile" />
+            <p>
+              {this.state.user.firstName} {this.state.user.lastName}
+            </p>
 
-          <button onClick={this.toggleSettings}>Settings</button>
-          {this.state.isAdmin ? (
-            this.state.showSettings ? (
+            {this.state.isAdmin ? (
               <Settings userProfile={this.state.user} />
-            ) : null
-          ) : (
-            <button onClick={this.handleFollow}>
-              {this.state.isFollowed ? "Unfollow" : "Follow"}
-            </button>
-          )}
-
-          {this.state.isAdmin ? (
-            <div>
-              {this.state.newNotification ? "You have new notifications" : null}
-              <button onClick={this.toggleNotifications}>
-                Notification {this.state.numberOfNotifications}
+            ) : (
+              <button onClick={this.handleFollow}>
+                {this.state.isFollowed ? "Unfollow" : "Follow"}
               </button>
+            )}
+            <div className="notifications">
+              {this.state.isAdmin ? (
+                <div>
+                  {this.state.newNotification ? (
+                    <div class="notification is-primary">
+                      You have a new notification
+                    </div>
+                  ) : null}
+
+                  <div onClick={this.toggleNotifications}>
+                    <Badge
+                      badgeContent={this.state.numberOfNotifications}
+                      color="primary"
+                      max={10}
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  </div>
+                </div>
+              ) : null}
+              {this.state.showNotifications ? (
+                <Notifications
+                  notifications={this.state.user.notifications}
+                  reduceNotifications={this.reduceNotifications}
+                />
+              ) : null}
             </div>
-          ) : null}
-          {this.state.showNotifications ? (
-            <Notifications
-              notifications={this.state.user.notifications}
-              reduceNotifications={this.reduceNotifications}
-            />
-          ) : null}
+          </div>
 
           <div className="button-group">
             <button className="button is-white" onClick={this.displayPosts}>

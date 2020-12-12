@@ -6,6 +6,11 @@ import { MessagePreview } from "./../styles/message-preview";
 import { Theme } from "./../styles/themes";
 import ConversationListItem from "../components/ConversationListItem/ConversationListItem";
 
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+let socket = io(ENDPOINT);
+
 class Conversation extends Component {
   state = {
     conversations: [],
@@ -13,6 +18,21 @@ class Conversation extends Component {
 
   componentDidMount() {
     this.getConversations();
+    socket.emit("join-main", { user: this.props.user._id }, (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+    socket.on("online", (user) => {
+      console.log("online");
+      console.log(user);
+    });
+  }
+
+  componentDidUpdate() {
+    socket.on("online", (user) => {
+      console.log("online");
+    });
   }
 
   componentWillUnmount() {

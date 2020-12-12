@@ -3,6 +3,11 @@ import conversationService from "./../lib/conversation-service";
 import ConversationList from "./ConversationList";
 import { withAuth } from "./../context/auth-context";
 import { Theme } from "./../styles/themes";
+import { MessageHeader } from "./../styles/message-header";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+let socket = io(ENDPOINT);
 
 class ConversationDetails extends Component {
   state = {
@@ -11,25 +16,48 @@ class ConversationDetails extends Component {
     sendMessage: "",
     intervalId: "",
     userContact: {},
+    newMessages: [],
   };
 
   componentDidMount() {
-    this.getConversation();
-
-    this.setTimerFromApiCall();
+    this.getConversationMount();
+    // this.setTimerFromApiCall();
     this.seenMessage();
     this.scrollToBottom();
+  }
+
+  startSocket = () => {
+    socket.emit(
+      "join",
+      { room: this.state.conversation._id, user: this.props.user._id },
+      (error) => {
+        if (error) {
+          console.log(error);
+        }
+      }
+    );
+  };
+
+  componentDidUpdate() {
+    const messages = this.state.newMessages;
+    socket.once("message", (message) => {
+      // console.log(message.text);
+      // messages.push(message.text);
+      // this.setState({ newMessages: messages });
+      this.getConversation();
+    });
+
+    socket.on("online", (user) => {
+      console.log("online");
+    });
   }
 
   scrollToBottom() {
     this.el.scrollIntoView({ behavior: "smooth" });
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
-
   seenMessage = () => {
+    console.log("seen");
     const { conversationId } = this.props.match.params;
 
     conversationService
@@ -45,14 +73,43 @@ class ConversationDetails extends Component {
       .then((apiResponse) => {
         this.setState({ conversation: apiResponse.data });
         this.getMessages();
-        this.filterCurrentUser();
+        this.filterCurrentUser(); //maybe don't need
+
         this.seenMessage();
       });
   };
 
+  getConversationMount = () => {
+    const { conversationId } = this.props.match.params;
+    conversationService
+      .getConversationOne(conversationId)
+      .then((apiResponse) => {
+        this.setState({ conversation: apiResponse.data });
+        this.getMessages();
+        this.filterCurrentUser();
+        this.startSocket();
+        this.seenMessage();
+      });
+  };
+
+  sendMessage = () => {
+    const message = this.state.sendMessage;
+    const conversationId = this.state.conversation._id;
+    console.log(message);
+    const sendObj = { conversationId, message };
+    if (message) {
+      socket.emit("sendMessage", sendObj, () => {
+        this.setState({ sendMessage: "" });
+      });
+    }
+  };
+
   getMessages = () => {
     const messages = this.state.conversation.messages;
-    this.setState({ messages });
+    if (messages.length !== this.state.messages.length) {
+      this.setState({ messages });
+      this.scrollToBottom();
+    }
   };
 
   handleInput = (event) => {
@@ -70,7 +127,9 @@ class ConversationDetails extends Component {
     conversationService
       .sendMessage(conversationId, sendMessage, userContactId)
       .then((apiResponse) => {
-        this.setState({ sendMessage: "" });
+        // this.setState({ sendMessage: "" });
+        this.sendMessage();
+
         this.getConversation();
       })
       .catch((err) => console.log(err));
@@ -105,36 +164,62 @@ class ConversationDetails extends Component {
   };
 
   componentWillUnmount() {
-    console.log("unmont");
     clearInterval(this.state.intervalId);
     this.seenMessage(); // LookLater
   }
+
+  outputDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toDateString().split(" ").slice(0, 3).join(" ");
+
+    const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
+    return time + " " + day;
+  };
+
+  checkSeen = () => {
+    const notificationsArr = this.state.conversation.notifications;
+    const messagesArr = this.state.conversation.messages;
+
+    if (
+      notificationsArr.length === 0 &&
+      messagesArr.length !== 0 &&
+      messagesArr[messagesArr.length - 1].userSent._id === this.props.user._id
+    ) {
+      return "Seen";
+    } else {
+      return null;
+    }
+  };
 
   render() {
     let user;
     // if (this.state.conversation.users) {
     //   user = this.filterCurrentUser(this.state.conversation.users);
     // }
-    if (this.state.conversation.notifications) {
-      console.log(this.state.conversation.notifications.length);
-    }
+
     return (
       <Theme dark={this.props.isDark}>
-        <h1>
-          Messages: {user && user.firstName} {user && user.lastName}
-        </h1>
+        <MessageHeader>
+          <img src={this.state.userContact.image} />
+          <h3>
+            {this.state.userContact.firstName} {this.state.userContact.lastName}
+          </h3>
+        </MessageHeader>
 
         {this.state.messages.map((message) => {
           return (
             <div key={message._id}>
               {this.isAdmin(message.userSent._id) ? (
                 <div className="admin-message">
+                  <div>{this.outputDate(message.created_at)}</div>
                   <p>
                     {message.userSent.firstName}: {message.messageContent}{" "}
                   </p>
                 </div>
               ) : (
                 <div className="user-message">
+                  <div>{this.outputDate(message.created_at)}</div>
+
                   <p>
                     {message.userSent.firstName}: {message.messageContent}
                   </p>
@@ -143,24 +228,32 @@ class ConversationDetails extends Component {
             </div>
           );
         })}
-        {this.state.conversation.notifications &&
-        this.state.conversation.notifications.length === 0
-          ? "Seen"
-          : null}
+        {/* <div>
+          {this.state.newMessages.map((message) => {
+            return <p>{message}</p>;
+          })}
+        </div> */}
+
+        <div className="seen">
+          {this.state.conversation.notifications && this.checkSeen()}
+        </div>
+
         <div
           ref={(el) => {
             this.el = el;
           }}
         ></div>
-        <form onSubmit={this.handleSubmit}>
-          <label>Send Message</label>
+        <form onSubmit={this.handleSubmit} className="send-message">
           <input
+            className="input is-info"
             value={this.state.sendMessage}
             name="sendMessage"
             onChange={this.handleInput}
             required
           />
-          <button type="submit">Send</button>
+          <button className="button" type="submit">
+            Send
+          </button>
         </form>
       </Theme>
     );

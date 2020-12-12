@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withAuth } from "./../../context/auth-context";
+import "bulma/css/bulma.css";
 
 class ConversationListItem extends Component {
   state = {
@@ -7,7 +8,10 @@ class ConversationListItem extends Component {
   };
   outputDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleString().split(" ").reverse().join(" ");
+    const day = date.toDateString().split(" ").slice(0, 3).join(" ");
+
+    const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
+    return time + " " + day;
   };
 
   componentDidMount() {
@@ -37,24 +41,28 @@ class ConversationListItem extends Component {
           src={`${receiverUser && receiverUser.image}`}
           alt="profile image"
         />
-        <div>
+        <div className="message-name">
           <h3>
             {receiverUser && receiverUser.firstName}{" "}
             {receiverUser && receiverUser.lastName}{" "}
             {this.state.unreadMessages === 0 ? null : this.state.unreadMessages}
           </h3>
 
-          <p>
-            {conversation.messages[messageArrLength] &&
-              conversation.messages[messageArrLength].userSent.firstName}
-            :{" "}
-            {conversation.messages[messageArrLength] &&
-              conversation.messages[messageArrLength].messageContent}
-            {this.outputDate(
-              conversation.messages[messageArrLength] &&
-                conversation.messages[messageArrLength].updated_at
-            )}
-          </p>
+          <div className="message-info">
+            <p>
+              {conversation.messages[messageArrLength] &&
+                conversation.messages[messageArrLength].userSent.firstName}
+              :{" "}
+              {conversation.messages[messageArrLength] &&
+                conversation.messages[messageArrLength].messageContent}
+            </p>
+            <p>
+              {this.outputDate(
+                conversation.messages[messageArrLength] &&
+                  conversation.messages[messageArrLength].updated_at
+              )}
+            </p>
+          </div>
         </div>
       </div>
     );

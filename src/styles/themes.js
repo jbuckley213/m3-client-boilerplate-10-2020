@@ -5,8 +5,8 @@ export const Theme = styled.div`
     props.dark &&
     css`
   background-color: rgb(68, 68, 68);
-  height:80%;
-  margin-bottom:200px;
+  height:auto;
+  ${"" /* margin-bottom:200px; */}
   h1 {
     color: palevioletred;
   }

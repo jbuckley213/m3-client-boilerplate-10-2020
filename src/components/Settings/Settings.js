@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import EditProfile from "./../EditProfile/EditProfile";
 import userService from "./../../lib/user-service";
 import { withAuth } from "./../../context/auth-context";
+import SettingsIcon from "@material-ui/icons/Settings";
+
+import "bulma/css/bulma.css";
 
 class Settings extends Component {
   state = {
     showEdit: false,
     isFollowed: false,
+    showSettings: false,
   };
 
   componentDidMount() {
@@ -42,30 +46,50 @@ class Settings extends Component {
       }
     });
   };
+  toggleSettings = () => {
+    this.setState({ showSettings: !this.state.showSettings });
+  };
 
   render() {
     return (
-      <div>
-        <button onClick={this.toggleEdit}>Edit Photo</button>
-        {this.state.showEdit ? <EditProfile /> : null}
+      <div className="settings">
+        <div onClick={this.toggleSettings}>
+          <SettingsIcon />
+        </div>
+        {this.state.showSettings ? (
+          <div className="settings-menu">
+            <button
+              className="is-size-7	 button is-white"
+              onClick={this.toggleEdit}
+            >
+              Edit Photo
+            </button>
+            {this.state.showEdit ? <EditProfile /> : null}
 
-        {true ? (
-          <div>
-            <h4 onClick={this.props.logout}>Logout</h4>
-
-            <button onClick={this.handleFollow}>
+            <button
+              className="is-size-7	 button is-white"
+              onClick={this.handleFollow}
+            >
               {this.state.isFollowed
                 ? "Hide Posts on My Dashboard"
                 : "Show Posts on My Dashboard"}
             </button>
-          </div>
-        ) : (
-          <button onClick={this.handleFollow}>
-            {this.state.isFollowed ? "Unfollow" : "Follow"}
-          </button>
-        )}
 
-        <button onClick={this.props.toggleTheme}>Toggle dark mode</button>
+            <button
+              className="is-size-7	 button is-white"
+              onClick={this.props.logout}
+            >
+              Logout
+            </button>
+
+            <button
+              className="is-size-7	 button is-white"
+              onClick={this.props.toggleTheme}
+            >
+              Toggle dark mode{" "}
+            </button>
+          </div>
+        ) : null}
       </div>
     );
   }
