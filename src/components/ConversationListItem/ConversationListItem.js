@@ -68,18 +68,22 @@ class ConversationListItem extends Component {
             ) : (
               <CheckIcon className="offline" />
             )}
-            {this.state.unreadMessages === 0 ? null : this.state.unreadMessages}
           </h3>
 
           <div className="message-info">
-            <p>
+            <div>
+              {this.state.unreadMessages === 0 ? null : (
+                <div className="unread">
+                  <p>{this.state.unreadMessages}</p>
+                </div>
+              )}
               {conversation.messages[messageArrLength] &&
                 conversation.messages[messageArrLength].userSent.firstName}
               :{" "}
               {conversation.messages[messageArrLength] &&
                 conversation.messages[messageArrLength].messageContent}
-            </p>
-            <p>
+            </div>
+            <p className="message-date">
               {this.outputDate(
                 conversation.messages[messageArrLength] &&
                   conversation.messages[messageArrLength].updated_at

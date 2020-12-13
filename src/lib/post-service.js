@@ -46,6 +46,11 @@ class PostService {
     const pr = this.api.delete(`/posts/${postId}/delete`);
     return pr;
   };
+
+  deleteComment = (postId, commentId) => {
+    const pr = this.api.delete(`/posts/${postId}/comment/${commentId}`);
+    return pr;
+  };
 }
 
 const postService = new PostService();

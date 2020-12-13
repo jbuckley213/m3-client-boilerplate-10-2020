@@ -359,7 +359,7 @@ class Profile extends Component {
                         return null;
                       } else {
                         return (
-                          <tr key={user._id} className="profile-link">
+                          <tr key={user._id} className="following-link">
                             <td>
                               <img src={user.image} alt="user profile" />
                             </td>

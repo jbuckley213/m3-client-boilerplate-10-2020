@@ -130,6 +130,7 @@ class ConversationDetails extends Component {
       .sendMessage(conversationId, sendMessage, userContactId)
       .then((apiResponse) => {
         // this.setState({ sendMessage: "" });
+        this.getConversation();
         this.sendMessage();
 
         // this.getConversation();

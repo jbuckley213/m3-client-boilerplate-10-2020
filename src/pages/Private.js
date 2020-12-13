@@ -91,7 +91,6 @@ class Private extends Component {
   };
 
   componentDidUpdate() {
-    console.log("update");
     socket.on("postIncoming", () => {
       console.log("new post");
       this.handlePostsFollowedApi();

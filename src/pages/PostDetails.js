@@ -4,6 +4,7 @@ import postService from "./../lib/post-service";
 import { Link } from "react-router-dom";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
+import Comment from "./../components/Comment/Comment";
 
 class PostDetails extends Component {
   state = {
@@ -121,28 +122,6 @@ class PostDetails extends Component {
     );
   };
 
-  displayComments = () => {
-    return (
-      <div>
-        {this.state.post.comments &&
-          this.state.post.comments.map((comment) => {
-            return (
-              <div className="comment-header" key={comment._id}>
-                <img src={`${comment.createdBy.image}`} />
-                <div className="comment-body">
-                  <h3>
-                    {comment.createdBy.firstName} {comment.createdBy.lastName}
-                  </h3>
-
-                  <p>{comment.commentContent}</p>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-    );
-  };
-
   handlePostLinks = () => {
     const postContent = this.state.post.postContent.split(" ");
     console.log(postContent);
@@ -169,7 +148,6 @@ class PostDetails extends Component {
       classes = "liked";
     }
     const post = this.state.post;
-    let spilt = [];
 
     return (
       <div className="card card-details">
@@ -208,7 +186,7 @@ class PostDetails extends Component {
         </div>
 
         <footer className="card-footer">
-          <p
+          <div
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
           >
@@ -218,7 +196,7 @@ class PostDetails extends Component {
               <ThumbUpIcon color="disabled" />
             )}{" "}
             <div>{this.state.numberOfLikes}</div>
-          </p>
+          </div>
 
           <div className="card-footer-item">
             <InsertCommentIcon />
@@ -227,7 +205,10 @@ class PostDetails extends Component {
         </footer>
 
         <section className="comments">
-          {this.displayComments()}
+          {post.comments &&
+            post.comments.map((comment) => {
+              return <Comment comment={comment} />;
+            })}
 
           {this.showCommentInput()}
         </section>

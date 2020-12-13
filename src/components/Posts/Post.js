@@ -169,7 +169,7 @@ class Post extends Component {
             </div>
           </Link>
           <footer className="card-footer">
-            <p
+            <div
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
             >
@@ -179,7 +179,7 @@ class Post extends Component {
                 <ThumbUpIcon color="disabled" />
               )}{" "}
               <div>{this.state.numberOfLikes}</div>
-            </p>
+            </div>
 
             <div className="card-footer-item">
               <InsertCommentIcon />

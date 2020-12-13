@@ -107,7 +107,7 @@ button.navbar-button {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin: auto 0;
+  margin: auto 5px;
 }
 
 .likes {
@@ -208,7 +208,11 @@ button.navbar-button {
   display: flex;
   justify-content: space-between;
 }
-.message-info p {
+.message-info .message-date {
+  margin-right: 5px;
+}
+.message-info div {
+  display: flex;
   margin-right: 5px;
 }
 
@@ -351,4 +355,39 @@ body,
 
 .offline {
   color: lightcoral;
+}
+
+.following-link img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.following-link {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.following-link td {
+  margin: 15px 22px;
+  width: 100px;
+}
+
+.show-posts {
+  overflow: scroll;
+}
+
+.unread {
+  background-color: #57ba98;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.unread p {
+  text-align: center;
+  margin-top: 5px;
 }
