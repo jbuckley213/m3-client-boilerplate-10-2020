@@ -60,13 +60,14 @@ class Search extends Component {
         <div className="search">
           <h1>Search For A Fellow Developer</h1>
           <input
+            className="input is-primary"
             name="searchInput"
             value={this.state.searchInput}
             onChange={this.handleInput}
             autoComplete="off"
           />
           {this.state.searchInput === "" ? null : (
-            <Fade>
+            <div className="animated slideInLeft">
               <table>
                 <tbody>
                   {this.state.searchResults.map((user) => {
@@ -74,7 +75,7 @@ class Search extends Component {
                   })}
                 </tbody>
               </table>
-            </Fade>
+            </div>
           )}
         </div>
       </Theme>

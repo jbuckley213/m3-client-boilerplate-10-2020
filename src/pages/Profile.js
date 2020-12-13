@@ -11,7 +11,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 import { Theme } from "./../styles/themes";
-import { Fade } from "./../styles/fade";
+import { ProfileButton } from "./../styles/profile-button";
 
 import UserPost from "./../components/UserPost/UserPost";
 import axios from "axios";
@@ -268,22 +268,31 @@ class Profile extends Component {
           </div>
 
           <div className="button-group">
-            <button className="button is-white" onClick={this.displayPosts}>
-              Posts {this.state.posts && this.state.posts.length}
-            </button>
-            <button className="button is-white" onClick={this.displayLikes}>
-              Likes {this.state.user.likes && this.state.user.likes.length}
-            </button>
-            <button className="button is-white" onClick={this.displayFollowing}>
-              Following{" "}
-              {this.state.user.following && this.getNumberOfFollowers()}
-            </button>
+            <ProfileButton highlight={this.state.showPosts}>
+              <div className="button is-white" onClick={this.displayPosts}>
+                {" "}
+                Posts {this.state.posts && this.state.posts.length}
+              </div>
+            </ProfileButton>
+
+            <ProfileButton highlight={this.state.showLikes}>
+              <div className="button is-white" onClick={this.displayLikes}>
+                {" "}
+                Likes {this.state.user.likes && this.state.user.likes.length}
+              </div>
+            </ProfileButton>
+            <ProfileButton highlight={this.state.showFollowing}>
+              <div className="button is-white" onClick={this.displayFollowing}>
+                Following{" "}
+                {this.state.user.following && this.getNumberOfFollowers()}
+              </div>
+            </ProfileButton>
           </div>
 
           {this.state.showPosts ? (
             <div className="animated fadeInUp">
               {this.state.isAdmin ? (
-                <form onSubmit={this.handleSubmit}>
+                <form className="post-form" onSubmit={this.handleSubmit}>
                   <input
                     name="postPhoto"
                     type="file"
@@ -301,7 +310,7 @@ class Profile extends Component {
                   )}
 
                   <input
-                    className="post"
+                    className="post input is-primary"
                     name="postInput"
                     value={this.state.postInput}
                     onChange={this.handleInput}

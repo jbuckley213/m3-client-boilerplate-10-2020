@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
+import { SignUpStyle } from "./../styles/login";
 // import userService from "./../lib/user-service";
 
 class Signup extends Component {
@@ -44,12 +45,13 @@ class Signup extends Component {
   render() {
     const { firstName, lastName, image, email, password } = this.state;
     return (
-      <div>
+      <SignUpStyle>
         <h1>Sign Up</h1>
 
         <form onSubmit={this.handleFormSubmit}>
-          <label>Image</label>
+          <label>Profile Pic</label>
           <input
+            className="input is-primary"
             name="image"
             type="file"
             onChange={this.handleFileUpload}
@@ -60,6 +62,7 @@ class Signup extends Component {
 
           <label>First Name:</label>
           <input
+            className="input is-primary"
             type="text"
             name="firstName"
             value={firstName}
@@ -68,6 +71,7 @@ class Signup extends Component {
           <br />
           <label>Last Name:</label>
           <input
+            className="input is-primary"
             type="text"
             name="lastName"
             value={lastName}
@@ -76,6 +80,7 @@ class Signup extends Component {
           <br />
           <label>Email:</label>
           <input
+            className="input is-primary"
             type="text"
             name="email"
             value={email}
@@ -84,18 +89,26 @@ class Signup extends Component {
           <br />
           <label>Password:</label>
           <input
+            className="input is-primary"
             type="password"
             name="password"
             value={password}
             onChange={this.handleChange}
           />
 
-          <input type="submit" value="Signup" />
+          <button className="button is-primary is-white" type="submit">
+            {" "}
+            Signup{" "}
+          </button>
         </form>
 
-        <p>Already have account?</p>
-        <Link to={"/login"}> Login</Link>
-      </div>
+        <div>
+          <p>Already have account?</p>
+          <button className="signup-btn button is-link is-light">
+            <Link to={"/login"}> Login</Link>
+          </button>
+        </div>
+      </SignUpStyle>
     );
   }
 }

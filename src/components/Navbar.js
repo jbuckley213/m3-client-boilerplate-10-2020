@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
+import ChatIcon from "@material-ui/icons/Chat";
+import PersonIcon from "@material-ui/icons/Person";
+import SearchIcon from "@material-ui/icons/Search";
+import HomeIcon from "@material-ui/icons/Home";
 import "bulma/css/bulma.css";
 
 class Navbar extends Component {
@@ -15,34 +19,44 @@ class Navbar extends Component {
               activeClassName="nav-link"
               to={"/private"}
             >
-              <h4>News Feed</h4>
+              <HomeIcon />
             </NavLink>
             <NavLink className="btn" activeClassName="nav-link" to="/search">
-              <h4>Search</h4>
+              <SearchIcon />
             </NavLink>
             <NavLink
               className="btn"
               activeClassName="nav-link"
               to={`/profile/${this.props.user._id}`}
             >
-              <h4>{this.props.user && this.props.user.firstName}</h4>
+              <PersonIcon />
             </NavLink>
             <NavLink
               className="btn"
               activeClassName="nav-link"
               to={"/conversations"}
             >
-              <h4>Chat</h4>
+              <ChatIcon />
             </NavLink>
           </>
         ) : (
           <>
             <NavLink to="/login">
-              <button className="navbar-button">Login</button>{" "}
+              <button
+                className="button btn nav-home-btn"
+                activeClassName="nav-link"
+              >
+                Login
+              </button>{" "}
             </NavLink>
             <br />
             <NavLink to="/signup">
-              <button className="navbar-button">Sign Up</button>{" "}
+              <button
+                className="button nav-home-btn"
+                activeClassName="nav-link"
+              >
+                Sign Up
+              </button>{" "}
             </NavLink>
           </>
         )}

@@ -68,7 +68,7 @@ class Conversation extends Component {
 
     return (
       <Theme dark={this.props.isDark}>
-        <h1>Conversations</h1>
+        <h1 className="subtitle is-4">Conversations</h1>
         {conversations.map((conversation) => {
           const user = this.filterCurrentUser(conversation.users);
 

@@ -249,7 +249,7 @@ button.navbar-button {
 }
 
 .profile-header {
-  margin: 20px 0;
+  padding: 20px 0;
   display: flex;
   justify-content: space-around;
 }
@@ -270,10 +270,12 @@ body,
 #root > div,
 .search {
   height: 100%;
+  background-color: #f2f2f2;
 }
 
 #nav-space {
   height: 130px;
+  background-color: #f2f2f2;
 }
 
 .comments h3 {
@@ -310,6 +312,7 @@ body,
 
 .post input {
   width: 70%;
+  padding: 20px 0;
 }
 .post {
   display: flex;
@@ -318,6 +321,10 @@ body,
   overflow: hidden;
 
   bottom: 75px;
+}
+
+.post-form {
+  padding-top: 40px;
 }
 
 .dashboard-header {
@@ -395,4 +402,17 @@ body,
 .comment-body .delete-comment {
   display: flex;
   justify-content: space-between;
+}
+
+#home p {
+  text-align: center;
+  margin: 40px;
+}
+
+.nav-home-btn {
+  margin: 5px 0;
+}
+
+.conversation-details {
+  background-color: white;
 }

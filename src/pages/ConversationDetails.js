@@ -241,68 +241,71 @@ class ConversationDetails extends Component {
 
     return (
       <ThemeConversation dark={this.props.isDark} className="isMessages">
-        <MessageHeader>
-          <img src={this.state.userContact.image} />
-          <h3>
-            {this.state.userContact.firstName} {this.state.userContact.lastName}
-          </h3>
-        </MessageHeader>
+        <div className="conversation-details">
+          <MessageHeader>
+            <img src={this.state.userContact.image} />
+            <h3>
+              {this.state.userContact.firstName}{" "}
+              {this.state.userContact.lastName}
+            </h3>
+          </MessageHeader>
 
-        {this.state.messages.map((message) => {
-          return (
-            <div key={message._id}>
-              {this.isAdmin(message.userSent._id) ? (
-                <div className="admin-message">
-                  <div>{this.outputDate(message.created_at)}</div>
-                  <p>
+          {this.state.messages.map((message) => {
+            return (
+              <div key={message._id}>
+                {this.isAdmin(message.userSent._id) ? (
+                  <div className="admin-message">
+                    <div>{this.outputDate(message.created_at)}</div>
                     <p>
-                      {message.userSent.firstName}: {message.messageContent}{" "}
+                      <p>
+                        {message.userSent.firstName}: {message.messageContent}{" "}
+                      </p>
+                      <button
+                        className="delete"
+                        onClick={() => this.deleteMessage(message._id)}
+                      ></button>
                     </p>
-                    <button
-                      className="delete"
-                      onClick={() => this.deleteMessage(message._id)}
-                    ></button>
-                  </p>
-                </div>
-              ) : (
-                <div className="user-message">
-                  <div>{this.outputDate(message.created_at)}</div>
+                  </div>
+                ) : (
+                  <div className="user-message">
+                    <div>{this.outputDate(message.created_at)}</div>
 
-                  <p>
-                    {message.userSent.firstName}: {message.messageContent}
-                  </p>
-                </div>
-              )}
-            </div>
-          );
-        })}
-        {/* <div>
+                    <p>
+                      {message.userSent.firstName}: {message.messageContent}
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {/* <div>
           {this.state.newMessages.map((message) => {
             return <p>{message}</p>;
           })}
         </div> */}
 
-        <div className="seen">
-          {this.state.conversation.notifications && this.checkSeen()}
-        </div>
+          <div className="seen">
+            {this.state.conversation.notifications && this.checkSeen()}
+          </div>
 
-        <div
-          ref={(el) => {
-            this.el = el;
-          }}
-        ></div>
-        <form onSubmit={this.handleSubmit} className="send-message">
-          <input
-            className="input is-info"
-            value={this.state.sendMessage}
-            name="sendMessage"
-            onChange={this.handleInput}
-            required
-          />
-          <button className="button" type="submit">
-            Send
-          </button>
-        </form>
+          <div
+            ref={(el) => {
+              this.el = el;
+            }}
+          ></div>
+          <form onSubmit={this.handleSubmit} className="send-message">
+            <input
+              className="input is-info"
+              value={this.state.sendMessage}
+              name="sendMessage"
+              onChange={this.handleInput}
+              required
+            />
+            <button className="button" type="submit">
+              Send
+            </button>
+          </form>
+        </div>
       </ThemeConversation>
     );
   }

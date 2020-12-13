@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
 
 function Home() {
   return (
-    <div> 
-      <h1>Home Page</h1>
+    <div>
+      <img src="/logo.png" />
+      <section id="home">
+        <p>
+          Love Code? Share your thoughts, explore new ideas and find others like
+          you!
+        </p>
+      </section>
     </div>
-  )
+  );
 }
 
 export default Home;

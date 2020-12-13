@@ -33,6 +33,10 @@ class Private extends Component {
       console.log("online");
       console.log(user);
     });
+    socket.on("postIncoming", () => {
+      console.log("new post");
+      this.handlePostsFollowedApi();
+    });
   }
 
   handlePostsFollowedApi = () => {
@@ -93,10 +97,10 @@ class Private extends Component {
   };
 
   componentDidUpdate() {
-    socket.on("postIncoming", () => {
-      console.log("new post");
-      this.handlePostsFollowedApi();
-    });
+    // socket.on("postIncoming", () => {
+    //   console.log("new post");
+    //   this.handlePostsFollowedApi();
+    // });
   }
 
   postWithSocket = () => {
