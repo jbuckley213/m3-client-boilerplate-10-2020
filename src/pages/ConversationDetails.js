@@ -120,6 +120,17 @@ class ConversationDetails extends Component {
     }
   };
 
+  sendDelete = () => {
+    const conversationId = this.state.conversation._id;
+
+    const sendObj = { conversationId, message: "" };
+
+    socket.emit("sendMessage", sendObj, () => {
+      console.log("MessageSent");
+      this.setState({ sendMessage: "" });
+    });
+  };
+
   getMessages = () => {
     const messages = this.state.conversation.messages;
     if (messages.length !== this.state.messages.length) {
@@ -209,6 +220,19 @@ class ConversationDetails extends Component {
     }
   };
 
+  deleteMessage = (messageId) => {
+    const { conversationId } = this.props.match.params;
+    conversationService
+      .deleteMessage(conversationId, messageId)
+      .then((apiResponse) => {
+        this.getConversation();
+        this.sendDelete();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     let user;
     // if (this.state.conversation.users) {
@@ -231,7 +255,13 @@ class ConversationDetails extends Component {
                 <div className="admin-message">
                   <div>{this.outputDate(message.created_at)}</div>
                   <p>
-                    {message.userSent.firstName}: {message.messageContent}{" "}
+                    <p>
+                      {message.userSent.firstName}: {message.messageContent}{" "}
+                    </p>
+                    <button
+                      className="delete"
+                      onClick={() => this.deleteMessage(message._id)}
+                    ></button>
                   </p>
                 </div>
               ) : (

@@ -38,6 +38,14 @@ class PostService {
     const pr = this.api.get(`/conversations/${conversationId}/message-seen`);
     return pr;
   };
+
+  deleteMessage = (conversationId, messageId) => {
+    const pr = this.api.delete(
+      `/conversations/${conversationId}/message/${messageId}`
+    );
+
+    return pr;
+  };
 }
 
 const postService = new PostService();
