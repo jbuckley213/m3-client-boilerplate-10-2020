@@ -103,6 +103,7 @@ class PostDetails extends Component {
       .then((apiResponse) => {
         console.log(apiResponse.data);
         this.handlePostById();
+        this.setState({ commentInput: "" });
       });
   };
 
@@ -154,10 +155,13 @@ class PostDetails extends Component {
         <header className="card-header">
           {post.postedBy && (
             <Link to={`/profile/${post.postedBy._id}`}>
-              <p className="card-header-title">
-                {post.postedBy && post.postedBy.firstName}{" "}
-                {post.postedBy && post.postedBy.lastName}
-              </p>
+              <div className="card-header-title">
+                <img src={post.postedBy.image} alt="profile" />
+                <div>
+                  {post.postedBy && post.postedBy.firstName}{" "}
+                  {post.postedBy && post.postedBy.lastName}
+                </div>
+              </div>
             </Link>
           )}
 
@@ -207,7 +211,12 @@ class PostDetails extends Component {
         <section className="comments">
           {post.comments &&
             post.comments.map((comment) => {
-              return <Comment comment={comment} />;
+              return (
+                <Comment
+                  getPostDetails={this.handlePostById}
+                  comment={comment}
+                />
+              );
             })}
 
           {this.showCommentInput()}

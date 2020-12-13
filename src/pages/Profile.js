@@ -35,6 +35,7 @@ class Profile extends Component {
     postPhoto: "",
     showNotifications: false,
     numberOfNotifications: 0,
+    numberOfFollowers: 0,
     newNotification: false,
     showSettings: false,
   };
@@ -162,29 +163,6 @@ class Profile extends Component {
       });
   };
 
-  showAdminFollowButton = () => {
-    //////Not USED but backup if settings don't work
-    return (
-      <div>
-        {this.state.isAdmin ? (
-          <div>
-            <h4 onClick={this.props.logout}>Logout</h4>
-
-            <button onClick={this.handleFollow}>
-              {this.state.isFollowed
-                ? "Hide Posts on My Dashboard"
-                : "Show Posts on My Dashboard"}
-            </button>
-          </div>
-        ) : (
-          <button onClick={this.handleFollow}>
-            {this.state.isFollowed ? "Unfollow" : "Follow"}
-          </button>
-        )}
-      </div>
-    );
-  };
-
   toggleNotifications = () => {
     if (this.state.newNotification) {
       userService
@@ -213,9 +191,19 @@ class Profile extends Component {
     this.setState({ showSettings: !this.state.showSettings });
   };
 
+  setNumberOfFollowing = () => {
+    const numberOfFollowing = this.state.user.following.length;
+    this.setState({ numberOfFollowing });
+  };
+
   getNumberOfFollowers = () => {
-    if (this.state.isFollowed) {
-      return this.state.user.following.length - 1;
+    const isAdmin = this.state.isAdmin;
+    if (isAdmin) {
+      if (this.state.isFollowed) {
+        return this.state.user.following.length - 1;
+      } else {
+        return this.state.user.following.length;
+      }
     } else {
       return this.state.user.following.length;
     }
@@ -239,7 +227,10 @@ class Profile extends Component {
             {this.state.isAdmin ? (
               <Settings userProfile={this.state.user} />
             ) : (
-              <button onClick={this.handleFollow}>
+              <button
+                className="button is-white is-size-7"
+                onClick={this.handleFollow}
+              >
                 {this.state.isFollowed ? "Unfollow" : "Follow"}
               </button>
             )}
@@ -355,7 +346,7 @@ class Profile extends Component {
                 <table>
                   <tbody>
                     {this.state.user.following.map((user) => {
-                      if (user._id === this.props.user._id) {
+                      if (user._id === this.state.user._id) {
                         return null;
                       } else {
                         return (

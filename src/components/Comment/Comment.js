@@ -1,31 +1,37 @@
 import React, { Component } from "react";
 import postService from "./../../lib/post-service";
+import { withAuth } from "./../../context/auth-context";
 
 class Comment extends Component {
   state = {
     isAdmin: false,
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.handleIsAdmin();
+  }
 
   handleIsAdmin = () => {
-    const postedById = this.props.comment.postedBy._id;
-    const currentUser = this.props.user._id;
-    if (postedById === currentUser) {
+    const createdById = this.props.comment.createdBy._id;
+    const currentUserId = this.props.user._id;
+    console.log(createdById, currentUserId);
+    if (createdById === currentUserId) {
+      console.log(true);
       this.setState({ isAdmin: true });
     } else {
       this.setState({ isAdmin: false });
     }
   };
 
-  deleteComment = (commentId) => {
-    const postId = this.state.post._id;
-
+  deleteComment = () => {
+    const postId = this.props.comment.post;
+    const commentId = this.props.comment._id;
     postService
       .deleteComment(postId, commentId)
       .then((apiResponse) => {
+        console.log("clicked");
         console.log(apiResponse);
-        this.handlePostById();
+        this.props.getPostDetails();
       })
       .catch((err) => {
         console.log(err);
@@ -33,16 +39,24 @@ class Comment extends Component {
   };
   render() {
     const { comment } = this.props;
-    console.log(comment);
+
     return (
       <div>
         <div className="comment-header" key={comment._id}>
           <img src={`${comment.createdBy.image}`} />
           <div className="comment-body">
-            <h3>
-              {comment.createdBy.firstName} {comment.createdBy.lastName}
-              {isAdmin ? <button>delete</button> : null}
-            </h3>
+            <div className="delete-comment">
+              <div>
+                {comment.createdBy.firstName} {comment.createdBy.lastName}
+              </div>
+              {this.state.isAdmin ? (
+                <p
+                  onClick={this.deleteComment}
+                  href="#"
+                  className="delete-icon delete"
+                ></p>
+              ) : null}
+            </div>
 
             <p>{comment.commentContent}</p>
           </div>
@@ -52,4 +66,4 @@ class Comment extends Component {
   }
 }
 
-export default Comment;
+export default withAuth(Comment);
