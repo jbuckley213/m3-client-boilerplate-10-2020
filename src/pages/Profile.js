@@ -241,7 +241,7 @@ class Profile extends Component {
                     <div
                       onMouseEnter={this.toggleNotifications}
                       id="new-notification"
-                      className="notification is-primary"
+                      className="notification is-primary animated bounce"
                     >
                       You have a new notification
                     </div>
@@ -281,65 +281,63 @@ class Profile extends Component {
           </div>
 
           {this.state.showPosts ? (
-            <div>
-              <Fade>
-                {this.state.isAdmin ? (
-                  <form onSubmit={this.handleSubmit}>
-                    <input
-                      name="postPhoto"
-                      type="file"
-                      // value={this.state.image}
-                      onChange={this.handleFileUpload}
-                    />
-                    {this.state.postPhoto === "" ? null : (
-                      <span>
-                        <img
-                          style={{ width: "100px" }}
-                          src={this.state.postPhoto && this.state.postPhoto}
-                          alt=""
-                        ></img>
-                      </span>
-                    )}
+            <div className="animated fadeInUp">
+              {this.state.isAdmin ? (
+                <form onSubmit={this.handleSubmit}>
+                  <input
+                    name="postPhoto"
+                    type="file"
+                    // value={this.state.image}
+                    onChange={this.handleFileUpload}
+                  />
+                  {this.state.postPhoto === "" ? null : (
+                    <span>
+                      <img
+                        style={{ width: "100px" }}
+                        src={this.state.postPhoto && this.state.postPhoto}
+                        alt=""
+                      ></img>
+                    </span>
+                  )}
 
-                    <input
-                      className="post"
-                      name="postInput"
-                      value={this.state.postInput}
-                      onChange={this.handleInput}
-                      required
-                    />
-                    <button className="button is-white s-size-7" type="submit">
-                      Post
-                    </button>
-                  </form>
-                ) : null}
-                {this.state.posts &&
-                  this.state.posts.map((post) => {
-                    return (
-                      <div key={post._id}>
-                        {this.state.isAdmin ? (
-                          <UserPost post={post} deletePost={this.deletePost} />
-                        ) : (
-                          <Post post={post} />
-                        )}
-                      </div>
-                    );
-                  })}{" "}
-              </Fade>
+                  <input
+                    className="post"
+                    name="postInput"
+                    value={this.state.postInput}
+                    onChange={this.handleInput}
+                    required
+                  />
+                  <button className="button is-white s-size-7" type="submit">
+                    Post
+                  </button>
+                </form>
+              ) : null}
+              {this.state.posts &&
+                this.state.posts.map((post) => {
+                  return (
+                    <div key={post._id}>
+                      {this.state.isAdmin ? (
+                        <UserPost post={post} deletePost={this.deletePost} />
+                      ) : (
+                        <Post post={post} />
+                      )}
+                    </div>
+                  );
+                })}{" "}
             </div>
           ) : null}
 
           {this.state.showLikes ? (
-            <Fade>
+            <div className="animated fadeInUp">
               {this.state.user.likes &&
                 this.state.user.likes.map((post) => {
                   return <Post key={post._id} post={post} />;
                 })}
-            </Fade>
+            </div>
           ) : null}
 
           {this.state.showFollowing ? (
-            <Fade>
+            <div className="animated fadeInUp">
               {this.getNumberOfFollowers() === 0 ? (
                 <h3>Not following anyone</h3>
               ) : (
@@ -369,7 +367,7 @@ class Profile extends Component {
                   </tbody>
                 </table>
               )}
-            </Fade>
+            </div>
           ) : null}
         </Theme>
       </div>

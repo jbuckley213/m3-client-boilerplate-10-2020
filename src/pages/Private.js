@@ -4,6 +4,8 @@ import { withTheme } from "./../context/theme-context";
 import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
+import "animate.css/source/animate.css";
+
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
 import axios from "axios";

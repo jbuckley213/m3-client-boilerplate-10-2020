@@ -52,7 +52,7 @@ class Notifications extends Component {
   render() {
     const notifications = this.state.notifications;
     return (
-      <div className="notifications-menu">
+      <div className="notifications-menu animated zoomIn">
         {notifications.map((notification) => {
           return notification.notificationInfo === "like" ? (
             <div className="notification-item" key={notification._id}>

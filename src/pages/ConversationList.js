@@ -25,18 +25,16 @@ class Conversation extends Component {
       }
     });
     socket.on("online", (users) => {
-      console.log("online");
+      // console.log("online");
       // console.log(users);
       const userIdArr = Object.values(users.users);
-      console.log(userIdArr);
+
       this.setState({ online: userIdArr });
     });
   }
 
   componentDidUpdate() {
-    socket.on("online", (user) => {
-      console.log("online");
-    });
+    socket.on("online", (user) => {});
   }
 
   componentWillUnmount() {

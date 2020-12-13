@@ -36,11 +36,8 @@ class ConversationDetails extends Component {
         }
       }
     );
-  };
 
-  componentDidUpdate() {
-    const messages = this.state.newMessages;
-    socket.once("message", (message) => {
+    socket.on("message", (message) => {
       console.log("socket called");
       // console.log(message.text);
       // messages.push(message.text);
@@ -52,6 +49,23 @@ class ConversationDetails extends Component {
     socket.on("online", (user) => {
       console.log("online");
     });
+  };
+
+  componentDidUpdate() {
+    const messages = this.state.newMessages;
+
+    // socket.once("message", (message) => {
+    //   console.log("socket called");
+    //   // console.log(message.text);
+    //   // messages.push(message.text);
+    //   // this.setState({ newMessages: messages });
+    //   this.getConversation();
+    //   this.seenMessage();
+    // });
+
+    // socket.on("online", (user) => {
+    //   console.log("online");
+    // });
   }
 
   scrollToBottom() {

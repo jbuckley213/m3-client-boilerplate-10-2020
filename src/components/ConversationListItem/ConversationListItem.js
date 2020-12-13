@@ -64,7 +64,7 @@ class ConversationListItem extends Component {
             {receiverUser && receiverUser.firstName}{" "}
             {receiverUser && receiverUser.lastName}{" "}
             {this.checkOnline() ? (
-              <CheckIcon className="online" />
+              <CheckIcon className="online animated bounce" />
             ) : (
               <CheckIcon className="offline" />
             )}
