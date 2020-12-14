@@ -9,6 +9,7 @@ import Settings from "./../components/Settings/Settings";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { useSpring, animated } from "react-spring";
 
 import { Theme } from "./../styles/themes";
 import { ProfileButton } from "./../styles/profile-button";
@@ -35,9 +36,9 @@ class Profile extends Component {
     postPhoto: "",
     showNotifications: false,
     numberOfNotifications: 0,
-    numberOfFollowers: 0,
     newNotification: false,
     showSettings: false,
+    following: [],
   };
 
   componentDidMount() {
@@ -61,7 +62,7 @@ class Profile extends Component {
 
         this.checkFollow();
         this.orderPosts();
-        this.setNumberOfNotifications();
+        this.setFollowing();
       })
       .catch((err) => {
         console.log(err);
@@ -182,20 +183,45 @@ class Profile extends Component {
     this.setState({ numberOfNotifications: notifications });
   };
 
-  setNumberOfNotifications = () => {
-    const numberOfNotifications = this.state.user.notifications.length;
-    this.setState({ numberOfNotifications });
-  };
-
   toggleSettings = () => {
     this.setState({ showSettings: !this.state.showSettings });
   };
 
-  setNumberOfFollowing = () => {
-    const numberOfFollowing = this.state.user.following.length;
-    this.setState({ numberOfFollowing });
+  setFollowing = () => {
+    const following = this.state.user.following;
+    const userProfile = this.state.user;
+    const filteredFollowing = following.filter((user) => {
+      if (user._id === userProfile._id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    this.setState({ following: filteredFollowing });
   };
 
+  handleFileUpload = (e) => {
+    console.log("The file to be uploaded is: ", e.target.files);
+    const file = e.target.files[0];
+
+    const uploadData = new FormData();
+    // image => this name has to be the same as in the model since we pass
+    // req.body to .create() method when creating a new project in '/api/projects' POST route
+    uploadData.append("image", file);
+
+    axios
+      .post("http://localhost:5000/api/posts/upload", uploadData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("response is: ", response);
+        // after the console.log we can see that response carries 'secure_url' which we can use to update the state
+        this.setState({ postPhoto: response.data.secure_url });
+      })
+      .catch((err) => {
+        console.log("Error while uploading the file: ", err);
+      });
+  };
   getNumberOfFollowers = () => {
     const isAdmin = this.state.isAdmin;
     if (isAdmin) {
@@ -208,21 +234,36 @@ class Profile extends Component {
       return this.state.user.following.length;
     }
   };
+  outputDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toDateString().split(" ").slice(1, 4).join(" ");
+
+    return day;
+  };
 
   render() {
     // console.log(this.state.user);
     // if (this.state.user.following) {
     //   console.log(this.state.user.following.length);
     // }
+    // const props = useSpring({
+    //   to: { opacity: 1 },
+    //   from: { opacity: 0 },
+    // });
     const user = this.state.user;
     return (
       <div className="profile">
         <Theme dark={this.props.isDark}>
           <div className="profile-header">
             <img src={this.state.user.image} alt="user profile" />
-            <p>
-              {this.state.user.firstName} {this.state.user.lastName}
-            </p>
+            <div>
+              <p>
+                {this.state.user.firstName} {this.state.user.lastName}
+              </p>
+              <p className="join-date">
+                Joined on {this.outputDate(this.state.user.created_at)}
+              </p>
+            </div>
 
             {this.state.isAdmin ? (
               <Settings userProfile={this.state.user} />
@@ -260,6 +301,7 @@ class Profile extends Component {
               ) : null}
               {this.state.showNotifications ? (
                 <Notifications
+                  toggleNotifications={this.toggleNotifications}
                   notifications={this.state.user.notifications}
                   reduceNotifications={this.reduceNotifications}
                 />
@@ -284,7 +326,7 @@ class Profile extends Component {
             <ProfileButton highlight={this.state.showFollowing}>
               <div className="button is-white" onClick={this.displayFollowing}>
                 Following{" "}
-                {this.state.user.following && this.getNumberOfFollowers()}
+                {this.state.user.following && this.state.following.length}
               </div>
             </ProfileButton>
           </div>
@@ -293,6 +335,14 @@ class Profile extends Component {
             <div className="animated fadeInUp">
               {this.state.isAdmin ? (
                 <form className="post-form" onSubmit={this.handleSubmit}>
+                  <textarea
+                    className="post"
+                    name="postInput"
+                    value={this.state.postInput}
+                    onChange={this.handleInput}
+                    required
+                  />
+                  <br />
                   <input
                     name="postPhoto"
                     type="file"
@@ -309,13 +359,6 @@ class Profile extends Component {
                     </span>
                   )}
 
-                  <input
-                    className="post input is-primary"
-                    name="postInput"
-                    value={this.state.postInput}
-                    onChange={this.handleInput}
-                    required
-                  />
                   <button className="button is-white s-size-7" type="submit">
                     Post
                   </button>
@@ -336,6 +379,17 @@ class Profile extends Component {
             </div>
           ) : null}
 
+          {/* <animated.div style={props}>
+            {this.state.showLikes ? (
+              <div>
+                {this.state.user.likes &&
+                  this.state.user.likes.map((post) => {
+                    return <Post key={post._id} post={post} />;
+                  })}
+              </div>
+            ) : null}
+          </animated.div> */}
+
           {this.state.showLikes ? (
             <div className="animated fadeInUp">
               {this.state.user.likes &&
@@ -344,34 +398,29 @@ class Profile extends Component {
                 })}
             </div>
           ) : null}
-
           {this.state.showFollowing ? (
             <div className="animated fadeInUp">
-              {this.getNumberOfFollowers() === 0 ? (
+              {this.state.following.length === 0 ? (
                 <h3>Not following anyone</h3>
               ) : (
                 <table>
                   <tbody>
-                    {this.state.user.following.map((user) => {
-                      if (user._id === this.state.user._id) {
-                        return null;
-                      } else {
-                        return (
-                          <tr key={user._id} className="following-link">
-                            <td>
-                              <img src={user.image} alt="user profile" />
-                            </td>
+                    {this.state.following.map((user) => {
+                      return (
+                        <tr key={user._id} className="following-link">
+                          <td>
+                            <img src={user.image} alt="user profile" />
+                          </td>
 
-                            <td>
-                              <p>
-                                <Link to={`/profile/${user._id}`}>
-                                  {user.firstName} {user.lastName}
-                                </Link>
-                              </p>
-                            </td>
-                          </tr>
-                        );
-                      }
+                          <td>
+                            <p>
+                              <Link to={`/profile/${user._id}`}>
+                                {user.firstName} {user.lastName}
+                              </Link>
+                            </p>
+                          </td>
+                        </tr>
+                      );
                     })}
                   </tbody>
                 </table>

@@ -14,16 +14,6 @@ class Notifications extends Component {
       notifications: [...this.props.notifications].reverse().slice(0, 5),
     });
   }
-  // filterLikes = () => {
-  //   const filteredLikes = this.props.notifications.filter((notification) => {
-  //     if (notification.userActivity._id === this.props.user._id) {
-  //       return false;
-  //     } else {
-  //       return true;
-  //     }
-  //   });
-  //   this.setState({ notifications: filteredLikes.reverse().slice(0, 5) });
-  // };
 
   filterNotifications = (notificationId) => {
     const filteredNotifications = this.state.notifications.filter(
@@ -54,12 +44,13 @@ class Notifications extends Component {
     return (
       <div className="notifications-menu animated zoomIn">
         {notifications.map((notification) => {
-          return notification.notificationInfo === "like" ? (
+          return notification.notificationInfo !== "follow" ? (
             <div className="notification-item" key={notification._id}>
               <Link to={`/postdetails/${notification.post}`}>
                 <p>
                   {notification.userActivity.firstName}{" "}
-                  {notification.userActivity.lastName} liked your post
+                  {notification.userActivity.lastName}{" "}
+                  {notification.notificationInfo} your post
                 </p>
               </Link>
               <button
@@ -69,10 +60,13 @@ class Notifications extends Component {
             </div>
           ) : (
             <div className="notification-item" key={notification._id}>
-              <Link to={`/postdetails/${notification.post}`}>
+              <Link
+                onClick={this.props.toggleNotifications}
+                to={`/profile/${notification.userActivity._id}`}
+              >
                 <p>
                   {notification.userActivity.firstName}{" "}
-                  {notification.userActivity.lastName} commented on your post
+                  {notification.userActivity.lastName} started following you
                 </p>
               </Link>
               <button

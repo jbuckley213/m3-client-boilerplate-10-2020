@@ -89,7 +89,7 @@ class Private extends Component {
       .then((response) => {
         console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ image: response.data.secure_url });
+        this.setState({ postPhoto: response.data.secure_url });
       })
       .catch((err) => {
         console.log("Error while uploading the file: ", err);
@@ -113,10 +113,10 @@ class Private extends Component {
     this.postWithSocket();
 
     postService
-      .createPost(this.props.user._id, this.state.post, this.state.image)
+      .createPost(this.props.user._id, this.state.post, this.state.postPhoto)
       .then((createdPost) => {
         this.handlePostsFollowedApi();
-        this.setState({ image: "", post: "" });
+        this.setState({ postPhoto: "", post: "" });
       })
       .catch((err) => {
         console.log(err);
@@ -136,9 +136,16 @@ class Private extends Component {
           </div>
           <form onSubmit={this.handleSubmit}>
             <input
+              name="post"
+              value={this.state.post}
+              onChange={this.handleInput}
+              required
+            />
+            <br />
+            <input
               name="postPhoto"
               type="file"
-              // value={this.state.image}
+              // value={this.state.postPhoto}
               onChange={this.handleFileUpload}
             />
 
@@ -151,13 +158,7 @@ class Private extends Component {
                 ></img>
               </span>
             )}
-            <br />
-            <input
-              name="post"
-              value={this.state.post}
-              onChange={this.handleInput}
-              required
-            />
+
             <button type="submit">Post</button>
           </form>
           <Fade>

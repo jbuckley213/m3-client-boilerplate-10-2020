@@ -310,9 +310,18 @@ body,
   margin: 10px 0 0 10px;
 }
 
-.post input {
-  width: 70%;
-  padding: 20px 0;
+.post-form textarea {
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 5px;
+  height: 50px;
+  padding: 5px;
+  font-size: 1.3rem;
+  border: 1px solid #3b945e;
+}
+.post-form input {
+  margin: 30px auto;
+  width: 50%;
 }
 .post {
   display: flex;
@@ -415,4 +424,12 @@ body,
 
 .conversation-details {
   background-color: white;
+}
+
+.date {
+  font-size: 0.5rem;
+}
+
+.join-date {
+  font-size: 0.7rem;
 }

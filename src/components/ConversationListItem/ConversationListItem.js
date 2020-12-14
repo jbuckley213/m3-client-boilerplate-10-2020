@@ -25,7 +25,6 @@ class ConversationListItem extends Component {
     let online = false;
     const receiverUserId = this.props.receiverUser._id;
     onlineArr.forEach((onlineUser) => {
-      console.log(receiverUserId);
       if (onlineUser === receiverUserId) {
         online = true;
       }

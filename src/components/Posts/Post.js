@@ -70,6 +70,14 @@ class Post extends Component {
   //   this.setState({ isLiked: !this.state.isLiked });
   // };
 
+  outputDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toDateString().split(" ").slice(0, 3).join(" ");
+
+    const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
+    return time + " " + day;
+  };
+
   componentDidMount() {
     let isLiked = false;
     if (this.props.post) {
@@ -149,6 +157,8 @@ class Post extends Component {
           </header>
           <Link to={`/postdetails/${post._id}`}>
             <div className="card-content">
+              <div className="date">{this.outputDate(post.date)}</div>
+
               <div className="content">
                 {post.postPhoto ? (
                   <img
@@ -162,9 +172,6 @@ class Post extends Component {
                 {post.postContent}
 
                 <br />
-                <time dateTime="2016-1-1">
-                  {post.data && post.date.toLocaleString()}
-                </time>
               </div>
             </div>
           </Link>

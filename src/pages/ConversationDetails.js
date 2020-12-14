@@ -49,6 +49,8 @@ class ConversationDetails extends Component {
     socket.on("online", (user) => {
       console.log("online");
     });
+
+    this.sendDelete();
   };
 
   componentDidUpdate() {
@@ -103,7 +105,6 @@ class ConversationDetails extends Component {
         this.getMessages();
         this.filterCurrentUser();
         this.startSocket();
-        // this.seenMessage();
       });
   };
 

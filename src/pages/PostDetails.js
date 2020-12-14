@@ -143,6 +143,14 @@ class PostDetails extends Component {
     return <p>{postContentWithLinkSplit}</p>;
   };
 
+  outputDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toDateString().split(" ").slice(0, 3).join(" ");
+
+    const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
+    return time + " " + day;
+  };
+
   render() {
     let classes = "";
     if (this.state.isLiked) {
@@ -179,6 +187,8 @@ class PostDetails extends Component {
           ></img>
         ) : null}
         <div className="card-content">
+          <div className="date">{this.outputDate(post.date)}</div>
+
           <div className="content">
             <p>{post.postContent}</p>
             <br />
@@ -213,6 +223,7 @@ class PostDetails extends Component {
             post.comments.map((comment) => {
               return (
                 <Comment
+                  key={comment._id}
                   getPostDetails={this.handlePostById}
                   comment={comment}
                 />
