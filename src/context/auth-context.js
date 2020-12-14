@@ -54,6 +54,7 @@ class AuthProvider extends React.Component {
   };
 
   me = () => {
+    console.log("me called");
     authService
       .me()
       .then((user) => {

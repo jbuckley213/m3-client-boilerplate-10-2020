@@ -141,41 +141,46 @@ class Post extends Component {
       classes = "liked";
     }
     return (
-      <div className="card">
+      <div>
+        {/* <div className="card"> */}
         <Theme dark={this.props.isDark}>
-          <header className="card-header">
-            <img src={post.postedBy.image} alt="user profile" />
-            <p className="card-header-title">
-              {post.postedBy && post.postedBy.firstName}{" "}
-              {post.postedBy && post.postedBy.lastName}
-            </p>
-            <p href="#" className="card-header-icon" aria-label="more options">
-              <span className="icon">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </p>
-          </header>
-          <Link to={`/postdetails/${post._id}`}>
-            <div className="card-content">
-              <div className="date">{this.outputDate(post.date)}</div>
+          {/* <header className="card-header">
+              <img src={post.postedBy.image} alt="user profile" />
+              <p className="card-header-title">
+                {post.postedBy && post.postedBy.firstName}{" "}
+                {post.postedBy && post.postedBy.lastName}
+              </p>
+              <p
+                href="#"
+                className="card-header-icon"
+                aria-label="more options"
+              >
+                <span className="icon">
+                  <i className="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </p>
+            </header> */}
+          {/* <Link to={`/postdetails/${post._id}`}> */}
+          {/* <div className="card-content">
+                <div className="date">{this.outputDate(post.date)}</div>
 
-              <div className="content">
-                {post.postPhoto ? (
-                  <img
-                    style={{ width: "100px" }}
-                    src={post.postPhoto && post.postPhoto}
-                    alt=""
-                  ></img>
-                ) : null}
-                {/* {this.handlePostLinks()} */}
+                <div className="content">
+                  {post.postPhoto ? (
+                    <img
+                      style={{ width: "100px" }}
+                      src={post.postPhoto && post.postPhoto}
+                      alt=""
+                    ></img>
+                  ) : null}
+                  {/* {this.handlePostLinks()} */}
 
-                {post.postContent}
+          {/* {post.postContent} */}
 
-                <br />
-              </div>
-            </div>
-          </Link>
-          <footer className="card-footer">
+          {/* <br /> */}
+          {/* </div> */}
+          {/* </div> */}
+          {/* </Link> */}
+          {/* <footer className="card-footer">
             <div
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
@@ -192,8 +197,41 @@ class Post extends Component {
               <InsertCommentIcon />
               <div>{this.state.numberOfComments}</div>
             </div>
-          </footer>
+          </footer> */}
         </Theme>
+        {/* </div> */}
+        <div className="post-main">
+          <div>
+            <img src={post.postedBy.image} alt="user profile" />
+          </div>
+          <div className="post-section">
+            <div className="post-user-info">
+              <div className="post-user">
+                {" "}
+                {post.postedBy && post.postedBy.firstName}{" "}
+                {post.postedBy && post.postedBy.lastName}
+                {"   "}
+              </div>
+              <div className="date">{this.outputDate(post.date)}</div>
+            </div>
+            <div className="post-content"> {post.postContent}</div>
+            <div className="post-actions">
+              {" "}
+              <div onClick={this.handleLike}>
+                {this.state.isLiked ? (
+                  <ThumbUpIcon fontSize="small" color="primary" />
+                ) : (
+                  <ThumbUpIcon fontSize="small" color="disabled" />
+                )}{" "}
+                <div>{this.state.numberOfLikes}</div>
+              </div>
+              <div className="comment-icon">
+                <InsertCommentIcon />
+                <div>{this.state.numberOfComments}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

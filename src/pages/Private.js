@@ -21,6 +21,7 @@ class Private extends Component {
     posts: [],
     post: "",
     postPhoto: "",
+    newPosts: [],
   };
 
   componentDidMount() {
@@ -52,7 +53,8 @@ class Private extends Component {
 
   orderPosts = () => {
     //const postsArr = [...this.props.user.posts];
-    const postsArr = [];
+    console.log("orderPosts");
+    const postsArr = [...this.state.newPosts, ...this.props.user.posts];
 
     this.state.users.forEach((user) => {
       postsArr.push(...user.posts);
@@ -116,8 +118,11 @@ class Private extends Component {
     postService
       .createPost(this.props.user._id, this.state.post, this.state.postPhoto)
       .then((createdPost) => {
+        console.log(createdPost);
+        const newPosts = [...this.state.newPosts];
+        newPosts.push(createdPost.data);
+        this.setState({ postPhoto: "", post: "", newPosts });
         this.handlePostsFollowedApi();
-        this.setState({ postPhoto: "", post: "" });
       })
       .catch((err) => {
         console.log(err);

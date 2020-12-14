@@ -20,6 +20,7 @@ import "bulma/css/bulma.css";
 
 import { Link } from "react-router-dom";
 import postService from "../lib/post-service";
+import authService from "../lib/auth-service";
 
 class Profile extends Component {
   state = {

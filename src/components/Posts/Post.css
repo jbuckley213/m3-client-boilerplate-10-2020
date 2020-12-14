@@ -2,3 +2,64 @@
   /* background-color: lightblue; */
   color: blue;
 }
+
+.post-main {
+  display: flex;
+  margin: 20px auto;
+  width: 95%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  color: #444444;
+}
+
+.post-main img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 5px 20px 0 0;
+}
+
+.post-user {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #444444;
+}
+
+.post-content {
+  font-size: 0.9rem;
+  color: #444444;
+}
+
+.post-actions {
+  margin: 20px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+}
+.post-actions div {
+  display: flex;
+}
+
+.post-actions div div {
+  margin: 0 10px;
+}
+.post-section {
+  padding-left: 20px;
+  width: 100%;
+  border-left: 1px solid palevioletred;
+}
+
+.comment-icon {
+  color: rgb(182, 179, 179);
+  margin-top: 2px;
+}
+
+.post-actions div {
+  font-size: 0.8rem;
+}
+
+.post-user-info {
+  display: flex;
+  align-items: center;
+}
