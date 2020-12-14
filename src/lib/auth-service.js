@@ -1,13 +1,14 @@
 import axios from "axios";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
 let socket = io(ENDPOINT);
 
 class AuthService {
   constructor() {
     this.auth = axios.create({
-      baseURL: "http://localhost:5000",
+      baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
     });
   }

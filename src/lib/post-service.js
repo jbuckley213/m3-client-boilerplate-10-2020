@@ -5,50 +5,54 @@ class PostService {
     // this.api  is a reusable base of the request containing the base url (baseURL)
     // of the API and the options ( `withCredentials: true` )
     this.api = axios.create({
-      baseURL: "http://localhost:5000/api",
+      baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
     });
   }
 
   getAllPostsByFollowedUsers = () => {
-    const pr = this.api.get("/posts");
+    const pr = this.api.get("/api/posts");
 
     return pr;
   };
 
   getById = (postId) => {
-    const pr = this.api.get(`/posts/${postId}`);
+    const pr = this.api.get(`/api/posts/${postId}`);
     return pr;
   };
 
   createPost = (postedBy, postContent, postPhoto) => {
     console.log(postedBy, postContent, postPhoto);
-    const pr = this.api.post("/posts", { postedBy, postContent, postPhoto });
+    const pr = this.api.post("/api/posts", {
+      postedBy,
+      postContent,
+      postPhoto,
+    });
     return pr;
   };
 
   likePost = (postId) => {
-    const pr = this.api.put(`/posts/${postId}/likes`);
+    const pr = this.api.put(`/api/posts/${postId}/likes`);
     return pr;
   };
   unlikePost = (postId) => {
-    const pr = this.api.put(`/posts/${postId}/unlikes`);
+    const pr = this.api.put(`/api/posts/${postId}/unlikes`);
     return pr;
   };
 
   comment = (postId, commentContent) => {
-    const pr = this.api.post(`/posts/${postId}/comment`, {
+    const pr = this.api.post(`/api/posts/${postId}/comment`, {
       commentContent,
     });
     return pr;
   };
   delete = (postId) => {
-    const pr = this.api.delete(`/posts/${postId}/delete`);
+    const pr = this.api.delete(`/api/posts/${postId}/delete`);
     return pr;
   };
 
   deleteComment = (postId, commentId) => {
-    const pr = this.api.delete(`/posts/${postId}/comment/${commentId}`);
+    const pr = this.api.delete(`/api/posts/${postId}/comment/${commentId}`);
     return pr;
   };
 }

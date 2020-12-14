@@ -5,29 +5,29 @@ class PostService {
     // this.api  is a reusable base of the request containing the base url (baseURL)
     // of the API and the options ( `withCredentials: true` )
     this.api = axios.create({
-      baseURL: "http://localhost:5000/api",
+      baseURL: process.env.REACT_APP_API_URL,
       withCredentials: true,
     });
   }
 
   createConversation = (userId) => {
-    const pr = this.api.post(`/conversations/${userId}`);
+    const pr = this.api.post(`/api/conversations/${userId}`);
 
     return pr;
   };
 
   getConversations = () => {
-    const pr = this.api.get(`/conversations`);
+    const pr = this.api.get(`/api/conversations`);
     return pr;
   };
 
   getConversationOne = (conversationId) => {
-    const pr = this.api.get(`/conversations/${conversationId}`);
+    const pr = this.api.get(`/api/conversations/${conversationId}`);
     return pr;
   };
 
   sendMessage = (conversationId, messageContent, userSentToId) => {
-    const pr = this.api.post(`/conversations/${conversationId}/message`, {
+    const pr = this.api.post(`/api/conversations/${conversationId}/message`, {
       messageContent,
       userSentToId,
     });
@@ -35,13 +35,15 @@ class PostService {
   };
 
   messageSeen = (conversationId) => {
-    const pr = this.api.get(`/conversations/${conversationId}/message-seen`);
+    const pr = this.api.get(
+      `/api/conversations/${conversationId}/message-seen`
+    );
     return pr;
   };
 
   deleteMessage = (conversationId, messageId) => {
     const pr = this.api.delete(
-      `/conversations/${conversationId}/message/${messageId}`
+      `/api/conversations/${conversationId}/message/${messageId}`
     );
 
     return pr;

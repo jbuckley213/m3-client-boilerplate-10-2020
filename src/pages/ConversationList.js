@@ -8,7 +8,8 @@ import ConversationListItem from "../components/ConversationListItem/Conversatio
 
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
 let socket = io(ENDPOINT);
 
 class Conversation extends Component {
@@ -69,26 +70,27 @@ class Conversation extends Component {
     return (
       <Theme dark={this.props.isDark}>
         <h1 className="subtitle is-4">Conversations</h1>
-        {conversations.map((conversation) => {
-          const user = this.filterCurrentUser(conversation.users);
+        {conversations &&
+          conversations.map((conversation) => {
+            const user = this.filterCurrentUser(conversation.users);
 
-          const messageArrLength = conversation.messages.length - 1;
+            const messageArrLength = conversation.messages.length - 1;
 
-          return (
-            <div key={conversation._id}>
-              <Link to={`/conversation-details/${conversation._id}`}>
-                <MessagePreview>
-                  <ConversationListItem
-                    online={this.state.online}
-                    conversation={conversation}
-                    messageArrLength={messageArrLength}
-                    receiverUser={user}
-                  />
-                </MessagePreview>
-              </Link>
-            </div>
-          );
-        })}
+            return (
+              <div key={conversation._id}>
+                <Link to={`/conversation-details/${conversation._id}`}>
+                  <MessagePreview>
+                    <ConversationListItem
+                      online={this.state.online}
+                      conversation={conversation}
+                      messageArrLength={messageArrLength}
+                      receiverUser={user}
+                    />
+                  </MessagePreview>
+                </Link>
+              </div>
+            );
+          })}
       </Theme>
     );
   }

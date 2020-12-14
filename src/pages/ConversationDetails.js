@@ -6,7 +6,8 @@ import { Theme, ThemeConversation } from "./../styles/themes";
 import { MessageHeader } from "./../styles/message-header";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
 let socket = io(ENDPOINT);
 
 class ConversationDetails extends Component {

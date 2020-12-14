@@ -11,7 +11,8 @@ import { Fade } from "./../styles/fade";
 import axios from "axios";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
 let socket = io(ENDPOINT);
 
 class Private extends Component {
@@ -83,7 +84,7 @@ class Private extends Component {
     uploadData.append("image", file);
 
     axios
-      .post("http://localhost:5000/api/posts/upload", uploadData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/posts/upload`, uploadData, {
         withCredentials: true,
       })
       .then((response) => {

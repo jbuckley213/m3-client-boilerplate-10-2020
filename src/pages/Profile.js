@@ -210,7 +210,7 @@ class Profile extends Component {
     uploadData.append("image", file);
 
     axios
-      .post("http://localhost:5000/api/posts/upload", uploadData, {
+      .post(`${process.env.REACT_APP_API_URL}/api/posts/upload`, uploadData, {
         withCredentials: true,
       })
       .then((response) => {

@@ -17,6 +17,7 @@ class Search extends Component {
     userService
       .getAll()
       .then((apiResponse) => {
+        console.log(apiResponse);
         this.setState({
           users: apiResponse.data,
           searchResults: apiResponse.data,
