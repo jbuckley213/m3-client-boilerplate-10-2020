@@ -11,6 +11,10 @@ export const Theme = styled.div`
   h1 {
     color: palevioletred;
   }
+  div{
+    background-color:rgb(100, 100, 100);
+    color: white;
+  }
   p {
     color: white;
 `}
@@ -27,7 +31,14 @@ export const ThemeConversation = styled.div`
   h1 {
     color: palevioletred;
   }
-  p {
+  .post-main{
+    background-color:rgb(80, 80, 80);
     color: white;
+  } 
+  .admin-message p{
+    color:white;
+  }
+  p {
+    color: palevioletred;
 `}
 `;

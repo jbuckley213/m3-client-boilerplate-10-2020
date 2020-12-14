@@ -10,6 +10,7 @@ display:flex;
  jusifty-content:space-evenly;
 align-items:center; 
 width:100%;
+z-index:6;
 
 img{
   width:50px;

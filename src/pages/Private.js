@@ -25,6 +25,8 @@ class Private extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     this.handlePostsFollowedApi();
     socket.emit("join-main", { user: this.props.user._id }, (error) => {
       if (error) {
@@ -140,20 +142,51 @@ class Private extends Component {
               <p>See New Posts Here!</p>
             </div>
           </div>
-          <form onSubmit={this.handleSubmit}>
-            <input
-              name="post"
-              value={this.state.post}
-              onChange={this.handleInput}
-              required
-            />
-            <br />
-            <input
-              name="postPhoto"
-              type="file"
-              // value={this.state.postPhoto}
-              onChange={this.handleFileUpload}
-            />
+
+          <form className="post-form" onSubmit={this.handleSubmit}>
+            <div className="post-main">
+              <div>
+                <img src={this.props.user.image} alt="user profile" />
+              </div>
+              <div className="post-section">
+                <div className="post-user-info">
+                  <div className="post-user">
+                    {" "}
+                    {this.props.user && this.props.user.firstName}{" "}
+                    {this.props.user && this.props.user.lastName}
+                    {"   "}
+                  </div>
+                </div>
+                {this.state.postPhoto === "" ? null : (
+                  <span>
+                    <img
+                      style={{ width: "100px" }}
+                      src={this.state.postPhoto && this.state.postPhoto}
+                      alt=""
+                    ></img>
+                  </span>
+                )}
+                <textarea
+                  className="post"
+                  name="post"
+                  value={this.state.post}
+                  onChange={this.handleInput}
+                  placeholder="Share you code..."
+                  required
+                />
+                <div className="post-actions">
+                  <input
+                    name="postPhoto"
+                    type="file"
+                    // value={this.state.postPhoto}
+                    onChange={this.handleFileUpload}
+                  />
+                  <button className="button is-white s-size-7" type="submit">
+                    Post
+                  </button>{" "}
+                </div>
+              </div>
+            </div>
 
             {this.state.postPhoto === "" ? null : (
               <span>
@@ -164,8 +197,6 @@ class Private extends Component {
                 ></img>
               </span>
             )}
-
-            <button type="submit">Post</button>
           </form>
           <Fade>
             {this.state.posts.map((post) => {

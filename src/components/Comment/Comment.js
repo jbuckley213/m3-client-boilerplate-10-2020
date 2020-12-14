@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import postService from "./../../lib/post-service";
 import { withAuth } from "./../../context/auth-context";
-
+import { Link } from "react-router-dom";
 class Comment extends Component {
   state = {
     isAdmin: false,
@@ -42,23 +42,33 @@ class Comment extends Component {
 
     return (
       <div>
-        <div className="comment-header" key={comment._id}>
-          <img src={`${comment.createdBy.image}`} />
-          <div className="comment-body">
-            <div className="delete-comment">
-              <div>
-                {comment.createdBy.firstName} {comment.createdBy.lastName}
+        <div className="post-main">
+          <div>
+            <img src={`${comment.createdBy.image}`} alt="user profile" />
+          </div>
+          <div className="post-section">
+            <div className="post-user-info">
+              <Link to={`/profile/${comment.createdBy._id}`}>
+                {" "}
+                <div className="post-user">
+                  {" "}
+                  {comment.createdBy.firstName} {comment.createdBy.lastName}
+                  {"   "}
+                </div>{" "}
+              </Link>
+
+              <div className="date">
+                {this.props.outputDate(comment.created_at)}
               </div>
-              {this.state.isAdmin ? (
+              {/* {this.state.isAdmin ? (
                 <p
                   onClick={this.deleteComment}
                   href="#"
                   className="delete-icon delete"
                 ></p>
-              ) : null}
-            </div>
-
-            <p>{comment.commentContent}</p>
+              ) : null} */}
+            </div>{" "}
+            <div className="post-content"> {comment.commentContent}</div>
           </div>
         </div>
       </div>

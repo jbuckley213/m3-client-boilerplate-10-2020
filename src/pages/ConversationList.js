@@ -19,6 +19,7 @@ class Conversation extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.getConversations();
     socket.emit("join-main", { user: this.props.user._id }, (error) => {
       if (error) {
@@ -69,28 +70,32 @@ class Conversation extends Component {
 
     return (
       <Theme dark={this.props.isDark}>
-        <h1 className="subtitle is-4">Conversations</h1>
-        {conversations &&
-          conversations.map((conversation) => {
-            const user = this.filterCurrentUser(conversation.users);
+        <div className="conversation-list">
+          <h1 className="subtitle is-4">Conversations</h1>
+          {conversations &&
+            conversations.map((conversation) => {
+              const user = this.filterCurrentUser(conversation.users);
 
-            const messageArrLength = conversation.messages.length - 1;
+              const messageArrLength = conversation.messages.length - 1;
 
-            return (
-              <div key={conversation._id}>
-                <Link to={`/conversation-details/${conversation._id}`}>
-                  <MessagePreview>
-                    <ConversationListItem
-                      online={this.state.online}
-                      conversation={conversation}
-                      messageArrLength={messageArrLength}
-                      receiverUser={user}
-                    />
-                  </MessagePreview>
-                </Link>
-              </div>
-            );
-          })}
+              return (
+                <div key={conversation._id}>
+                  <Link to={`/conversation-details/${conversation._id}`}>
+                    <div className="conversations">
+                      <MessagePreview>
+                        <ConversationListItem
+                          online={this.state.online}
+                          conversation={conversation}
+                          messageArrLength={messageArrLength}
+                          receiverUser={user}
+                        />
+                      </MessagePreview>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+        </div>
       </Theme>
     );
   }

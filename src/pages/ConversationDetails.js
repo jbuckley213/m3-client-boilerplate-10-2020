@@ -18,6 +18,7 @@ class ConversationDetails extends Component {
     intervalId: "",
     userContact: {},
     newMessages: [],
+    showDelete: false,
   };
 
   componentDidMount() {
@@ -235,15 +236,22 @@ class ConversationDetails extends Component {
       });
   };
 
+  toggleDelete = () => {
+    this.setState({ showDelete: !this.state.showDelete });
+  };
+
   render() {
-    let user;
     // if (this.state.conversation.users) {
     //   user = this.filterCurrentUser(this.state.conversation.users);
     // }
+    let classes = "";
+    if (this.state.showDelete) {
+      classes = "slide-message";
+    }
 
     return (
-      <ThemeConversation dark={this.props.isDark} className="isMessages">
-        <div className="conversation-details">
+      <div className="conversation-details">
+        <ThemeConversation dark={this.props.isDark} className="isMessages">
           <MessageHeader>
             <img src={this.state.userContact.image} />
             <h3>
@@ -256,17 +264,24 @@ class ConversationDetails extends Component {
             return (
               <div key={message._id}>
                 {this.isAdmin(message.userSent._id) ? (
-                  <div className="admin-message">
-                    <div>{this.outputDate(message.created_at)}</div>
-                    <p>
+                  <div>
+                    <div
+                      onClick={this.toggleDelete}
+                      className={`admin-message ${classes}`}
+                    >
+                      <div>{this.outputDate(message.created_at)}</div>
                       <p>
-                        {message.userSent.firstName}: {message.messageContent}{" "}
+                        <p>
+                          {message.userSent.firstName}: {message.messageContent}{" "}
+                        </p>
                       </p>
+                    </div>
+                    {this.state.showDelete ? (
                       <button
-                        className="delete"
+                        className="delete delete-message"
                         onClick={() => this.deleteMessage(message._id)}
                       ></button>
-                    </p>
+                    ) : null}
                   </div>
                 ) : (
                   <div className="user-message">
@@ -307,8 +322,8 @@ class ConversationDetails extends Component {
               Send
             </button>
           </form>
-        </div>
-      </ThemeConversation>
+        </ThemeConversation>
+      </div>
     );
   }
 }

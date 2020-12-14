@@ -43,6 +43,8 @@ class Profile extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     this.handlePostApi(true);
   }
 
@@ -85,7 +87,10 @@ class Profile extends Component {
       return 0;
     });
 
-    this.setState({ posts: postsArr });
+    this.setState({
+      posts: postsArr,
+      numberOfNotifications: this.props.user.notifications.length,
+    });
   };
 
   componentDidUpdate = () => {

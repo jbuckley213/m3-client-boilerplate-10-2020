@@ -17,6 +17,8 @@ class PostDetails extends Component {
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
+
     this.handlePostById();
   }
 
@@ -159,8 +161,8 @@ class PostDetails extends Component {
     const post = this.state.post;
 
     return (
-      <div className="card card-details">
-        <header className="card-header">
+      <div>
+        {/* <header className="card-header">
           {post.postedBy && (
             <Link to={`/profile/${post.postedBy._id}`}>
               <div className="card-header-title">
@@ -178,15 +180,15 @@ class PostDetails extends Component {
               <i className="fas fa-angle-down" aria-hidden="true"></i>
             </span>
           </p>
-        </header>
-        {post.postPhoto ? (
+        </header> */}
+        {/* {post.postPhoto ? (
           <img
             style={{ width: "100px" }}
             src={post.postPhoto && post.postPhoto}
             alt=""
           ></img>
-        ) : null}
-        <div className="card-content">
+        ) : null} */}
+        {/* <div className="card-content">
           <div className="date">{this.outputDate(post.date)}</div>
 
           <div className="content">
@@ -197,9 +199,9 @@ class PostDetails extends Component {
             </time>
             <p onClick={this.toggleLikes}>Likes</p>
           </div>
-        </div>
+        </div> */}
 
-        <footer className="card-footer">
+        {/* <footer className="card-footer">
           <div
             onClick={this.handleLike}
             className={`card-footer-item ${classes}`}
@@ -216,34 +218,81 @@ class PostDetails extends Component {
             <InsertCommentIcon />
             <div>{this.state.numberOfComments}</div>
           </div>
-        </footer>
+        </footer> */}
 
-        <section className="comments">
-          {post.comments &&
-            post.comments.map((comment) => {
-              return (
-                <Comment
-                  key={comment._id}
-                  getPostDetails={this.handlePostById}
-                  comment={comment}
-                />
-              );
-            })}
+        <div id="post-details">
+          <div className="post-main">
+            <div>
+              <img
+                src={post.postedBy && post.postedBy.image}
+                alt="user profile"
+              />
+            </div>
+            <div className="post-section">
+              <div className="post-user-info">
+                <div className="post-user">
+                  {" "}
+                  {post.postedBy && post.postedBy.firstName}{" "}
+                  {post.postedBy && post.postedBy.lastName}
+                  {"   "}
+                </div>
+                <div className="date">{this.outputDate(post.date)}</div>
+              </div>
+              <Link to={`/postdetails/${post._id}`}>
+                {" "}
+                <div className="post-content"> {post.postContent}</div>
+              </Link>
+              <p className="like-btn" onClick={this.toggleLikes}>
+                Likes
+              </p>
+              <div className="post-actions">
+                {" "}
+                <div onClick={this.handleLike}>
+                  {this.state.isLiked ? (
+                    <ThumbUpIcon fontSize="small" color="primary" />
+                  ) : (
+                    <ThumbUpIcon fontSize="small" color="disabled" />
+                  )}{" "}
+                  <div>{this.state.numberOfLikes}</div>
+                </div>
+                <div className="comment-icon">
+                  <InsertCommentIcon />
+                  <div>{this.state.numberOfComments}</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          {this.showCommentInput()}
-        </section>
-        {this.state.showLikes ? (
-          <div className="likes">
-            {post.likes &&
-              post.likes.map((user) => {
+          <section className="comments">
+            {post.comments &&
+              post.comments.map((comment) => {
                 return (
-                  <p key={user._id}>
-                    {user.firstName} {user.lastName}
-                  </p>
+                  <Comment
+                    outputDate={this.outputDate}
+                    key={comment._id}
+                    getPostDetails={this.handlePostById}
+                    comment={comment}
+                  />
                 );
               })}
-          </div>
-        ) : null}
+
+            {this.showCommentInput()}
+          </section>
+          {this.state.showLikes ? (
+            <div className="likes animated zoomIn">
+              {post.likes &&
+                post.likes.map((user) => {
+                  return (
+                    <Link to={`/profile/${user._id}`}>
+                      <p className="like-item" key={user._id}>
+                        {user.firstName} {user.lastName}
+                      </p>{" "}
+                    </Link>
+                  );
+                })}
+            </div>
+          ) : null}
+        </div>
       </div>
     );
   }

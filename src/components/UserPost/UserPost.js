@@ -90,9 +90,8 @@ class Post extends Component {
       classes = "liked";
     }
     return (
-      <div className="card">
-        <Theme dark={this.props.isDark}>
-          <header className="card-header">
+      <Theme dark={this.props.isDark}>
+        {/* <header className="card-header">
             <p className="card-header-title">
               {post.postedBy && post.postedBy.firstName}{" "}
               {post.postedBy && post.postedBy.lastName}
@@ -107,9 +106,9 @@ class Post extends Component {
                 <i className="fas fa-angle-down" aria-hidden="true"></i>
               </span>
             </p>
-          </header>
+          </header> */}
 
-          {post.postPhoto ? (
+        {/* {post.postPhoto ? (
             <img
               style={{ width: "100px" }}
               src={post.postPhoto && post.postPhoto}
@@ -131,9 +130,9 @@ class Post extends Component {
                 Cancel
               </button>
             </div>
-          ) : null}
+          ) : null} */}
 
-          <Link to={`/postdetails/${post._id}`}>
+        {/* <Link to={`/postdetails/${post._id}`}>
             <div className="card-content">
               <div className="date">{this.outputDate(post.date)}</div>
 
@@ -141,8 +140,8 @@ class Post extends Component {
                 {post.postContent} <br />
               </div>
             </div>
-          </Link>
-          <footer className="card-footer">
+          </Link> */}
+        {/* <footer className="card-footer">
             <div
               onClick={this.handleLike}
               className={`card-footer-item ${classes}`}
@@ -159,9 +158,73 @@ class Post extends Component {
               <InsertCommentIcon />
               <div>{this.state.numberOfComments}</div>
             </div>
-          </footer>
-        </Theme>
-      </div>
+          </footer> */}
+        <div>
+          <div className="post-main">
+            <div>
+              <img src={post.postedBy.image} alt="user profile" />
+            </div>
+            <div className="post-section">
+              <div className="post-user-info">
+                <div className="post-user">
+                  {" "}
+                  {post.postedBy && post.postedBy.firstName}{" "}
+                  {post.postedBy && post.postedBy.lastName}
+                  {"   "}
+                </div>
+                <div className="date">{this.outputDate(post.date)}</div>
+                <p
+                  onClick={this.toggleDelete}
+                  href="#"
+                  className="delete-icon delete is-size-7"
+                ></p>
+                {this.state.showDelete ? (
+                  <div>
+                    <button
+                      className="button is-warning is-light is-size-7"
+                      onClick={() => this.props.deletePost(post._id)}
+                    >
+                      Confirm Delete
+                    </button>
+                    <button
+                      className="button is-info is-light is-size-7"
+                      onClick={this.toggleDelete}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : null}{" "}
+              </div>
+              <div className="post-content">
+                {post.postPhoto ? (
+                  <img
+                    className="post-image"
+                    style={{ width: "100px" }}
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}
+                {post.postContent}
+              </div>
+              <div className="post-actions">
+                {" "}
+                <div onClick={this.handleLike}>
+                  {this.state.isLiked ? (
+                    <ThumbUpIcon fontSize="small" color="primary" />
+                  ) : (
+                    <ThumbUpIcon fontSize="small" color="disabled" />
+                  )}{" "}
+                  <div>{this.state.numberOfLikes}</div>
+                </div>
+                <div className="comment-icon">
+                  <InsertCommentIcon />
+                  <div>{this.state.numberOfComments}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Theme>
     );
   }
 }

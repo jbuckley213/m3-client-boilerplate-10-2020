@@ -18,8 +18,11 @@ import PrivateRoute from "./components/PrivateRoute";
 
 class App extends Component {
   render() {
+    console.log(window.innerWidth < 1023);
+
     return (
       <div className="container">
+        {window.innerWidth > 1023 ? <Navbar /> : null}
         <Switch>
           <Route exact path="/" component={Home} />
 
@@ -46,7 +49,9 @@ class App extends Component {
           />
         </Switch>
         <div id="nav-space"></div>
-        <Navbar />
+
+        {window.innerWidth < 1023 ? <Navbar /> : null}
+        {/* <Navbar /> */}
       </div>
     );
   }

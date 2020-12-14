@@ -198,40 +198,44 @@ class Post extends Component {
               <div>{this.state.numberOfComments}</div>
             </div>
           </footer> */}
-        </Theme>
-        {/* </div> */}
-        <div className="post-main">
-          <div>
-            <img src={post.postedBy.image} alt="user profile" />
-          </div>
-          <div className="post-section">
-            <div className="post-user-info">
-              <div className="post-user">
+
+          {/* </div> */}
+          <div className="post-main">
+            <div>
+              <img src={post.postedBy.image} alt="user profile" />
+            </div>
+            <div className="post-section">
+              <div className="post-user-info">
+                <div className="post-user">
+                  {" "}
+                  {post.postedBy && post.postedBy.firstName}{" "}
+                  {post.postedBy && post.postedBy.lastName}
+                  {"   "}
+                </div>
+                <div className="date">{this.outputDate(post.date)}</div>
+              </div>
+              <Link to={`/postdetails/${post._id}`}>
                 {" "}
-                {post.postedBy && post.postedBy.firstName}{" "}
-                {post.postedBy && post.postedBy.lastName}
-                {"   "}
-              </div>
-              <div className="date">{this.outputDate(post.date)}</div>
-            </div>
-            <div className="post-content"> {post.postContent}</div>
-            <div className="post-actions">
-              {" "}
-              <div onClick={this.handleLike}>
-                {this.state.isLiked ? (
-                  <ThumbUpIcon fontSize="small" color="primary" />
-                ) : (
-                  <ThumbUpIcon fontSize="small" color="disabled" />
-                )}{" "}
-                <div>{this.state.numberOfLikes}</div>
-              </div>
-              <div className="comment-icon">
-                <InsertCommentIcon />
-                <div>{this.state.numberOfComments}</div>
+                <div className="post-content"> {post.postContent}</div>
+              </Link>
+              <div className="post-actions">
+                {" "}
+                <div onClick={this.handleLike}>
+                  {this.state.isLiked ? (
+                    <ThumbUpIcon fontSize="small" color="primary" />
+                  ) : (
+                    <ThumbUpIcon fontSize="small" color="disabled" />
+                  )}{" "}
+                  <div>{this.state.numberOfLikes}</div>
+                </div>
+                <div className="comment-icon">
+                  <InsertCommentIcon />
+                  <div>{this.state.numberOfComments}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Theme>
       </div>
     );
   }
