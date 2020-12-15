@@ -14,6 +14,7 @@ class Post extends Component {
     isliked: false,
     numberOfLikes: 0,
     numberOfComments: 0,
+    showPhoto: false,
   };
 
   countNumberOfLikes = () => {
@@ -91,6 +92,10 @@ class Post extends Component {
     this.countNumberOfLikes();
     this.countNumberOfComments();
   }
+
+  toggleShowPicture = () => {
+    this.setState({ showPhoto: !this.state.showPhoto });
+  };
 
   // handlePostLinks = () => {
   //   const postContent = this.props.post.postContent.split(" ");
@@ -214,9 +219,18 @@ class Post extends Component {
                 </div>
                 <div className="date">{this.outputDate(post.date)}</div>
               </div>
+              {post.postPhoto ? (
+                <img
+                  onClick={this.toggleShowPicture}
+                  className="post-image"
+                  style={{ width: "100px" }}
+                  src={post.postPhoto && post.postPhoto}
+                  alt=""
+                ></img>
+              ) : null}
               <Link to={`/postdetails/${post._id}`}>
                 {" "}
-                <div className="post-content"> {post.postContent}</div>
+                <div className="post-content">{post.postContent}</div>
               </Link>
               <div className="post-actions">
                 {" "}
@@ -233,6 +247,14 @@ class Post extends Component {
                   <div>{this.state.numberOfComments}</div>
                 </div>
               </div>
+              {this.state.showPhoto ? (
+                <img
+                  onClick={this.toggleShowPicture}
+                  className="large-img animated zoomIn"
+                  src={post.postPhoto && post.postPhoto}
+                  alt=""
+                ></img>
+              ) : null}
             </div>
           </div>
         </Theme>

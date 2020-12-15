@@ -42,6 +42,7 @@ class ConversationDetails extends Component {
     socket.on("message", (message) => {
       console.log("socket called");
       // console.log(message.text);
+      // const messages = [];
       // messages.push(message.text);
       // this.setState({ newMessages: messages });
       this.getConversation();
@@ -296,10 +297,10 @@ class ConversationDetails extends Component {
             );
           })}
           {/* <div>
-          {this.state.newMessages.map((message) => {
-            return <p>{message}</p>;
-          })}
-        </div> */}
+            {this.state.newMessages.map((message) => {
+              return <p>{message}</p>;
+            })}
+          </div> */}
 
           <div className="seen">
             {this.state.conversation.notifications && this.checkSeen()}

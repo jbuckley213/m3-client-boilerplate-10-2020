@@ -498,3 +498,13 @@ body,
 .conversation-list {
   height: 100vh;
 }
+
+.post-main .large-img {
+  position: relative;
+  top: 0;
+  z-index: 2;
+  margin: 0 auto;
+  width: 70%;
+  height: auto;
+  border-radius: 10px;
+}
