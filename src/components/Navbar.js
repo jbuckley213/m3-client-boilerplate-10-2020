@@ -10,6 +10,7 @@ import Badge from "@material-ui/core/Badge";
 import "bulma/css/bulma.css";
 
 import io from "socket.io-client";
+import userService from "../lib/user-service";
 
 //const ENDPOINT = "http://localhost:5000";
 const ENDPOINT = process.env.REACT_APP_API_URL;
@@ -23,6 +24,7 @@ class Navbar extends Component {
   componentDidMount() {
     if (this.props.user) {
       this.startSocket();
+      this.getMessageUnread();
     }
   }
 
@@ -41,9 +43,9 @@ class Navbar extends Component {
       );
 
       socket.on("message", (message) => {
-        let newMessages = this.state.newMessages;
-        newMessages++;
-        this.setState({ newMessages });
+        // let newMessages = this.state.newMessages;
+        // newMessages++;
+        // this.setState({ newMessages });
       });
     });
 
@@ -69,6 +71,22 @@ class Navbar extends Component {
 
     return notification;
   };
+
+  getMessageUnread = () => {
+    userService.getOne(this.props.user._id).then((apiResponse) => {
+      const conversations = apiResponse.data.user.conversations;
+      console.log(apiResponse.data);
+      const totalUnreadMessages = conversations.reduce(
+        (total, conversation) => {
+          console.log(conversations.notifications);
+          return (total += conversation.notifications.length);
+        },
+        0
+      );
+      this.setState({ newMessages: totalUnreadMessages });
+    });
+  };
+
   setMessagesZero = () => {
     this.setState({ newMessages: 0 });
   };
@@ -116,7 +134,7 @@ class Navbar extends Component {
               onClick={this.setMessagesZero}
             >
               <Badge
-                badgeContent={this.getMessageNotification()}
+                // badgeContent={this.getMessageNotification()}
                 color="primary"
                 max={10}
               >

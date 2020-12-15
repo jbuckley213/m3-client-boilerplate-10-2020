@@ -38,8 +38,6 @@ class Settings extends Component {
   };
 
   checkFollow = () => {
-    console.log(this.props);
-
     this.props.user.followers.forEach((userFollowing) => {
       if (this.props.user._id === userFollowing) {
         this.setState({ isFollowed: true });

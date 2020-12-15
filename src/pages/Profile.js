@@ -21,6 +21,10 @@ import "bulma/css/bulma.css";
 import { Link } from "react-router-dom";
 import postService from "../lib/post-service";
 import authService from "../lib/auth-service";
+import io from "socket.io-client";
+
+const ENDPOINT = process.env.REACT_APP_API_URL;
+let socket = io(ENDPOINT);
 
 class Profile extends Component {
   state = {
@@ -46,6 +50,15 @@ class Profile extends Component {
     window.scrollTo(0, 0);
 
     this.handlePostApi(true);
+
+    socket.on("notification", (response) => {
+      const userId = response.userId.userId;
+      const userLiked = response.userId.userLiked;
+      console.log(userLiked);
+      if (userId === this.props.user._id && userLiked !== this.props.user._id) {
+        this.handlePostApi();
+      }
+    });
   }
 
   handlePostApi = (mount) => {
@@ -89,7 +102,7 @@ class Profile extends Component {
 
     this.setState({
       posts: postsArr,
-      numberOfNotifications: this.props.user.notifications.length,
+      numberOfNotifications: this.state.user.notifications.length,
     });
   };
 

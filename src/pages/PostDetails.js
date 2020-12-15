@@ -7,6 +7,12 @@ import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import Comment from "./../components/Comment/Comment";
 import { LikeItem } from "./../styles/likeitem";
 
+import io from "socket.io-client";
+
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
+let socket = io(ENDPOINT);
+
 class PostDetails extends Component {
   state = {
     post: {},
@@ -93,6 +99,17 @@ class PostDetails extends Component {
     this.setState({ isLiked: !this.state.isLiked });
   };
 
+  socketComment = () => {
+    console.log("sockey run");
+    socket.emit(
+      "notification",
+      { userId: this.state.post.postedBy._id, userLiked: this.props.user._id },
+      () => {
+        console.log("socket called");
+      }
+    );
+  };
+
   handleInput = (event) => {
     const { name, value } = event.target;
 
@@ -107,6 +124,7 @@ class PostDetails extends Component {
         console.log(apiResponse.data);
         this.handlePostById();
         this.setState({ commentInput: "" });
+        this.socketComment();
       });
   };
 

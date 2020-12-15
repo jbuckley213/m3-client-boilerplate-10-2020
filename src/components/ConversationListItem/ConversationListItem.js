@@ -43,8 +43,17 @@ class ConversationListItem extends Component {
     //         break
     //     }
     // })
+    console.log(
+      "notications",
+      conversation.notifications.length,
+      conversation.notifications[0]
+    );
     if (conversation.notifications[0] === currentUserId) {
-      console.log("notications");
+      console.log(
+        "notications",
+        conversation.notifications.length,
+        conversation._id
+      );
       this.setState({ unreadMessages: conversation.notifications.length });
     }
   };

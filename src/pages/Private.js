@@ -34,10 +34,7 @@ class Private extends Component {
         console.log(error);
       }
     });
-    socket.on("online", (user) => {
-      console.log("online");
-      console.log(user);
-    });
+    socket.on("online", (user) => {});
     socket.on("postIncoming", () => {
       console.log("new post");
       this.handlePostsFollowedApi();

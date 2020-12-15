@@ -5,15 +5,26 @@ export const Theme = styled.div`
     props.dark &&
     css`
     width:100%;
-  background-color: rgb(68, 68, 68);
+  background-color: rgb(0, 0, 0) ;
   height:100%;
   
   h1 {
     color: palevioletred;
   }
-  div{
-    background-color:rgb(100, 100, 100);
+  div.post-main{
+    background-color:rgb(29, 41, 53);
     color: white;
+  }
+  div.message-preview{
+    background-color:rgb(29, 41, 53);
+
+  }
+  div.notifications-menu{
+    background-color:rgb(29, 41, 53);
+
+  }
+  div{
+    color:white;
   }
   p {
     color: white;
@@ -25,7 +36,7 @@ export const ThemeConversation = styled.div`
     props.dark &&
     css`
     width:100%;
-  background-color: rgb(68, 68, 68);
+    background-color:rgb(29, 41, 53);
   height:auto;
   
   h1 {
