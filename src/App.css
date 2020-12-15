@@ -93,9 +93,10 @@ button.navbar-button {
   width: auto;
   padding: 20px;
   z-index: 1;
-  background-color: #57ba98;
+  background-color: white;
   opacity: 0.95;
   border-radius: 10px;
+  border: 1px solid #3b945e;
 }
 .button-group {
   margin-bottom: 30px;
@@ -134,7 +135,13 @@ button.navbar-button {
 }
 
 .like-btn {
+  margin-top: 10px;
   font-size: 0.8rem;
+  color: palevioletred;
+}
+
+.like-btn:hover {
+  color: #3b945e;
 }
 
 /* To display popup likes */
@@ -282,7 +289,7 @@ button.navbar-button {
 }
 
 .profile-header {
-  padding: 20px 0;
+  padding: 20px 5px;
   display: flex;
   justify-content: space-around;
 }
@@ -300,7 +307,8 @@ button.navbar-button {
 html,
 body,
 #root,
-#root > div {
+#root > div,
+.container-side-nav {
   height: auto;
   background-color: #f2f2f2;
 }
@@ -386,9 +394,25 @@ body,
 
 #post-details {
   padding-top: 5px;
+  height: 100vh;
+}
+
+.post-comment {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.post-comment input {
+  margin: 0 5px;
+  width: 70%;
+  height: 35px;
+  font-size: 1.1rem;
 }
 
 .dashboard-header {
+  padding-top: 15px;
   display: flex;
   justify-content: space-around;
 }
@@ -407,10 +431,20 @@ body,
 }
 
 .notification-item {
+  margin: 10px 0;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+.notification-item img {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
 }
 
+.notification-delete {
+  margin: 0 15px;
+}
 .online {
   position: relative;
   top: 5px;
@@ -507,4 +541,26 @@ body,
   width: 70%;
   height: auto;
   border-radius: 10px;
+}
+
+@media (min-width: 1000px) {
+  nav.navbar {
+    display: block;
+    padding: 0px 20px;
+    background: #f2f2f2;
+    overflow: hidden;
+    position: sticky;
+    top: 10;
+    bottom: 0;
+    width: auto;
+    /* color: #f2f2f2; */
+  }
+
+  .container-side-nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  .container-side-nav .side-nav-pages {
+    width: 100%;
+  }
 }

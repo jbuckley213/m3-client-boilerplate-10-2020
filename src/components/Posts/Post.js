@@ -9,6 +9,12 @@ import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import "./Post.css";
 import "bulma/css/bulma.css";
 
+import io from "socket.io-client";
+
+//const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = process.env.REACT_APP_API_URL;
+let socket = io(ENDPOINT);
+
 class Post extends Component {
   state = {
     isliked: false,
@@ -27,6 +33,17 @@ class Post extends Component {
     this.setState({ numberOfComments });
   };
 
+  socketLike = () => {
+    console.log("sockey run");
+    socket.emit(
+      "notification",
+      { userId: this.props.post.postedBy._id },
+      () => {
+        console.log("socket called");
+      }
+    );
+  };
+
   handleLike = () => {
     if (!this.state.isLiked) {
       postService
@@ -36,6 +53,7 @@ class Post extends Component {
           let numberOfLikes = this.state.numberOfLikes;
           numberOfLikes++;
           this.setState({ numberOfLikes: numberOfLikes });
+          this.socketLike();
         })
         .catch((err) => {
           console.log(err);

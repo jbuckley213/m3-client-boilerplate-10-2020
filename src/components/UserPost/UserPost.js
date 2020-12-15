@@ -195,17 +195,20 @@ class Post extends Component {
                   </div>
                 ) : null}{" "}
               </div>
-              <div className="post-content">
-                {post.postPhoto ? (
-                  <img
-                    className="post-image"
-                    style={{ width: "100px" }}
-                    src={post.postPhoto && post.postPhoto}
-                    alt=""
-                  ></img>
-                ) : null}
-                {post.postContent}
-              </div>
+
+              {post.postPhoto ? (
+                <img
+                  className="post-image"
+                  style={{ width: "100px" }}
+                  src={post.postPhoto && post.postPhoto}
+                  alt=""
+                ></img>
+              ) : null}
+              <Link to={`/postdetails/${post._id}`}>
+                {" "}
+                <div className="post-content">{post.postContent}</div>
+              </Link>
+
               <div className="post-actions">
                 {" "}
                 <div onClick={this.handleLike}>

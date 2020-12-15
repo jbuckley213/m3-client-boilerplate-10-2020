@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import Comment from "./../components/Comment/Comment";
+import { LikeItem } from "./../styles/likeitem";
 
 class PostDetails extends Component {
   state = {
@@ -111,7 +112,7 @@ class PostDetails extends Component {
 
   showCommentInput = () => {
     return (
-      <form onSubmit={this.handleSubmit} className="post">
+      <form onSubmit={this.handleSubmit} className="post-comment">
         <input
           name="commentInput"
           value={this.state.commentInput}
@@ -119,7 +120,7 @@ class PostDetails extends Component {
           autoComplete="off"
         />
         <button className="button is-white s-size-7" type="submit">
-          Submit
+          Comment
         </button>
       </form>
     );
@@ -284,9 +285,12 @@ class PostDetails extends Component {
                 post.likes.map((user) => {
                   return (
                     <Link to={`/profile/${user._id}`}>
-                      <p className="like-item" key={user._id}>
-                        {user.firstName} {user.lastName}
-                      </p>{" "}
+                      <LikeItem>
+                        <img src={`${user.image}`} alt="profile" />
+                        <p className="like-item" key={user._id}>
+                          {user.firstName} {user.lastName}
+                        </p>{" "}
+                      </LikeItem>
                     </Link>
                   );
                 })}

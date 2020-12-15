@@ -11,7 +11,7 @@ class Notifications extends Component {
   componentDidMount() {
     //this.filterLikes();
     this.setState({
-      notifications: [...this.props.notifications].reverse().slice(0, 5),
+      notifications: [...this.props.notifications].reverse().slice(0, 10),
     });
   }
 
@@ -46,6 +46,7 @@ class Notifications extends Component {
         {notifications.map((notification) => {
           return notification.notificationInfo !== "follow" ? (
             <div className="notification-item" key={notification._id}>
+              <img src={`${notification.userActivity.image}`} />
               <Link to={`/postdetails/${notification.post}`}>
                 <p>
                   {notification.userActivity.firstName}{" "}
@@ -54,7 +55,7 @@ class Notifications extends Component {
                 </p>
               </Link>
               <button
-                className="delete"
+                className="delete notification-delete"
                 onClick={() => this.deleteNotification(notification._id)}
               ></button>
             </div>

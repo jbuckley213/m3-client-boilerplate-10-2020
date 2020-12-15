@@ -74,7 +74,7 @@ class Navbar extends Component {
   render() {
     // const { user, logout, isLoggedin } = this.props;
     return (
-      <nav className="navbar">
+      <nav className="side-navbar">
         {this.props.isLoggedIn ? (
           <>
             <NavLink
