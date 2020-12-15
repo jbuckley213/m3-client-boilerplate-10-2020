@@ -18,7 +18,9 @@ class Navbar extends Component {
     newMessages: 0,
   };
   componentDidMount() {
-    this.startSocket();
+    if (this.props.user) {
+      this.startSocket();
+    }
   }
 
   startSocket = () => {
