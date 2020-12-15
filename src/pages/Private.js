@@ -5,6 +5,7 @@ import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
 import "animate.css/source/animate.css";
+import PostInput from "./../components/PostInput/PostInput";
 
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
@@ -142,6 +143,11 @@ class Private extends Component {
               <p>See New Posts Here!</p>
             </div>
           </div>
+
+          {/* <PostInput
+            handlePostsFollowedApi={this.props.handlePostsFollowedApi}
+            handleSubmit={this.props.handleSubmit}
+          /> */}
 
           <form className="post-form" onSubmit={this.handleSubmit}>
             <div className="post-main">

@@ -60,8 +60,12 @@ class Navbar extends Component {
 
   getMessageNotification = () => {
     const conversations = this.props.user.conversations;
+    if (conversations.length === 0) {
+      return 0;
+    }
     const notification = this.state.newMessages / conversations.length;
     console.log(notification);
+
     return notification;
   };
   setMessagesZero = () => {
@@ -110,10 +114,13 @@ class Navbar extends Component {
               to={"/conversations"}
               onClick={this.setMessagesZero}
             >
-              <ChatIcon />
-              {this.getMessageNotification() === 0
-                ? null
-                : this.getMessageNotification()}
+              <Badge
+                badgeContent={this.getMessageNotification()}
+                color="primary"
+                max={10}
+              >
+                <ChatIcon />
+              </Badge>
             </NavLink>
           </>
         ) : (

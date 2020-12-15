@@ -38,8 +38,12 @@ button.navbar-button {
 }
 .dashboard {
   background-color: #f2f2f2;
+  /* height: ; */
 }
 
+.profile {
+  /* height: 100vh; */
+}
 .profile img {
   height: 100px;
   width: 100px;
