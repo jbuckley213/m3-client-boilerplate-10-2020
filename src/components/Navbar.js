@@ -49,8 +49,9 @@ class Navbar extends Component {
 
     socket.on("notification", (response) => {
       const userId = response.userId.userId;
-
-      if (userId === this.props.user._id) {
+      const userLiked = response.userId.userLiked;
+      console.log(userLiked);
+      if (userId === this.props.user._id && userLiked !== this.props.user._id) {
         let newNotification = this.state.newNotification;
         newNotification++;
         this.setState({ newNotification });

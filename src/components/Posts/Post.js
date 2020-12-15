@@ -37,7 +37,7 @@ class Post extends Component {
     console.log("sockey run");
     socket.emit(
       "notification",
-      { userId: this.props.post.postedBy._id },
+      { userId: this.props.post.postedBy._id, userLiked: this.props.user._id },
       () => {
         console.log("socket called");
       }
