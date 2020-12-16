@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { MessagePreview } from "./../styles/message-preview";
 import { Theme } from "./../styles/themes";
 import ConversationListItem from "../components/ConversationListItem/ConversationListItem";
+import "animate.css/source/animate.css";
 
 import io from "socket.io-client";
 
@@ -69,7 +70,7 @@ class Conversation extends Component {
         <div className="conversation-list">
           <h1 className="subtitle is-4">Conversations</h1>
           {conversations && conversations.length === 0 ? (
-            <p className="zero-conversation">
+            <p className="zero-conversation animated fadeIn">
               You have no conversations. Search for developers to chat with!
             </p>
           ) : (

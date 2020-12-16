@@ -625,4 +625,5 @@ html {
 .zero-conversation {
   text-align: center;
   font-size: 1.1rem;
+  animation-delay: 0.5s;
 }
