@@ -160,6 +160,7 @@ button.navbar-button {
 }
 .search {
   width: 100%;
+  margin: 20px 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -551,6 +552,7 @@ body,
 
 .conversation-list {
   height: 100vh;
+  margin: 20px 0;
 }
 
 .post-main .large-img {
@@ -618,4 +620,9 @@ html {
     margin: 0 auto;
     border-radius: 50%;
   }
+}
+
+.zero-conversation {
+  text-align: center;
+  font-size: 1.1rem;
 }

@@ -68,7 +68,11 @@ class Conversation extends Component {
       <Theme dark={this.props.isDark}>
         <div className="conversation-list">
           <h1 className="subtitle is-4">Conversations</h1>
-          {conversations &&
+          {conversations && conversations.length === 0 ? (
+            <p className="zero-conversation">
+              You have no conversations. Search for developers to chat with!
+            </p>
+          ) : (
             conversations.map((conversation) => {
               const user = this.filterCurrentUser(conversation.users);
 
@@ -90,7 +94,8 @@ class Conversation extends Component {
                   </Link>
                 </div>
               );
-            })}
+            })
+          )}
         </div>
       </Theme>
     );

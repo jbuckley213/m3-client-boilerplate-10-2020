@@ -70,9 +70,13 @@ class Search extends Component {
             <div className="animated slideInLeft">
               <table>
                 <tbody>
-                  {this.state.searchResults.map((user) => {
-                    return <SearchResult key={user._id} userSearch={user} />;
-                  })}
+                  {this.state.searchResults.length === 0
+                    ? "Not results found"
+                    : this.state.searchResults.map((user) => {
+                        return (
+                          <SearchResult key={user._id} userSearch={user} />
+                        );
+                      })}
                 </tbody>
               </table>
             </div>
