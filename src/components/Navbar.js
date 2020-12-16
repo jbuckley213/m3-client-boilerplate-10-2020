@@ -75,10 +75,8 @@ class Navbar extends Component {
   getMessageUnread = () => {
     userService.getOne(this.props.user._id).then((apiResponse) => {
       const conversations = apiResponse.data.user.conversations;
-      console.log(apiResponse.data);
       const totalUnreadMessages = conversations.reduce(
         (total, conversation) => {
-          console.log(conversations.notifications);
           return (total += conversation.notifications.length);
         },
         0

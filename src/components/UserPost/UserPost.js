@@ -85,80 +85,9 @@ class Post extends Component {
 
   render() {
     const { post } = this.props;
-    let classes = "";
-    if (this.state.isLiked) {
-      classes = "liked";
-    }
+
     return (
       <Theme dark={this.props.isDark}>
-        {/* <header className="card-header">
-            <p className="card-header-title">
-              {post.postedBy && post.postedBy.firstName}{" "}
-              {post.postedBy && post.postedBy.lastName}
-            </p>
-            <p
-              onClick={this.toggleDelete}
-              href="#"
-              className="delete-icon delete"
-            ></p>
-            <p href="#" className="card-header-icon" aria-label="more options">
-              <span className="icon">
-                <i className="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </p>
-          </header> */}
-
-        {/* {post.postPhoto ? (
-            <img
-              style={{ width: "100px" }}
-              src={post.postPhoto && post.postPhoto}
-              alt=""
-            ></img>
-          ) : null}
-          {this.state.showDelete ? (
-            <div>
-              <button
-                className="button is-warning is-light is-size-7"
-                onClick={() => this.props.deletePost(post._id)}
-              >
-                Confirm Delete
-              </button>
-              <button
-                className="button is-info is-light is-size-7"
-                onClick={this.toggleDelete}
-              >
-                Cancel
-              </button>
-            </div>
-          ) : null} */}
-
-        {/* <Link to={`/postdetails/${post._id}`}>
-            <div className="card-content">
-              <div className="date">{this.outputDate(post.date)}</div>
-
-              <div className="content">
-                {post.postContent} <br />
-              </div>
-            </div>
-          </Link> */}
-        {/* <footer className="card-footer">
-            <div
-              onClick={this.handleLike}
-              className={`card-footer-item ${classes}`}
-            >
-              {this.state.isLiked ? (
-                <ThumbUpIcon color="primary" />
-              ) : (
-                <ThumbUpIcon color="disabled" />
-              )}{" "}
-              <div> {this.state.numberOfLikes}</div>
-            </div>
-
-            <div className="card-footer-item">
-              <InsertCommentIcon />
-              <div>{this.state.numberOfComments}</div>
-            </div>
-          </footer> */}
         <div>
           <div className="post-main">
             <div>
@@ -215,7 +144,7 @@ class Post extends Component {
                   {this.state.isLiked ? (
                     <ThumbUpIcon fontSize="small" color="primary" />
                   ) : (
-                    <ThumbUpIcon fontSize="small" color="disabled" />
+                    <ThumbUpIcon fontSize="small" /> //color="disabled"
                   )}{" "}
                   <div>{this.state.numberOfLikes}</div>
                 </div>

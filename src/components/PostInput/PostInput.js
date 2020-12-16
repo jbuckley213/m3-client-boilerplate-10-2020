@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import postService from "./../../lib/post-service";
 
-import io from "socket.io-client";
 import { withAuth } from "../../context/auth-context";
 
 //const ENDPOINT = "http://localhost:5000";
-const ENDPOINT = process.env.REACT_APP_API_URL;
-let socket = io(ENDPOINT);
 
 class PostInput extends Component {
   state = {
@@ -42,27 +38,6 @@ class PostInput extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-  //   postWithSocket = () => {
-  //     socket.emit("post", {}, () => {});
-  //   };
-  //   handleSubmit = (event) => {
-  //     event.preventDefault();
-
-  //     this.postWithSocket();
-
-  //     postService
-  //       .createPost(this.props.user._id, this.state.post, this.state.postPhoto)
-  //       .then((createdPost) => {
-  //         console.log(createdPost);
-  //         const newPosts = [...this.state.newPosts];
-  //         newPosts.push(createdPost.data);
-  //         this.setState({ postPhoto: "", post: "", newPosts });
-  //         this.handlePostsFollowedApi();
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
 
   render() {
     return (

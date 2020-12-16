@@ -43,11 +43,7 @@ class ConversationListItem extends Component {
     //         break
     //     }
     // })
-    console.log(
-      "notications",
-      conversation.notifications.length,
-      conversation.notifications[0]
-    );
+
     if (conversation.notifications[0] === currentUserId) {
       console.log(
         "notications",
@@ -63,10 +59,7 @@ class ConversationListItem extends Component {
     // console.log("isOnline", this.checkOnline());
     return (
       <div className="message-preview">
-        <img
-          src={`${receiverUser && receiverUser.image}`}
-          alt="profile image"
-        />
+        <img src={`${receiverUser && receiverUser.image}`} alt="profile" />
         <div className="message-name">
           <h3>
             {receiverUser && receiverUser.firstName}{" "}

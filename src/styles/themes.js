@@ -6,6 +6,7 @@ export const Theme = styled.div`
     css`
     width:100%;
   background-color: rgb(0, 0, 0) ;
+  ${"" /* height:100%; */}
   height:100%;
   
   h1 {
@@ -22,6 +23,29 @@ export const Theme = styled.div`
   div.notifications-menu{
     background-color:rgb(29, 41, 53);
 
+  }
+  div#nav-space{
+    background-color: rgb(0, 0, 0) ;
+
+  }
+  nav.navbar{
+    background-color: rgb(0, 0, 0) ;
+
+  }
+  button.button{
+    background-color:rgb(29, 41, 53);
+    color:white;
+
+  }
+
+  input {
+    background-color: rgb(0, 0, 0) ;
+    color:white;
+  }
+
+  textarea{
+    background-color: rgb(0, 0, 0) ;
+    color:white;
   }
   div{
     color:white;

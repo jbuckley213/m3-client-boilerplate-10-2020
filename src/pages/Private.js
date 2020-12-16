@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
-import { withTheme } from "./../context/theme-context";
 import postService from "./../lib/post-service";
 import Post from "./../components/Posts/Post";
 import "bulma/css/bulma.css";
 import "animate.css/source/animate.css";
-import PostInput from "./../components/PostInput/PostInput";
 
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
@@ -34,7 +32,7 @@ class Private extends Component {
         console.log(error);
       }
     });
-    socket.on("online", (user) => {});
+    // socket.on("online", (user) => {});
     socket.on("postIncoming", () => {
       console.log("new post");
       this.handlePostsFollowedApi();
@@ -53,7 +51,7 @@ class Private extends Component {
 
   orderPosts = () => {
     //const postsArr = [...this.props.user.posts];
-    console.log("orderPosts");
+
     const postsArr = [...this.state.newPosts, ...this.props.user.posts];
 
     this.state.users.forEach((user) => {
@@ -174,7 +172,7 @@ class Private extends Component {
                   name="post"
                   value={this.state.post}
                   onChange={this.handleInput}
-                  placeholder="Share you code..."
+                  placeholder="Share your code..."
                   required
                 />
                 <div className="post-actions">

@@ -60,13 +60,13 @@ class Comment extends Component {
               <div className="date">
                 {this.props.outputDate(comment.created_at)}
               </div>
-              {/* {this.state.isAdmin ? (
+              {this.state.isAdmin ? (
                 <p
                   onClick={this.deleteComment}
                   href="#"
                   className="delete-icon delete"
                 ></p>
-              ) : null} */}
+              ) : null}
             </div>{" "}
             <div className="post-content"> {comment.commentContent}</div>
           </div>

@@ -46,7 +46,10 @@ class Notifications extends Component {
         {notifications.map((notification) => {
           return notification.notificationInfo !== "follow" ? (
             <div className="notification-item" key={notification._id}>
-              <img src={`${notification.userActivity.image}`} />
+              <img
+                src={`${notification.userActivity.image}`}
+                alt="user profile"
+              />
               <Link to={`/postdetails/${notification.post}`}>
                 <p>
                   {notification.userActivity.firstName}{" "}
@@ -61,10 +64,15 @@ class Notifications extends Component {
             </div>
           ) : (
             <div className="notification-item" key={notification._id}>
+              <img
+                src={`${notification.userActivity.image}`}
+                alt="user profile"
+              />
               <Link
                 onClick={this.props.toggleNotifications}
                 to={`/profile/${notification.userActivity._id}`}
               >
+                {" "}
                 <p>
                   {notification.userActivity.firstName}{" "}
                   {notification.userActivity.lastName} started following you

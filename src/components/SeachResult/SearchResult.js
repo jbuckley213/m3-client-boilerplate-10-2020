@@ -4,7 +4,6 @@ import UserService from "./../../lib/user-service";
 import conversationService from "./../../lib/conversation-service";
 
 import { Link } from "react-router-dom";
-import authService from "../../lib/auth-service";
 
 class SearchResult extends Component {
   state = {

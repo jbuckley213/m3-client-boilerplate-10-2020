@@ -122,7 +122,7 @@ button.navbar-button {
   align-items: center;
   width: 50%;
   padding: 10px 0 30px 0;
-  height: auto;
+  height: 40%;
   top: 30%;
   left: 25%;
   opacity: 0.9;
@@ -163,6 +163,7 @@ button.navbar-button {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .search h1 {
   margin: 0 auto;
@@ -172,6 +173,8 @@ button.navbar-button {
   width: 100%;
   margin: 0 auto;
   display: flex;
+  position: relative;
+  right: 20px;
 }
 
 .card {
@@ -257,6 +260,7 @@ button.navbar-button {
 .message-info div {
   display: flex;
   margin-right: 5px;
+  overflow: hidden;
 }
 
 .send-message input {
@@ -357,11 +361,12 @@ body,
 .post-form textarea {
   width: 90%;
   margin: 0 0;
-  border-radius: 5px;
+  border-radius: 10px;
   height: 50px;
-  padding: 2px;
+  padding: 5px;
   font-size: 1.1rem;
   border: none;
+  background-color: #f2f2f2;
 }
 /* .post-form textarea {
   width: 90%;
@@ -389,6 +394,9 @@ body,
 .post-form {
   padding-top: 40px;
 }
+.post-form .post-main {
+  border: 0.1rem solid rgb(59, 148, 94, 0.4);
+}
 
 .post-main .post-image {
   width: 100px;
@@ -398,7 +406,7 @@ body,
 
 #post-details {
   padding-top: 5px;
-  height: 100vh;
+  height: auto;
 }
 
 .post-comment {
@@ -413,6 +421,14 @@ body,
   width: 70%;
   height: 35px;
   font-size: 1.1rem;
+  border: none;
+  background-color: #f2f2f2;
+  border-radius: 15px;
+  padding: 0 5px;
+}
+#comment-btn:hover {
+  background-color: #f2f2f2;
+  color: #3b945e;
 }
 
 .dashboard-header {
@@ -441,8 +457,8 @@ body,
   align-items: center;
 }
 .notification-item img {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin: 0 10px;
 }
 
@@ -567,4 +583,16 @@ body,
   .container-side-nav .side-nav-pages {
     width: 100%;
   }
+}
+
+html {
+  background-color: #f2f2f2;
+}
+
+.profile-post-form {
+  padding: 0;
+}
+
+.no-info {
+  text-align: center;
 }

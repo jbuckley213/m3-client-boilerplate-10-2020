@@ -33,7 +33,7 @@ class AuthService {
   }
 
   logout() {
-    socket.off();
+    socket.emit("logout");
 
     const pr = this.auth.get("/auth/logout").then((response) => response.data);
 

@@ -3,13 +3,10 @@ import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
 import Notifications from "./../components/Notifications/Notifications";
-import EditProfile from "./../components/EditProfile/EditProfile";
 import Settings from "./../components/Settings/Settings";
 
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import SettingsIcon from "@material-ui/icons/Settings";
-import { useSpring, animated } from "react-spring";
 
 import { Theme } from "./../styles/themes";
 import { ProfileButton } from "./../styles/profile-button";
@@ -20,7 +17,6 @@ import "bulma/css/bulma.css";
 
 import { Link } from "react-router-dom";
 import postService from "../lib/post-service";
-import authService from "../lib/auth-service";
 import io from "socket.io-client";
 
 const ENDPOINT = process.env.REACT_APP_API_URL;
@@ -120,10 +116,22 @@ class Profile extends Component {
     });
   };
 
+  socketFollow = () => {
+    console.log("sockey run");
+    socket.emit(
+      "notification",
+      { userId: this.state.user._id, userLiked: this.props.user._id },
+      () => {
+        console.log("socket called");
+      }
+    );
+  };
+
   handleFollow = () => {
     if (!this.state.isFollowed) {
       userService.follow(this.state.user._id).then((apiResponse) => {
         this.setState({ isFollowed: true });
+        this.socketFollow();
       });
     } else if (this.state.isFollowed) {
       userService
@@ -269,7 +277,6 @@ class Profile extends Component {
     //   to: { opacity: 1 },
     //   from: { opacity: 0 },
     // });
-    const user = this.state.user;
     return (
       <div className="profile">
         <Theme dark={this.props.isDark}>
@@ -299,7 +306,7 @@ class Profile extends Component {
                 <div>
                   {this.state.newNotification ? (
                     <div
-                      onMouseEnter={this.toggleNotifications}
+                      onClick={this.toggleNotifications}
                       id="new-notification"
                       className="notification is-primary animated bounce"
                     >
@@ -354,7 +361,10 @@ class Profile extends Component {
             <div className="animated fadeInUp">
               {this.state.isAdmin ? (
                 <div>
-                  <form className="post-form" onSubmit={this.handleSubmit}>
+                  <form
+                    className="profile-post-form post-form"
+                    onSubmit={this.handleSubmit}
+                  >
                     <div className="post-main">
                       <div>
                         <img src={this.props.user.image} alt="user profile" />
@@ -412,36 +422,6 @@ class Profile extends Component {
                       </span>
                     )}
                   </form>
-
-                  {/* <form className="post-form" onSubmit={this.handleSubmit}>
-                    <textarea
-                      className="post"
-                      name="postInput"
-                      value={this.state.postInput}
-                      onChange={this.handleInput}
-                      required
-                    />
-                    <br />
-                    <input
-                      name="postPhoto"
-                      type="file"
-                      // value={this.state.image}
-                      onChange={this.handleFileUpload}
-                    />
-                    {this.state.postPhoto === "" ? null : (
-                      <span>
-                        <img
-                          style={{ width: "100px" }}
-                          src={this.state.postPhoto && this.state.postPhoto}
-                          alt=""
-                        ></img>
-                      </span>
-                    )}
-
-                    <button className="button is-white s-size-7" type="submit">
-                      Post
-                    </button>
-                  </form> */}
                 </div>
               ) : null}
               {this.state.posts &&
@@ -470,18 +450,31 @@ class Profile extends Component {
             ) : null}
           </animated.div> */}
 
-          {this.state.showLikes ? (
+          {/* {this.state.showLikes ? (
             <div className="animated fadeInUp">
               {this.state.user.likes &&
                 this.state.user.likes.map((post) => {
                   return <Post key={post._id} post={post} />;
                 })}
             </div>
+          ) : null} */}
+
+          {this.state.showLikes ? (
+            <div className="animated fadeInUp">
+              {this.state.user.likes.length === 0 ? (
+                <h3 className="no-info">No likes yet</h3>
+              ) : (
+                this.state.user.likes.map((post) => {
+                  return <Post key={post._id} post={post} />;
+                })
+              )}
+            </div>
           ) : null}
+
           {this.state.showFollowing ? (
             <div className="animated fadeInUp">
               {this.state.following.length === 0 ? (
-                <h3>Not following anyone</h3>
+                <h3 className="no-info">Not following anyone</h3>
               ) : (
                 <table>
                   <tbody>

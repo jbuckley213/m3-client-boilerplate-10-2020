@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import conversationService from "./../lib/conversation-service";
-import ConversationList from "./ConversationList";
 import { withAuth } from "./../context/auth-context";
-import { Theme, ThemeConversation } from "./../styles/themes";
+import { ThemeConversation } from "./../styles/themes";
 import { MessageHeader } from "./../styles/message-header";
 import io from "socket.io-client";
 
@@ -41,12 +40,12 @@ class ConversationDetails extends Component {
 
     socket.on("message", (message) => {
       console.log("socket called");
-      // console.log(message.text);
+      //console.log(message.text);
       // const messages = [];
       // messages.push(message.text);
       // this.setState({ newMessages: messages });
       this.getConversation();
-      this.seenMessage();
+      //this.seenMessage();
     });
 
     socket.on("online", (user) => {
@@ -55,23 +54,6 @@ class ConversationDetails extends Component {
 
     this.sendDelete();
   };
-
-  componentDidUpdate() {
-    const messages = this.state.newMessages;
-
-    // socket.once("message", (message) => {
-    //   console.log("socket called");
-    //   // console.log(message.text);
-    //   // messages.push(message.text);
-    //   // this.setState({ newMessages: messages });
-    //   this.getConversation();
-    //   this.seenMessage();
-    // });
-
-    // socket.on("online", (user) => {
-    //   console.log("online");
-    // });
-  }
 
   scrollToBottom() {
     this.el.scrollIntoView({ behavior: "smooth" });
@@ -130,7 +112,6 @@ class ConversationDetails extends Component {
     const sendObj = { conversationId, message: "" };
 
     socket.emit("sendMessage", sendObj, () => {
-      console.log("MessageSent");
       this.setState({ sendMessage: "" });
     });
   };
@@ -272,9 +253,7 @@ class ConversationDetails extends Component {
                     >
                       <div>{this.outputDate(message.created_at)}</div>
                       <p>
-                        <p>
-                          {message.userSent.firstName}: {message.messageContent}{" "}
-                        </p>
+                        {message.userSent.firstName}: {message.messageContent}{" "}
                       </p>
                     </div>
                     {this.state.showDelete ? (

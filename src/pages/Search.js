@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
-import { Link } from "react-router-dom";
 import { Theme } from "./../styles/themes";
 import SearchResult from "./../components/SeachResult/SearchResult";
-import { Fade } from "./../styles/fade";
 
 class Search extends Component {
   state = {
@@ -19,7 +17,6 @@ class Search extends Component {
     userService
       .getAll()
       .then((apiResponse) => {
-        console.log(apiResponse);
         this.setState({
           users: apiResponse.data,
           searchResults: apiResponse.data,

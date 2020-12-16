@@ -6,7 +6,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import Comment from "./../components/Comment/Comment";
 import { LikeItem } from "./../styles/likeitem";
-
+import { Theme } from "./../styles/themes";
 import io from "socket.io-client";
 
 //const ENDPOINT = "http://localhost:5000";
@@ -21,6 +21,7 @@ class PostDetails extends Component {
     numberOfLikes: 0,
     numberOfComments: 0,
     showLikes: false,
+    showPhoto: false,
   };
 
   componentDidMount() {
@@ -136,8 +137,14 @@ class PostDetails extends Component {
           value={this.state.commentInput}
           onChange={this.handleInput}
           autoComplete="off"
+          placeholder="Write your comment here..."
+          required
         />
-        <button className="button is-white s-size-7" type="submit">
+        <button
+          id="comment-btn"
+          className="button is-white s-size-7"
+          type="submit"
+        >
           Comment
         </button>
       </form>
@@ -171,150 +178,129 @@ class PostDetails extends Component {
     const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
     return time + " " + day;
   };
+  toggleShowPicture = () => {
+    this.setState({ showPhoto: !this.state.showPhoto });
+  };
 
   render() {
-    let classes = "";
-    if (this.state.isLiked) {
-      classes = "liked";
-    }
     const post = this.state.post;
 
     return (
       <div>
-        {/* <header className="card-header">
-          {post.postedBy && (
-            <Link to={`/profile/${post.postedBy._id}`}>
-              <div className="card-header-title">
-                <img src={post.postedBy.image} alt="profile" />
-                <div>
-                  {post.postedBy && post.postedBy.firstName}{" "}
-                  {post.postedBy && post.postedBy.lastName}
-                </div>
+        <Theme dark={this.props.isDark}>
+          <div id="post-details">
+            <div className="post-main">
+              <div>
+                <img
+                  src={post.postedBy && post.postedBy.image}
+                  alt="user profile"
+                />
               </div>
-            </Link>
-          )}
-
-          <p href="#" className="card-header-icon" aria-label="more options">
-            <span className="icon">
-              <i className="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </p>
-        </header> */}
-        {/* {post.postPhoto ? (
-          <img
-            style={{ width: "100px" }}
-            src={post.postPhoto && post.postPhoto}
-            alt=""
-          ></img>
-        ) : null} */}
-        {/* <div className="card-content">
-          <div className="date">{this.outputDate(post.date)}</div>
-
-          <div className="content">
-            <p>{post.postContent}</p>
-            <br />
-            <time dateTime="2016-1-1">
-              {post.data && post.date.toLocaleString()}
-            </time>
-            <p onClick={this.toggleLikes}>Likes</p>
-          </div>
-        </div> */}
-
-        {/* <footer className="card-footer">
-          <div
-            onClick={this.handleLike}
-            className={`card-footer-item ${classes}`}
-          >
-            {this.state.isLiked ? (
-              <ThumbUpIcon color="primary" />
-            ) : (
-              <ThumbUpIcon color="disabled" />
-            )}{" "}
-            <div>{this.state.numberOfLikes}</div>
-          </div>
-
-          <div className="card-footer-item">
-            <InsertCommentIcon />
-            <div>{this.state.numberOfComments}</div>
-          </div>
-        </footer> */}
-
-        <div id="post-details">
-          <div className="post-main">
-            <div>
-              <img
-                src={post.postedBy && post.postedBy.image}
-                alt="user profile"
-              />
-            </div>
-            <div className="post-section">
-              <div className="post-user-info">
-                <div className="post-user">
-                  {" "}
-                  {post.postedBy && post.postedBy.firstName}{" "}
-                  {post.postedBy && post.postedBy.lastName}
-                  {"   "}
+              <div className="post-section">
+                <div className="post-user-info">
+                  <Link to={`/profile/${post.postedBy && post.postedBy._id}`}>
+                    <div className="post-user">
+                      {" "}
+                      {post.postedBy && post.postedBy.firstName}{" "}
+                      {post.postedBy && post.postedBy.lastName}
+                      {"   "}
+                    </div>
+                  </Link>
+                  <div className="date">{this.outputDate(post.date)}</div>
                 </div>
-                <div className="date">{this.outputDate(post.date)}</div>
-              </div>
-              <Link to={`/postdetails/${post._id}`}>
-                {" "}
+                {post.postPhoto ? (
+                  <img
+                    onClick={this.toggleShowPicture}
+                    className="post-image"
+                    style={{ width: "100px" }}
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}{" "}
                 <div className="post-content"> {post.postContent}</div>
-              </Link>
-              <p className="like-btn" onClick={this.toggleLikes}>
-                Likes
-              </p>
-              <div className="post-actions">
-                {" "}
-                <div onClick={this.handleLike}>
-                  {this.state.isLiked ? (
-                    <ThumbUpIcon fontSize="small" color="primary" />
-                  ) : (
-                    <ThumbUpIcon fontSize="small" color="disabled" />
-                  )}{" "}
-                  <div>{this.state.numberOfLikes}</div>
+                <p className="like-btn" onClick={this.toggleLikes}>
+                  Likes
+                </p>
+                <div className="post-actions">
+                  {" "}
+                  <div onClick={this.handleLike}>
+                    {this.state.isLiked ? (
+                      <ThumbUpIcon fontSize="small" color="primary" />
+                    ) : (
+                      <ThumbUpIcon fontSize="small" color="disabled" />
+                    )}{" "}
+                    <div>{this.state.numberOfLikes}</div>
+                  </div>
+                  <div className="comment-icon">
+                    <InsertCommentIcon />
+                    <div>{this.state.numberOfComments}</div>
+                  </div>
                 </div>
-                <div className="comment-icon">
-                  <InsertCommentIcon />
-                  <div>{this.state.numberOfComments}</div>
-                </div>
+                {this.state.showPhoto ? (
+                  <img
+                    onClick={this.toggleShowPicture}
+                    className="large-img animated zoomIn"
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}
               </div>
             </div>
-          </div>
 
-          <section className="comments">
-            {post.comments &&
-              post.comments.map((comment) => {
-                return (
-                  <Comment
-                    outputDate={this.outputDate}
-                    key={comment._id}
-                    getPostDetails={this.handlePostById}
-                    comment={comment}
-                  />
-                );
-              })}
-
-            {this.showCommentInput()}
-          </section>
-          {this.state.showLikes ? (
-            <div className="likes animated zoomIn">
-              {post.likes &&
-                post.likes.map((user) => {
+            <section className="comments">
+              {post.comments &&
+                post.comments.map((comment) => {
                   return (
-                    <Link to={`/profile/${user._id}`}>
-                      <LikeItem>
-                        <img src={`${user.image}`} alt="profile" />
-                        <p className="like-item" key={user._id}>
-                          {user.firstName} {user.lastName}
-                        </p>{" "}
-                      </LikeItem>
-                    </Link>
+                    <Comment
+                      outputDate={this.outputDate}
+                      key={comment._id}
+                      getPostDetails={this.handlePostById}
+                      comment={comment}
+                    />
                   );
                 })}
-            </div>
-          ) : null}
-        </div>
+
+              <div>
+                <div className="post-main">
+                  <div>
+                    <img src={`${this.props.user.image}`} alt="user profile" />
+                  </div>
+                  <div className="post-section">
+                    <div className="post-user-info">
+                      {" "}
+                      <div className="post-user">
+                        {" "}
+                        {this.props.user.firstName} {this.props.user.lastName}
+                        {"   "}
+                      </div>{" "}
+                    </div>{" "}
+                    <div className="post-content">
+                      {" "}
+                      {this.showCommentInput()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            {this.state.showLikes ? (
+              <div className="likes animated zoomIn">
+                {post.likes &&
+                  post.likes.map((user) => {
+                    return (
+                      <Link to={`/profile/${user._id}`}>
+                        <LikeItem>
+                          <img src={`${user.image}`} alt="profile" />
+                          <p className="like-item" key={user._id}>
+                            {user.firstName} {user.lastName}
+                          </p>{" "}
+                        </LikeItem>
+                      </Link>
+                    );
+                  })}
+              </div>
+            ) : null}
+          </div>
+        </Theme>
       </div>
     );
   }

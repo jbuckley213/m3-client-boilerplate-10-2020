@@ -36,11 +36,7 @@ class Conversation extends Component {
   }
 
   componentDidUpdate() {
-    socket.on("online", (user) => {});
-  }
-
-  componentWillUnmount() {
-    console.log("unmount");
+    // socket.on("online", (user) => {});
   }
 
   getConversations = () => {
