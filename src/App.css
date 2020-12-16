@@ -65,7 +65,7 @@ button.navbar-button {
 
 .profile-link img {
   width: 100px;
-  height: auto;
+  height: 40px;
   border-radius: 50%;
 }
 
@@ -76,7 +76,7 @@ button.navbar-button {
 }
 .profile-link td {
   margin: 15px 22px;
-  width: 30px;
+  width: 42px;
 }
 .notifications {
   display: flex;
@@ -563,6 +563,26 @@ body,
   border-radius: 10px;
 }
 
+html {
+  background-color: #f2f2f2;
+}
+
+.profile-post-form {
+  padding: 0;
+}
+
+.no-info {
+  text-align: center;
+}
+
+.login-error {
+  text-align: center;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  animation-delay: 1s;
+}
+
 @media (min-width: 1000px) {
   nav.navbar {
     display: block;
@@ -583,16 +603,19 @@ body,
   .container-side-nav .side-nav-pages {
     width: 100%;
   }
-}
-
-html {
-  background-color: #f2f2f2;
-}
-
-.profile-post-form {
-  padding: 0;
-}
-
-.no-info {
-  text-align: center;
+  #home {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  #home p {
+    font-size: 1.2rem;
+    width: 80%;
+    margin: 30px auto;
+  }
+  #home img {
+    width: 45%;
+    margin: 0 auto;
+    border-radius: 50%;
+  }
 }

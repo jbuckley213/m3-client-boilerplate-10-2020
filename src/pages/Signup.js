@@ -67,6 +67,7 @@ class Signup extends Component {
             name="firstName"
             value={firstName}
             onChange={this.handleChange}
+            required
           />
           <br />
           <label>Last Name:</label>
@@ -76,6 +77,7 @@ class Signup extends Component {
             name="lastName"
             value={lastName}
             onChange={this.handleChange}
+            required
           />
           <br />
           <label>Email:</label>
@@ -85,6 +87,7 @@ class Signup extends Component {
             name="email"
             value={email}
             onChange={this.handleChange}
+            required
           />
           <br />
           <label>Password:</label>
@@ -94,6 +97,7 @@ class Signup extends Component {
             name="password"
             value={password}
             onChange={this.handleChange}
+            required
           />
 
           <button className="button is-primary is-white" type="submit">

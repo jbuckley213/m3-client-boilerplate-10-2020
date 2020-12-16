@@ -142,22 +142,15 @@ class Navbar extends Component {
           </>
         ) : (
           <>
-            <NavLink to="/login">
-              <button
-                className="button btn nav-home-btn"
-                activeClassName="nav-link"
-              >
-                Login
-              </button>{" "}
+            <NavLink className="btn" activeClassName="nav-link" to="/">
+              Home
             </NavLink>
-            <br />
-            <NavLink to="/signup">
-              <button
-                className="button nav-home-btn"
-                activeClassName="nav-link"
-              >
-                Sign Up
-              </button>{" "}
+            <NavLink className="btn" activeClassName="nav-link" to="/login">
+              Login
+            </NavLink>
+
+            <NavLink className="btn" activeClassName="nav-link" to="/signup">
+              Sign Up
             </NavLink>
           </>
         )}

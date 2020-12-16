@@ -20,6 +20,7 @@ class SearchResult extends Component {
 
   checkFollow = () => {
     const currentUserFollowing = this.props.user.following;
+    console.log(currentUserFollowing);
     const userSearchId = this.props.userSearch._id;
     let isFollowing = false;
     currentUserFollowing.forEach((user) => {

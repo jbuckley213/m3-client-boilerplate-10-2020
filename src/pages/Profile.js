@@ -439,26 +439,6 @@ class Profile extends Component {
             </div>
           ) : null}
 
-          {/* <animated.div style={props}>
-            {this.state.showLikes ? (
-              <div>
-                {this.state.user.likes &&
-                  this.state.user.likes.map((post) => {
-                    return <Post key={post._id} post={post} />;
-                  })}
-              </div>
-            ) : null}
-          </animated.div> */}
-
-          {/* {this.state.showLikes ? (
-            <div className="animated fadeInUp">
-              {this.state.user.likes &&
-                this.state.user.likes.map((post) => {
-                  return <Post key={post._id} post={post} />;
-                })}
-            </div>
-          ) : null} */}
-
           {this.state.showLikes ? (
             <div className="animated fadeInUp">
               {this.state.user.likes.length === 0 ? (

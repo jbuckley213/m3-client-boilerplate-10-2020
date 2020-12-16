@@ -40,10 +40,20 @@ class AuthProvider extends React.Component {
   login = (email, password) => {
     authService
       .login(email, password)
-      .then((user) => this.setState({ isLoggedIn: true, user }))
+      .then((user) => {
+        console.log("error");
+        this.setState({ isLoggedIn: true, user });
+      })
       .catch((err) => {
-        this.setState({ isLoggedIn: false, user: null });
+        console.log("error");
+
+        this.setState({
+          isLoggedIn: false,
+          user: null,
+        });
       });
+
+    return "Username or password not correct";
   };
 
   logout = () => {
