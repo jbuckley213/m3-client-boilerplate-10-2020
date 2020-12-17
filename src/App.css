@@ -160,7 +160,7 @@ button.navbar-button {
 }
 .search {
   width: 100%;
-  margin: 20px 0;
+  padding: 20px 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -552,7 +552,7 @@ body,
 
 .conversation-list {
   height: 100vh;
-  margin: 20px 0;
+  padding: 20px 0;
 }
 
 .post-main .large-img {

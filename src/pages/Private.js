@@ -158,15 +158,15 @@ class Private extends Component {
                     {"   "}
                   </div>
                 </div>
-                {this.state.postPhoto === "" ? null : (
+                {/* {this.state.postPhoto === "" ? null : (
                   <span>
                     <img
-                      style={{ width: "100px" }}
+                      style={{ width: "50px" }}
                       src={this.state.postPhoto && this.state.postPhoto}
                       alt=""
                     ></img>
                   </span>
-                )}
+                )} */}
                 <textarea
                   className="post"
                   name="post"
