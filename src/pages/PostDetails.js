@@ -282,21 +282,28 @@ class PostDetails extends Component {
                 </div>
               </div>
             </section>
+
             {this.state.showLikes ? (
-              <div className="likes animated zoomIn">
-                {post.likes &&
-                  post.likes.map((user) => {
-                    return (
-                      <Link to={`/profile/${user._id}`}>
-                        <LikeItem>
-                          <img src={`${user.image}`} alt="profile" />
-                          <p className="like-item" key={user._id}>
-                            {user.firstName} {user.lastName}
-                          </p>{" "}
-                        </LikeItem>
-                      </Link>
-                    );
-                  })}
+              <div className="likes">
+                <div className="like-content animated zoomIn">
+                  <p
+                    className="delete close-likes"
+                    onClick={this.toggleLikes}
+                  ></p>
+                  {post.likes &&
+                    post.likes.map((user) => {
+                      return (
+                        <Link to={`/profile/${user._id}`}>
+                          <LikeItem>
+                            <img src={`${user.image}`} alt="profile" />
+                            <p className="like-item" key={user._id}>
+                              {user.firstName} {user.lastName}
+                            </p>{" "}
+                          </LikeItem>
+                        </Link>
+                      );
+                    })}
+                </div>
               </div>
             ) : null}
           </div>

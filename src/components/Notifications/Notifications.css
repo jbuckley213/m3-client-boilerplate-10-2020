@@ -1,0 +1,30 @@
+.notification-table img {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+.notification-table {
+  width: 400px;
+  table-layout: auto;
+}
+
+.notification-table .notifications-info {
+  display: flex;
+  width: 300px;
+  text-align: left;
+}
+.notifications-info p {
+  width: 00px;
+}
+.notification-table .notifications-btn-delete {
+  padding: 10px;
+  text-align: center;
+  width: 100px;
+}
+.notification-table tr {
+  display: flex;
+}
+
+.notification-table p {
+  width: 200px;
+}

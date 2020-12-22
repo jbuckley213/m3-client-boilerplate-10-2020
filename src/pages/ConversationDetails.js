@@ -241,55 +241,55 @@ class ConversationDetails extends Component {
               {this.state.userContact.lastName}
             </h3>
           </MessageHeader>
-
-          {this.state.messages.map((message) => {
-            return (
-              <div key={message._id}>
-                {this.isAdmin(message.userSent._id) ? (
-                  <div>
-                    <div
-                      onClick={this.toggleDelete}
-                      className={`admin-message ${classes}`}
-                    >
+          <div className="message-background">
+            {this.state.messages.map((message) => {
+              return (
+                <div key={message._id}>
+                  {this.isAdmin(message.userSent._id) ? (
+                    <div>
+                      <div
+                        onClick={this.toggleDelete}
+                        className={`admin-message ${classes}`}
+                      >
+                        <div>{this.outputDate(message.created_at)}</div>
+                        <p>
+                          {message.userSent.firstName}: {message.messageContent}{" "}
+                        </p>
+                      </div>
+                      {this.state.showDelete ? (
+                        <button
+                          className="delete delete-message"
+                          onClick={() => this.deleteMessage(message._id)}
+                        ></button>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <div className="user-message">
                       <div>{this.outputDate(message.created_at)}</div>
+
                       <p>
-                        {message.userSent.firstName}: {message.messageContent}{" "}
+                        {message.userSent.firstName}: {message.messageContent}
                       </p>
                     </div>
-                    {this.state.showDelete ? (
-                      <button
-                        className="delete delete-message"
-                        onClick={() => this.deleteMessage(message._id)}
-                      ></button>
-                    ) : null}
-                  </div>
-                ) : (
-                  <div className="user-message">
-                    <div>{this.outputDate(message.created_at)}</div>
-
-                    <p>
-                      {message.userSent.firstName}: {message.messageContent}
-                    </p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  )}
+                </div>
+              );
+            })}
+            <div className="seen">
+              {this.state.conversation.notifications && this.checkSeen()}
+            </div>
+            <div
+              ref={(el) => {
+                this.el = el;
+              }}
+            ></div>
+          </div>
           {/* <div>
             {this.state.newMessages.map((message) => {
               return <p>{message}</p>;
             })}
           </div> */}
 
-          <div className="seen">
-            {this.state.conversation.notifications && this.checkSeen()}
-          </div>
-
-          <div
-            ref={(el) => {
-              this.el = el;
-            }}
-          ></div>
           <form onSubmit={this.handleSubmit} className="send-message">
             <input
               className="input is-info"

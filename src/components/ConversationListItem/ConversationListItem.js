@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from "./../../context/auth-context";
 import CheckIcon from "@material-ui/icons/Check";
 import "bulma/css/bulma.css";
+import "./ConversationListItem.css";
 
 class ConversationListItem extends Component {
   state = {

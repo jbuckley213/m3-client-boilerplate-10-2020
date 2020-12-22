@@ -1,0 +1,14 @@
+.message-info {
+  display: flex;
+  justify-content: space-between;
+}
+.message-info .message-date {
+  margin-right: 5px;
+}
+.message-info div {
+  display: flex;
+  margin-right: 5px;
+  overflow-y: hidden;
+  width: 320px;
+  height: 30px;
+}

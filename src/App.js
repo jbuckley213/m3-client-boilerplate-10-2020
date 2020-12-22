@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Private from "./pages/Private";
+import PrivateHook from "./pages/PrivateHook";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import PostDetails from "./pages/PostDetails";
@@ -32,7 +33,7 @@ class App extends Component {
                 <AnonRoute exact path="/signup" component={Signup} />
                 <AnonRoute exact path="/login" component={Login} />
 
-                <PrivateRoute exact path="/private" component={Private} />
+                <PrivateRoute exact path="/private" component={PrivateHook} />
                 <PrivateRoute exact path="/search" component={Search} />
                 <PrivateRoute exact path="/profile/:id" component={Profile} />
                 <PrivateRoute

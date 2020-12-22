@@ -75,20 +75,6 @@ class Post extends Component {
     this.setState({ isLiked: !this.state.isLiked });
   };
 
-  // handleLike = () => {
-  //   if (!this.state.isLiked) {
-  //     let numberOfLikes = this.state.numberOfLikes;
-  //     numberOfLikes++;
-  //     this.setState({ numberOfLikes: numberOfLikes });
-  //   }
-  //   if (this.state.isLiked) {
-  //     let numberOfLikes = this.state.numberOfLikes;
-  //     numberOfLikes--;
-  //     this.setState({ numberOfLikes: numberOfLikes });
-  //   }
-  //   this.setState({ isLiked: !this.state.isLiked });
-  // };
-
   outputDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.toDateString().split(" ").slice(0, 3).join(" ");
