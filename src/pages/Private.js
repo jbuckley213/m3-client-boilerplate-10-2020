@@ -199,11 +199,9 @@ class Private extends Component {
               </span>
             )}
           </form>
-          <Fade>
-            {this.state.posts.map((post) => {
-              return <Post key={post._id} post={post} />;
-            })}
-          </Fade>
+          {this.state.posts.map((post) => {
+            return <Post key={post._id} post={post} />;
+          })}
         </Theme>
       </div>
     );

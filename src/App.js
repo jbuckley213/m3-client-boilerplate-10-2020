@@ -10,6 +10,8 @@ import Private from "./pages/Private";
 import PrivateHook from "./pages/PrivateHook";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import ProfileHook from "./pages/ProfileHook";
+
 import PostDetails from "./pages/PostDetails";
 import ConversationList from "./pages/ConversationList";
 import ConversationDetails from "./pages/ConversationDetails";
@@ -35,7 +37,11 @@ class App extends Component {
 
                 <PrivateRoute exact path="/private" component={PrivateHook} />
                 <PrivateRoute exact path="/search" component={Search} />
-                <PrivateRoute exact path="/profile/:id" component={Profile} />
+                <PrivateRoute
+                  exact
+                  path="/profile/:id"
+                  component={ProfileHook}
+                />
                 <PrivateRoute
                   exact
                   path="/postdetails/:postId"

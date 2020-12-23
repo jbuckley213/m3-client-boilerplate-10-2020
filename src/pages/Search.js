@@ -19,13 +19,27 @@ class Search extends Component {
       .then((apiResponse) => {
         this.setState({
           users: apiResponse.data,
-          searchResults: apiResponse.data,
         });
+        this.filterSearch();
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  filterSearch = () => {
+    const users = this.state.users;
+
+    const filteredUsers = users.filter((user) => {
+      if (user._id === this.props.user._id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    this.setState({ users: filteredUsers, searchResults: filteredUsers });
+  };
 
   handleSearchResults = (value) => {
     const { users } = this.state;

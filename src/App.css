@@ -523,7 +523,7 @@ body,
   overflow: scroll;
 }
 
-.unread {
+.message-info .unread {
   background-color: #57ba98;
   border-radius: 50%;
   width: 25px;
@@ -649,4 +649,14 @@ html {
   text-align: center;
   font-size: 1.1rem;
   animation-delay: 0.5s;
+}
+
+.outline {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: 1px solid white;
+  border-radius: 5px;
 }

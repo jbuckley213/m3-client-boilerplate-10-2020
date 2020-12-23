@@ -77,11 +77,13 @@ class ConversationListItem extends Component {
                   <p>{this.state.unreadMessages}</p>
                 </div>
               )}
-              {conversation.messages[messageArrLength] &&
-                conversation.messages[messageArrLength].userSent.firstName}
-              :{" "}
-              {conversation.messages[messageArrLength] &&
-                conversation.messages[messageArrLength].messageContent}
+              <div className="preview-message-content">
+                {conversation.messages[messageArrLength] &&
+                  conversation.messages[messageArrLength].userSent.firstName}
+                :{" "}
+                {conversation.messages[messageArrLength] &&
+                  conversation.messages[messageArrLength].messageContent}
+              </div>
             </div>
             <p className="message-date">
               {this.outputDate(

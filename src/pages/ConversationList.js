@@ -36,6 +36,21 @@ class Conversation extends Component {
     });
   }
 
+  sortConversations = () => {
+    const sortedConversation = [...this.state.conversations];
+
+    sortedConversation.sort((a, b) => {
+      if (a.updated_at > b.updated_at) {
+        return -1;
+      } else if (a.updated_at > b.updated_at) {
+        return 1;
+      }
+      return 0;
+    });
+
+    this.setState({ conversations: sortedConversation });
+  };
+
   componentDidUpdate() {
     // socket.on("online", (user) => {});
   }
@@ -45,6 +60,7 @@ class Conversation extends Component {
       .getConversations()
       .then((apiResponse) => {
         this.setState({ conversations: apiResponse.data });
+        this.sortConversations();
       })
       .catch((err) => {
         console.log(err);

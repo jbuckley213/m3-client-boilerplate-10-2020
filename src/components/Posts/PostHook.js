@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { Theme } from "./../../styles/themes";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
-
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
+import DropDownComment from "./../DropDownComments/DropDownComment";
 import "./Post.css";
 import "bulma/css/bulma.css";
 
@@ -20,6 +21,12 @@ const Post = (props) => {
   const [numberOfLikes, setNumberOfLikes] = useState(0);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [showPhoto, setShowPhoto] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
 
   const countNumberOfLikes = () => {
     let numberOfLikes = props.post.likes.length;
@@ -99,6 +106,17 @@ const Post = (props) => {
     setShowPhoto(!showPhoto);
   };
 
+  const socketComment = () => {
+    console.log("sockey run");
+    socket.emit(
+      "notification",
+      { userId: props.post.postedBy._id, userLiked: props.user._id },
+      () => {
+        console.log("socket called");
+      }
+    );
+  };
+
   // handlePostLinks = () => {
   //   const postContent = this.props.post.postContent.split(" ");
   //   console.log(postContent);
@@ -149,57 +167,69 @@ const Post = (props) => {
       {/* <div className="card"> */}
       <Theme dark={props.isDark}>
         {/* </div> */}
-        <div className="post-main">
-          <div>
-            <img src={post.postedBy.image} alt="user profile" />
-          </div>
-          <div className="post-section">
-            <div className="post-user-info">
-              <div className="post-user">
-                {" "}
-                {post.postedBy && post.postedBy.firstName}{" "}
-                {post.postedBy && post.postedBy.lastName}
-                {"   "}
+        <div className="post-main-page">
+          <motion.li layout onClick={toggleOpen} initial={{ borderRadius: 10 }}>
+            <div className="post-main">
+              <div>
+                <img src={post.postedBy.image} alt="user profile" />
               </div>
-              <div className="date">{outputDate(post.date)}</div>
+              <div className="post-section">
+                <div className="post-user-info">
+                  <div className="post-user">
+                    {" "}
+                    {post.postedBy && post.postedBy.firstName}{" "}
+                    {post.postedBy && post.postedBy.lastName}
+                    {"   "}
+                  </div>
+                  <div className="date">{outputDate(post.date)}</div>
+                </div>
+                {post.postPhoto ? (
+                  <img
+                    onClick={toggleShowPicture}
+                    className="post-image"
+                    style={{ width: "100px" }}
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}
+                {/* <Link to={`/postdetails/${post._id}`}> */}{" "}
+                <div className="post-content">{post.postContent}</div>
+                {/* </Link> */}
+                <div className="post-actions">
+                  {" "}
+                  <div onClick={handleLike}>
+                    {isLiked ? (
+                      <ThumbUpIcon fontSize="small" color="primary" />
+                    ) : (
+                      <ThumbUpIcon fontSize="small" /> //color="disabled"
+                    )}{" "}
+                    <div>{numberOfLikes}</div>
+                  </div>
+                  <div className="comment-icon">
+                    <InsertCommentIcon />
+                    <div>{numberOfComments}</div>
+                  </div>
+                </div>
+                {showPhoto ? (
+                  <img
+                    onClick={toggleShowPicture}
+                    className="large-img animated zoomIn"
+                    src={post.postPhoto && post.postPhoto}
+                    alt=""
+                  ></img>
+                ) : null}
+              </div>
             </div>
-            {post.postPhoto ? (
-              <img
-                onClick={toggleShowPicture}
-                className="post-image"
-                style={{ width: "100px" }}
-                src={post.postPhoto && post.postPhoto}
-                alt=""
-              ></img>
-            ) : null}
-            <Link to={`/postdetails/${post._id}`}>
-              {" "}
-              <div className="post-content">{post.postContent}</div>
-            </Link>
-            <div className="post-actions">
-              {" "}
-              <div onClick={handleLike}>
-                {isLiked ? (
-                  <ThumbUpIcon fontSize="small" color="primary" />
-                ) : (
-                  <ThumbUpIcon fontSize="small" /> //color="disabled"
-                )}{" "}
-                <div>{numberOfLikes}</div>
-              </div>
-              <div className="comment-icon">
-                <InsertCommentIcon />
-                <div>{numberOfComments}</div>
-              </div>
-            </div>
-            {showPhoto ? (
-              <img
-                onClick={toggleShowPicture}
-                className="large-img animated zoomIn"
-                src={post.postPhoto && post.postPhoto}
-                alt=""
-              ></img>
-            ) : null}
-          </div>
+          </motion.li>
+          <AnimatePresence>
+            {isOpen && (
+              <DropDownComment
+                comments={post.comments}
+                postId={post._id}
+                socketComment={socketComment}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </Theme>
     </div>

@@ -4,6 +4,7 @@ import postService from "./../lib/post-service";
 import Post from "./../components/Posts/PostHook";
 import "bulma/css/bulma.css";
 import "animate.css/source/animate.css";
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 import { Theme } from "./../styles/themes";
 import { Fade } from "./../styles/fade";
@@ -63,7 +64,6 @@ const Private = (props) => {
     //const postsArr = [...this.props.user.posts];
 
     const postsArr = [...newPosts, ...props.user.posts];
-    console.log("orderPosts users", newPosts);
     users.forEach((user) => {
       postsArr.push(...user.posts);
     });
@@ -75,7 +75,6 @@ const Private = (props) => {
       }
       return 0;
     });
-    console.log(postsArr);
 
     setPosts([...postsArr]);
   };
@@ -139,7 +138,6 @@ const Private = (props) => {
         console.log(err);
       });
   };
-  console.log("users", users);
   return (
     <div className="dashboard">
       <Theme dark={props.isDark}>
@@ -211,11 +209,14 @@ const Private = (props) => {
             </span>
           )}
         </form>
-        <Fade>
-          {posts.map((post) => {
-            return <Post key={post._id} post={post} />;
-          })}
-        </Fade>
+
+        <AnimateSharedLayout>
+          <motion.ul layout initial={{ borderRadius: 25 }}>
+            {posts.map((post) => {
+              return <Post key={post._id} post={post} />;
+            })}
+          </motion.ul>
+        </AnimateSharedLayout>
       </Theme>
     </div>
   );
