@@ -4,13 +4,14 @@
   margin: 0 10px;
 }
 .notification-table {
-  width: 400px;
+  width: 50%;
   table-layout: auto;
+  margin: 0 auto;
 }
 
 .notification-table .notifications-info {
   display: flex;
-  width: 300px;
+  width: 100%;
   text-align: left;
 }
 .notifications-info p {

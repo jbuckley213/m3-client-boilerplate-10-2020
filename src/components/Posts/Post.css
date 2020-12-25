@@ -58,7 +58,7 @@
 }
 .post-section {
   padding-left: 20px;
-  width: 100%;
+  width: 83%;
   border-left: 1px solid palevioletred;
 }
 
@@ -99,4 +99,13 @@ li {
   cursor: pointer;
   /* border: 1px solid #444; */
   background-color: #f4f4f4;
+}
+
+pre {
+  color: #da1039;
+  border-radius: 5px;
+  width: 80%;
+}
+code {
+  background-color: white;
 }

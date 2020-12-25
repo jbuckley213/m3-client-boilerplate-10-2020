@@ -40,16 +40,20 @@ class ConversationDetails extends Component {
 
     socket.on("message", (message) => {
       console.log("socket called");
-      //console.log(message.text);
+      // console.log(message.text);
       // const messages = [];
       // messages.push(message.text);
       // this.setState({ newMessages: messages });
-      this.getConversation();
-      //this.seenMessage();
+      //this.getConversation();
+      this.seenMessage();
     });
 
     socket.on("online", (user) => {
       console.log("online");
+    });
+
+    socket.on("messageIsSeen", () => {
+      this.getConversation();
     });
 
     this.sendDelete();
@@ -61,7 +65,9 @@ class ConversationDetails extends Component {
 
   seenMessage = () => {
     const { conversationId } = this.props.match.params;
-
+    socket.emit("messageSeen", { room: this.state.conversation._id }, () => {
+      console.log("message-seen");
+    });
     conversationService
       .messageSeen(conversationId)
       .then((apiResponse) => {})
@@ -139,6 +145,7 @@ class ConversationDetails extends Component {
     conversationService
       .sendMessage(conversationId, sendMessage, userContactId)
       .then((apiResponse) => {
+        console.log(apiResponse);
         // this.setState({ sendMessage: "" });
         this.getConversation();
         this.sendMessage();
@@ -177,7 +184,17 @@ class ConversationDetails extends Component {
   };
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    console.log("leave conversation");
+    socket.emit(
+      "leaveConversation",
+      { room: this.state.conversation._id },
+      (error) => {
+        if (error) {
+          console.log(error);
+        }
+      }
+    );
+
     this.seenMessage(); // LookLater
   }
 

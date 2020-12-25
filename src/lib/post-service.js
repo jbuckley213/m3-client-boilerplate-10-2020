@@ -21,12 +21,13 @@ class PostService {
     return pr;
   };
 
-  createPost = (postedBy, postContent, postPhoto) => {
-    console.log(postedBy, postContent, postPhoto);
+  createPost = (postedBy, postContent, postPhoto, code) => {
+    console.log(postedBy, postContent, postPhoto, code);
     const pr = this.api.post("/api/posts", {
       postedBy,
       postContent,
       postPhoto,
+      code,
     });
     return pr;
   };

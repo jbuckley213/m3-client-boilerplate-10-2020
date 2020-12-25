@@ -194,6 +194,11 @@ const Post = (props) => {
                 ) : null}
                 {/* <Link to={`/postdetails/${post._id}`}> */}{" "}
                 <div className="post-content">{post.postContent}</div>
+                {post.code && (
+                  <code>
+                    <pre>{post.code}</pre>
+                  </code>
+                )}
                 {/* </Link> */}
                 <div className="post-actions">
                   {" "}

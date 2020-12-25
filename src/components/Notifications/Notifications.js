@@ -61,7 +61,7 @@ class Notifications extends Component {
                       <Link to={`/postdetails/${notification.post}`}>
                         <p>
                           {notification.userActivity.firstName}{" "}
-                          {notification.userActivity.lastName}{" "}
+                          {/* {notification.userActivity.lastName}{" "} */}
                           {notification.notificationInfo} your post
                         </p>
                       </Link>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer } from "react";
 import { withAuth } from "./../context/auth-context";
 import postService from "./../lib/post-service";
 import Post from "./../components/Posts/PostHook";
+import PostInput from "./../components/PostInput/PostInput";
 import "bulma/css/bulma.css";
 import "animate.css/source/animate.css";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
@@ -18,12 +19,13 @@ let socket = io(ENDPOINT);
 const Private = (props) => {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
-
+  const [showCodeInput, setShowCodeInput] = useState(false);
   const [input, setInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
       post: "",
       postPhoto: "",
+      code: "",
     }
   );
 
@@ -124,19 +126,32 @@ const Private = (props) => {
     postWithSocket();
 
     postService
-      .createPost(props.user._id, input.post, input.postPhoto)
+      .createPost(props.user._id, input.post, input.postPhoto, input.code)
       .then((createdPost) => {
         console.log(createdPost);
         const newPostsCreated = [...newPosts];
         newPostsCreated.push(createdPost.data);
 
-        setInput({ postPhoto: "", post: "" });
+        setInput({ postPhoto: "", post: "", code: "" });
         setNewPosts([...newPostsCreated]);
         handlePostsFollowedApi();
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleComponentSubmit = (createdPost) => {
+    postWithSocket();
+
+    const newPostsCreated = [...newPosts];
+    newPostsCreated.push(createdPost.data);
+    setNewPosts([...newPostsCreated]);
+    handlePostsFollowedApi();
+  };
+
+  const toggleCodeInput = () => {
+    setShowCodeInput(!showCodeInput);
   };
   return (
     <div className="dashboard">
@@ -149,10 +164,7 @@ const Private = (props) => {
           </div>
         </div>
 
-        {/* <PostInput
-            handlePostsFollowedApi={this.props.handlePostsFollowedApi}
-            handleSubmit={this.props.handleSubmit}
-          /> */}
+        <PostInput handleComponentSubmit={handleComponentSubmit} />
 
         <form className="post-form" onSubmit={handleSubmit}>
           <div className="post-main">
@@ -182,16 +194,35 @@ const Private = (props) => {
                 name="post"
                 value={input.post}
                 onChange={handleInput}
-                placeholder="Share your code..."
+                placeholder="Share your thoughts..."
                 required
               />
-              <div className="post-actions">
-                <input
-                  name="postPhoto"
-                  type="file"
-                  // value={this.state.postPhoto}
-                  onChange={handleFileUpload}
+              {showCodeInput && (
+                <textarea
+                  className="post"
+                  name="code"
+                  className="code-input"
+                  value={input.code}
+                  onChange={handleInput}
+                  placeholder="Share your code..."
                 />
+              )}
+
+              <div className="post-actions">
+                <div>
+                  <input
+                    name="postPhoto"
+                    type="file"
+                    // value={this.state.postPhoto}
+                    onChange={handleFileUpload}
+                  />
+                  <p
+                    onClick={toggleCodeInput}
+                    className="button is-white s-size-7"
+                  >
+                    Code
+                  </p>
+                </div>
                 <button className="button is-white s-size-7" type="submit">
                   Post
                 </button>{" "}

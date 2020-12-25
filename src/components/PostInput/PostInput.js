@@ -1,17 +1,28 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
+import postService from "./../../lib/post-service";
 
 import { withAuth } from "../../context/auth-context";
 
 //const ENDPOINT = "http://localhost:5000";
 
-class PostInput extends Component {
-  state = {
-    post: "",
-    postPhoto: "",
-  };
+const PostInput = (props) => {
+  // state = {
+  //   post: "",
+  //   postPhoto: "",
+  // };
 
-  handleFileUpload = (e) => {
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [input, setInput] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      post: "",
+      postPhoto: "",
+      code: "",
+    }
+  );
+
+  const handleFileUpload = (e) => {
     console.log("The file to be uploaded is: ", e.target.files);
     const file = e.target.files[0];
 
@@ -27,77 +38,112 @@ class PostInput extends Component {
       .then((response) => {
         console.log("response is: ", response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state
-        this.setState({ postPhoto: response.data.secure_url });
+        setInput({ postPhoto: response.data.secure_url });
       })
       .catch((err) => {
         console.log("Error while uploading the file: ", err);
       });
   };
 
-  handleInput = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    postService
+      .createPost(props.user._id, input.post, input.postPhoto, input.code)
+      .then((createdPost) => {
+        console.log(createdPost);
+
+        setInput({ postPhoto: "", post: "", code: "" });
+
+        props.handleComponentSubmit(createdPost);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  render() {
-    return (
-      <form className="post-form" onSubmit={this.handleSubmit}>
-        <div className="post-main">
-          <div>
-            <img src={this.props.user.image} alt="user profile" />
-          </div>
-          <div className="post-section">
-            <div className="post-user-info">
-              <div className="post-user">
-                {" "}
-                {this.props.user && this.props.user.firstName}{" "}
-                {this.props.user && this.props.user.lastName}
-                {"   "}
-              </div>
+  const handleInput = (event) => {
+    const { name, value } = event.target;
+    setInput({ [name]: value });
+  };
+
+  const toggleCodeInput = () => {
+    setShowCodeInput(!showCodeInput);
+  };
+
+  return (
+    <form className="post-form" onSubmit={handleSubmit}>
+      <div className="post-main">
+        <div>
+          <img src={props.user.image} alt="user profile" />
+        </div>
+        <div className="post-section">
+          <div className="post-user-info">
+            <div className="post-user">
+              {" "}
+              {props.user && props.user.firstName}{" "}
+              {props.user && props.user.lastName}
+              {"   "}
             </div>
-            {this.state.postPhoto === "" ? null : (
-              <span>
-                <img
-                  style={{ width: "100px" }}
-                  src={this.state.postPhoto && this.state.postPhoto}
-                  alt=""
-                ></img>
-              </span>
-            )}
+          </div>
+          {/* {this.state.postPhoto === "" ? null : (
+                  <span>
+                    <img
+                      style={{ width: "50px" }}
+                      src={this.state.postPhoto && this.state.postPhoto}
+                      alt=""
+                    ></img>
+                  </span>
+                )} */}
+          <textarea
+            className="post"
+            name="post"
+            value={input.post}
+            onChange={handleInput}
+            placeholder="Share your thoughts........"
+            required
+          />
+          {showCodeInput && (
             <textarea
               className="post"
-              name="post"
-              value={this.state.post}
-              onChange={this.handleInput}
-              placeholder="Share you code..."
-              required
+              name="code"
+              className="code-input"
+              value={input.code}
+              onChange={handleInput}
+              placeholder="Share your code..."
             />
-            <div className="post-actions">
+          )}
+
+          <div className="post-actions">
+            <div>
               <input
                 name="postPhoto"
                 type="file"
                 // value={this.state.postPhoto}
-                onChange={this.handleFileUpload}
+                onChange={handleFileUpload}
               />
-              <button className="button is-white s-size-7" type="submit">
-                Post
-              </button>{" "}
+              <p onClick={toggleCodeInput} className="button is-white s-size-7">
+                Code
+              </p>
             </div>
+            <button className="button is-white s-size-7" type="submit">
+              Post
+            </button>{" "}
           </div>
         </div>
+      </div>
 
-        {this.state.postPhoto === "" ? null : (
-          <span>
-            <img
-              style={{ width: "100px" }}
-              src={this.state.postPhoto && this.state.postPhoto}
-              alt=""
-            ></img>
-          </span>
-        )}
-      </form>
-    );
-  }
-}
+      {input.postPhoto === "" ? null : (
+        <span>
+          <img
+            style={{ width: "100px" }}
+            src={input.postPhoto && input.postPhoto}
+            alt=""
+          ></img>
+        </span>
+      )}
+    </form>
+  );
+};
 
 export default withAuth(PostInput);
