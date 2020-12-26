@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import Divider from "@material-ui/core/Divider";
+import SwipeableViews from "react-swipeable-views";
 
 const tutorialSteps = [
   {
@@ -38,22 +40,30 @@ const tutorialSteps = [
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: 400,
     width: 400,
     flexGrow: 1,
-    height: 400,
-    borderRadius: 50,
+    border: 0,
   },
   header: {
     display: "flex",
     alignItems: "center",
-    height: 100,
+    height: 70,
+    paddingTop: 20,
+    borderRadius: "10px 10px 0 0 ",
+
     paddingLeft: theme.spacing(4),
   },
   content: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    // borderTop: "1px solid #3b945e",
+    paddingTop: 20,
+    height: 100,
     paddingLeft: theme.spacing(4),
+  },
+  buttons: {
+    borderRadius: "0 0 10px 10px ",
   },
 }));
 
@@ -71,22 +81,47 @@ function NewUserPopup() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
 
   return (
     <PopUp>
       <div className={classes.root}>
         <Paper square elevation={0} className={classes.header}>
+          <Typography style={{ margin: "0 10px" }}>
+            {tutorialSteps[activeStep].icon}
+          </Typography>
+
           <Typography>{tutorialSteps[activeStep].title}</Typography>
         </Paper>
-        <Paper square elevation={0} className={classes.content}>
+        <Divider variant="middle" />
+        {/* <Paper square elevation={0} className={classes.content}>
           <p>{tutorialSteps[activeStep].step}</p>
-          <p>{tutorialSteps[activeStep].icon}</p>
-        </Paper>
+        </Paper> */}
+
+        <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+        >
+          {tutorialSteps.map((step, index) => (
+            <div key={step.label}>
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Paper square elevation={0} className={classes.content}>
+                  <p>{tutorialSteps[activeStep].step}</p>
+                </Paper>
+              ) : null}
+            </div>
+          ))}
+        </SwipeableViews>
 
         <MobileStepper
           steps={maxSteps}
           position="static"
           variant="text"
+          className={classes.buttons}
           activeStep={activeStep}
           nextButton={
             <Button
