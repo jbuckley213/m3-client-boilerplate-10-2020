@@ -168,7 +168,7 @@ const Post = (props) => {
       <Theme dark={props.isDark}>
         {/* </div> */}
         <div className="post-main-page">
-          <motion.li layout onClick={toggleOpen} initial={{ borderRadius: 10 }}>
+          <motion.li layout initial={{ borderRadius: 10 }}>
             <div className="post-main">
               <div>
                 <img src={post.postedBy.image} alt="user profile" />
@@ -210,7 +210,7 @@ const Post = (props) => {
                     )}{" "}
                     <div>{numberOfLikes}</div>
                   </div>
-                  <div className="comment-icon">
+                  <div onClick={toggleOpen} className="comment-icon">
                     <InsertCommentIcon />
                     <div>{numberOfComments}</div>
                   </div>

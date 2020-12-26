@@ -4,6 +4,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import PersonIcon from "@material-ui/icons/Person";
 import SearchIcon from "@material-ui/icons/Search";
 import HomeIcon from "@material-ui/icons/Home";
+import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Paper from "@material-ui/core/Paper";
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewUserPopup() {
+function NewUserPopup(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -94,6 +95,7 @@ function NewUserPopup() {
           </Typography>
 
           <Typography>{tutorialSteps[activeStep].title}</Typography>
+          <CloseIcon onClick={props.closeNewUserMessage} />
         </Paper>
         <Divider variant="middle" />
         {/* <Paper square elevation={0} className={classes.content}>
