@@ -1,0 +1,21 @@
+.popup-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+
+  background-color: rgb(0, 0, 0, 0.4);
+}
+
+.popup-menu .new-user-menu {
+  border-radius: 10px;
+  border: 1px solid #3b945e;
+  height: 250px;
+  overflow: auto;
+}

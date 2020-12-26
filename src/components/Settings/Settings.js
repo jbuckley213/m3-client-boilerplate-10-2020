@@ -64,15 +64,6 @@ class Settings extends Component {
             </button>
             {this.state.showEdit ? <EditProfile /> : null}
 
-            {/* <button
-              className="is-size-7	 button is-white"
-              onClick={this.handleFollow}
-            >
-              {this.state.isFollowed
-                ? "Hide Posts on My Dashboard"
-                : "Show Posts on My Dashboard"}
-            </button> */}
-
             <button
               className="is-size-7	 button is-white"
               onClick={this.props.logout}
