@@ -1,9 +1,10 @@
 @media (min-width: 1023px) {
-  .photo-code-buttons-moblie {
+  .post-actions-input .photo-code-buttons-moblie {
     display: none;
   }
-  .post-actions .photo-code-buttons {
+  .post-actions-input .photo-code-buttons {
     display: flex;
+    align-items: center;
   }
 }
 .post-actions .photo-code-buttons-moblie {
@@ -20,6 +21,37 @@
   padding: 20px;
 }
 
-.post-actions .photo-code-buttons {
+.photo-code-buttons {
   display: none;
+}
+
+.post-actions-input {
+  margin-top: 10px;
+}
+
+.post-actions-input button {
+  float: right;
+  background-color: #f4f4f4;
+  color: #444;
+}
+
+.post-actions-input button:hover {
+  float: right;
+  background-color: rgb(87, 186, 152, 0.9);
+  color: white;
+}
+
+.post-actions-input p {
+  float: right;
+  background-color: #f4f4f4;
+  color: #444;
+}
+.post-actions-input p:hover {
+  background-color: rgb(87, 186, 152, 0.9);
+  color: white;
+}
+
+.post-actions-input input {
+  width: 200px;
+  margin: 0;
 }

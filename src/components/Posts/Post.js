@@ -21,6 +21,7 @@ class Post extends Component {
     numberOfLikes: 0,
     numberOfComments: 0,
     showPhoto: false,
+    highlightedContent: [],
   };
 
   countNumberOfLikes = () => {
@@ -34,7 +35,6 @@ class Post extends Component {
   };
 
   socketLike = () => {
-    console.log("sockey run");
     socket.emit(
       "notification",
       { userId: this.props.post.postedBy._id, userLiked: this.props.user._id },
@@ -49,7 +49,6 @@ class Post extends Component {
       postService
         .likePost(this.props.post._id)
         .then((postLiked) => {
-          console.log(postLiked);
           let numberOfLikes = this.state.numberOfLikes;
           numberOfLikes++;
           this.setState({ numberOfLikes: numberOfLikes });
@@ -65,7 +64,6 @@ class Post extends Component {
         .then((postUnliked) => {
           let numberOfLikes = this.state.numberOfLikes;
           numberOfLikes--;
-          console.log(numberOfLikes);
           this.setState({ numberOfLikes: numberOfLikes });
         })
         .catch((err) => {
@@ -95,57 +93,34 @@ class Post extends Component {
     this.setState({ isLiked: isLiked });
     this.countNumberOfLikes();
     this.countNumberOfComments();
+    this.highlightSearchInput();
   }
 
   toggleShowPicture = () => {
     this.setState({ showPhoto: !this.state.showPhoto });
   };
 
-  // handlePostLinks = () => {
-  //   const postContent = this.props.post.postContent.split(" ");
-  //   console.log(postContent);
+  highlightSearchInput = () => {
+    if (this.props.searchWord) {
+      const postContent = this.props.post.postContent.split(" ");
+      const searchWord = this.props.searchWord;
+      const capitalSeachWord = searchWord.toUpperCase();
+      const highlightedContent = postContent.map((word) => {
+        if (word.includes(searchWord) || word.includes(capitalSeachWord)) {
+          return <strong>{word}</strong>;
+        } else {
+          return word;
+        }
+      });
+      // console.log(highlightedContent);
 
-  //   const postContentWithLinkSplit = postContent.map((word) => {
-  //     if (word.startsWith("http") || word.startsWith("https")) {
-  //       return "<a href={`${word}`}>{word}</a>";
-  //     } else {
-  //       return word;
-  //     }
-  //   });
-  //   console.log(postContentWithLinkSplit);
+      this.setState({ highlightedContent: highlightedContent });
+    }
+  };
 
-  //   const postContentWithLink = postContentWithLinkSplit.join(" ");
-
-  //   console.log(postContentWithLink);
-
-  //   return <p>{postContentWithLink}</p>;
-  // };
-
-  // componentWillUnmount() {
-  //   if (!this.state.isLiked) {
-  //     postService
-  //       .likePost(this.props.post._id)
-  //       .then((postLiked) => {
-  //         console.log("Post liked");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   if (this.state.isLiked) {
-  //     postService
-  //       .unlikePost(this.props.post._id)
-  //       .then((postUnliked) => {
-  //         console.log("Post unliked");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }
   render() {
     const { post } = this.props;
-
+    // console.log("highlighted", this.state.highlightedContent);
     return (
       <div>
         {/* <div className="card"> */}
@@ -176,7 +151,12 @@ class Post extends Component {
               ) : null}
               <Link to={`/postdetails/${post._id}`}>
                 {" "}
-                <div className="post-content">{post.postContent}</div>
+                {/* <div className="post-content">{post.postContent}</div> */}
+                <div className="post-content">
+                  {this.state.highlightedContent.map((word, i) => {
+                    return <span key={i}>{word} </span>;
+                  })}
+                </div>
               </Link>
               <div className="post-actions">
                 {" "}

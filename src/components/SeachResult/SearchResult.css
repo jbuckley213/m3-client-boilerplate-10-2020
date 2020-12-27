@@ -1,0 +1,9 @@
+.following-column {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .following-column {
+    display: block;
+  }
+}

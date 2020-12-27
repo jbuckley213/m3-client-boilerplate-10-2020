@@ -3,7 +3,7 @@ import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import { Theme } from "./../styles/themes";
 import SearchResult from "./../components/SeachResult/SearchResult";
-import Post from "./../components/Posts/PostHook";
+import Post from "./../components/Posts/Post";
 
 const Search = (props) => {
   // state = {
@@ -118,10 +118,10 @@ const Search = (props) => {
           autoComplete="off"
         />
         {searchInput === "" ? null : (
-          <div className="animated slideInLeft">
+          <div className="animated slideInLeft search-content">
             <h1>People</h1>
             <table>
-              <tbody>
+              <tbody className="search-table-body">
                 {searchResults.length === 0
                   ? "Not results found"
                   : searchResults.map((user) => {
@@ -133,7 +133,9 @@ const Search = (props) => {
             <h1>Posts</h1>
 
             {searchPosts.map((post) => {
-              return <Post key={post._id} post={post} />;
+              return (
+                <Post key={post._id} post={post} searchWord={searchInput} />
+              );
             })}
           </div>
         )}

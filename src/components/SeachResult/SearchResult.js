@@ -4,6 +4,7 @@ import UserService from "./../../lib/user-service";
 import conversationService from "./../../lib/conversation-service";
 
 import { Link } from "react-router-dom";
+import "./SearchResult.css";
 
 class SearchResult extends Component {
   state = {
@@ -91,7 +92,7 @@ class SearchResult extends Component {
             <p>{userSearch && userSearch.lastName}</p>
           </Link>
         </td>
-        <td>
+        <td className="following-column">
           {this.state.isFollowing ? (
             <button
               className="button is-white is-light is-size-7"

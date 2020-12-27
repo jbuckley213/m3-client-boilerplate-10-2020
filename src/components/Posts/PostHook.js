@@ -21,6 +21,7 @@ const Post = (props) => {
   const [numberOfLikes, setNumberOfLikes] = useState(0);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [showPhoto, setShowPhoto] = useState(false);
+  const [postContentLinks, setPostContentLinks] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -100,6 +101,7 @@ const Post = (props) => {
     setIsLiked(liked);
     countNumberOfLikes();
     countNumberOfComments();
+    handlePostContentWithLinks();
   }, []);
 
   const toggleShowPicture = () => {
@@ -117,48 +119,19 @@ const Post = (props) => {
     );
   };
 
-  // handlePostLinks = () => {
-  //   const postContent = this.props.post.postContent.split(" ");
-  //   console.log(postContent);
+  const handlePostContentWithLinks = () => {
+    const postContent = props.post.postContent.split(" ");
 
-  //   const postContentWithLinkSplit = postContent.map((word) => {
-  //     if (word.startsWith("http") || word.startsWith("https")) {
-  //       return "<a href={`${word}`}>{word}</a>";
-  //     } else {
-  //       return word;
-  //     }
-  //   });
-  //   console.log(postContentWithLinkSplit);
-
-  //   const postContentWithLink = postContentWithLinkSplit.join(" ");
-
-  //   console.log(postContentWithLink);
-
-  //   return <p>{postContentWithLink}</p>;
-  // };
-
-  // componentWillUnmount() {
-  //   if (!this.state.isLiked) {
-  //     postService
-  //       .likePost(this.props.post._id)
-  //       .then((postLiked) => {
-  //         console.log("Post liked");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   if (this.state.isLiked) {
-  //     postService
-  //       .unlikePost(this.props.post._id)
-  //       .then((postUnliked) => {
-  //         console.log("Post unliked");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }
+    const postContentWithLinks = postContent.map((word) => {
+      if (word.startsWith("http") || word.startsWith("https")) {
+        return <a href={word}>{word}</a>;
+      } else {
+        return word;
+      }
+    });
+    // console.log(highlightedContent);
+    setPostContentLinks(postContentWithLinks);
+  };
 
   const { post } = props;
 
@@ -193,7 +166,12 @@ const Post = (props) => {
                   ></img>
                 ) : null}
                 {/* <Link to={`/postdetails/${post._id}`}> */}{" "}
-                <div className="post-content">{post.postContent}</div>
+                {/* <div className="post-content">{post.postContent}</div> */}
+                <div className="post-content">
+                  {postContentLinks.map((word, i) => {
+                    return <span key={i}>{word} </span>;
+                  })}
+                </div>
                 {post.code && (
                   <code>
                     <pre>{post.code}</pre>

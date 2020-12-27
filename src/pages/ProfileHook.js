@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { withAuth } from "./../context/auth-context";
 import userService from "./../lib/user-service";
 import Post from "./../components/Posts/Post";
+import PostHook from "./../components/Posts/PostHook";
+
 import Notifications from "./../components/Notifications/Notifications";
 import Settings from "./../components/Settings/Settings";
 import PostInput from "./../components/PostInput/PostInput";
@@ -358,7 +360,7 @@ const Profile = (props) => {
                     {isAdmin ? (
                       <UserPost post={post} deletePost={deletePost} />
                     ) : (
-                      <Post post={post} />
+                      <PostHook post={post} />
                     )}
                   </div>
                 );
@@ -372,7 +374,7 @@ const Profile = (props) => {
               <h3 className="no-info">No likes yet</h3>
             ) : (
               user.likes.map((post) => {
-                return <Post key={post._id} post={post} />;
+                return <PostHook key={post._id} post={post} />;
               })
             )}
           </div>

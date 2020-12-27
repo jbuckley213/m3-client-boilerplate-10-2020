@@ -2,6 +2,8 @@ import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import postService from "./../../lib/post-service";
 import PostMenuDropDown from "./../PostMenuDropDown/PostMenuDropDown";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 import { withAuth } from "../../context/auth-context";
 import "./PostInput.css";
 
@@ -113,10 +115,11 @@ const PostInput = (props) => {
             />
           )}
 
-          <div className="post-actions">
-            <p onClick={toggleCodeAndImageInput}>Show Inputs</p>
+          <div className="post-actions-input">
             {/* <PostMenuDropDown /> */}
             <div className="photo-code-buttons-moblie">
+              <MoreVertIcon onClick={toggleCodeAndImageInput} />
+
               {showCodeAndImageInput && (
                 <div>
                   {" "}
@@ -147,11 +150,11 @@ const PostInput = (props) => {
                 // value={this.state.postPhoto}
                 onChange={handleFileUpload}
               />
-              <p onClick={toggleCodeInput} className="button is-white s-size-7">
+              <p onClick={toggleCodeInput} className="button s-size-7">
                 Code
               </p>
             </div>
-            <button className="button is-white s-size-7" type="submit">
+            <button className="button s-size-7" type="submit">
               Post
             </button>{" "}
           </div>
