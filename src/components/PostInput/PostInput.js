@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import postService from "./../../lib/post-service";
-
+import PostMenuDropDown from "./../PostMenuDropDown/PostMenuDropDown";
 import { withAuth } from "../../context/auth-context";
-
-//const ENDPOINT = "http://localhost:5000";
+import "./PostInput.css";
 
 const PostInput = (props) => {
-  // state = {
-  //   post: "",
-  //   postPhoto: "",
-  // };
-
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [input, setInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -21,6 +15,7 @@ const PostInput = (props) => {
       code: "",
     }
   );
+  const [showCodeAndImageInput, setshowCodeAndImageInput] = useState(false);
 
   const handleFileUpload = (e) => {
     console.log("The file to be uploaded is: ", e.target.files);
@@ -71,6 +66,10 @@ const PostInput = (props) => {
     setShowCodeInput(!showCodeInput);
   };
 
+  const toggleCodeAndImageInput = () => {
+    setshowCodeAndImageInput(!showCodeAndImageInput);
+  };
+
   return (
     <form className="post-form" onSubmit={handleSubmit}>
       <div className="post-main">
@@ -115,7 +114,33 @@ const PostInput = (props) => {
           )}
 
           <div className="post-actions">
-            <div>
+            <p onClick={toggleCodeAndImageInput}>Show Inputs</p>
+            {/* <PostMenuDropDown /> */}
+            <div className="photo-code-buttons-moblie">
+              {showCodeAndImageInput && (
+                <div>
+                  {" "}
+                  <label>Upload Photo</label>
+                  <input
+                    name="postPhoto"
+                    type="file"
+                    placeholder="Upload photo"
+                    // value={this.state.postPhoto}
+                    onChange={handleFileUpload}
+                  />
+                  <p
+                    onClick={() => {
+                      toggleCodeInput();
+                      toggleCodeAndImageInput();
+                    }}
+                    className="button is-white s-size-7"
+                  >
+                    Type Code
+                  </p>
+                </div>
+              )}
+            </div>
+            <div className="photo-code-buttons">
               <input
                 name="postPhoto"
                 type="file"

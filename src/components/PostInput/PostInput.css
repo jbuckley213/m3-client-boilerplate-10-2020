@@ -1,0 +1,25 @@
+@media (min-width: 1023px) {
+  .photo-code-buttons-moblie {
+    display: none;
+  }
+  .post-actions .photo-code-buttons {
+    display: flex;
+  }
+}
+.post-actions .photo-code-buttons-moblie {
+  position: relative;
+  top: 60px;
+  right: 20px;
+  z-index: 1;
+}
+.post-actions .photo-code-buttons-moblie div {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+}
+
+.post-actions .photo-code-buttons {
+  display: none;
+}

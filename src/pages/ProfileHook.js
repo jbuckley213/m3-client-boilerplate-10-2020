@@ -48,7 +48,6 @@ const Profile = (props) => {
     socket.on("notification", (response) => {
       const userId = response.userId.userId;
       const userLiked = response.userId.userLiked;
-      console.log(userLiked);
       if (userId === props.user._id && userLiked !== props.user._id) {
         handlePostApi();
       }
@@ -60,7 +59,6 @@ const Profile = (props) => {
     userService
       .getOne(profileId)
       .then((apiResponse) => {
-        console.log("response");
         setUser(apiResponse.data.user);
         setIsAdmin(apiResponse.data.isAdmin);
         setUserId(profileId);
@@ -87,9 +85,7 @@ const Profile = (props) => {
 
   const orderPosts = () => {
     const postsArr = [];
-    console.log(user);
     if (Object.keys(user).length !== 0) {
-      console.log("called");
       user.posts.forEach((post) => {
         postsArr.push(post);
       });
@@ -122,7 +118,6 @@ const Profile = (props) => {
   };
 
   const socketFollow = () => {
-    console.log("sockey run");
     socket.emit(
       "notification",
       { userId: user._id, userLiked: props.user._id },
@@ -142,7 +137,6 @@ const Profile = (props) => {
       userService
         .unfollow(user._id)
         .then((apiResponse) => {
-          console.log(apiResponse.data.following);
           setIsFollowed(false);
         })
         .catch((err) => console.log(err));
@@ -234,8 +228,6 @@ const Profile = (props) => {
   function onPan(event, info) {
     console.log(info.point.x, info.point.y);
   }
-
-  console.log("posts", posts);
 
   return (
     <div className="profile">
