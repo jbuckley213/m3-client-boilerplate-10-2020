@@ -115,3 +115,31 @@ code {
   justify-content: space-evenly;
   align-items: center;
 }
+
+.like-btn-animate {
+  background-position: left;
+  background-repeat: no-repeat;
+  /* background-size: 2900%; */
+  /* animation: heart-burst 0.5s 10; */
+}
+
+@keyframes heart-burst {
+  0% {
+    position: relative;
+    left: 2px;
+    font-size: 1.2rem;
+    transform: rotate(90deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(270deg);
+  }
+  100% {
+    position: relative;
+    left: 0px;
+    font-size: 1rem;
+    transform: rotate(360deg);
+  }
+}

@@ -96,7 +96,7 @@ class Conversation extends Component {
               const messageArrLength = conversation.messages.length - 1;
 
               return (
-                <div key={conversation._id}>
+                <div className="animated fadeInUp" key={conversation._id}>
                   <Link to={`/conversation-details/${conversation._id}`}>
                     <div className="conversations">
                       <MessagePreview>

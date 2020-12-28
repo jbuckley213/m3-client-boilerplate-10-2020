@@ -672,3 +672,50 @@ html {
   margin: 5px auto;
   font-family: monospace;
 }
+
+.typing {
+  height: 30px;
+  width: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #57ba98;
+  border-radius: 12px;
+  margin: 10px 0 10px 20px;
+}
+
+.dots {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color: #444;
+  position: relative;
+}
+
+.dot1 {
+  animation: type 1s ease-in-out infinite;
+}
+.dot2 {
+  animation: type 1s ease-in-out 0.05s infinite;
+}
+.dot3 {
+  animation: type 1s ease-in-out 0.1s infinite;
+}
+
+@keyframes type {
+  0% {
+    top: 0;
+  }
+  25% {
+    top: 5px;
+  }
+  /* 50% {
+    top: 0;
+  } */
+  75% {
+    top: -5px;
+  }
+  100% {
+    top: 0;
+  }
+}

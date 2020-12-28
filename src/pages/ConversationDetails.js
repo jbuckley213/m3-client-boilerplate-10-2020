@@ -18,6 +18,7 @@ class ConversationDetails extends Component {
     userContact: {},
     newMessages: [],
     showDelete: false,
+    isTyping: false,
   };
 
   componentDidMount() {
@@ -39,13 +40,13 @@ class ConversationDetails extends Component {
     );
 
     socket.on("message", (message) => {
-      console.log("socket called");
       // console.log(message.text);
       // const messages = [];
       // messages.push(message.text);
       // this.setState({ newMessages: messages });
-      //this.getConversation();
+      this.getConversation();
       this.seenMessage();
+      this.setState({ isTyping: false });
     });
 
     socket.on("online", (user) => {
@@ -54,6 +55,17 @@ class ConversationDetails extends Component {
 
     socket.on("messageIsSeen", () => {
       this.getConversation();
+      // this.scrollToBottom();
+    });
+
+    socket.on("type", () => {
+      console.log("typing");
+      this.setState({ isTyping: true });
+      this.scrollToBottom();
+    });
+
+    socket.on("StopType", () => {
+      this.setState({ isTyping: false });
     });
 
     this.sendDelete();
@@ -132,6 +144,11 @@ class ConversationDetails extends Component {
 
   handleInput = (event) => {
     const { name, value } = event.target;
+
+    socket.emit("typing", {
+      room: this.state.conversation._id,
+      value: value,
+    });
 
     this.setState({ [name]: value });
   };
@@ -306,6 +323,14 @@ class ConversationDetails extends Component {
               return <p>{message}</p>;
             })}
           </div> */}
+
+          {this.state.isTyping ? (
+            <div className="typing">
+              <div className="dots dot1"></div>
+              <div className="dots dot2"></div>
+              <div className="dots dot3"></div>
+            </div>
+          ) : null}
 
           <form onSubmit={this.handleSubmit} className="send-message">
             <input

@@ -182,7 +182,11 @@ const Post = (props) => {
                   {" "}
                   <div onClick={handleLike}>
                     {isLiked ? (
-                      <ThumbUpIcon fontSize="small" color="primary" />
+                      <ThumbUpIcon
+                        fontSize="small"
+                        color="primary"
+                        className="like-btn-animate"
+                      />
                     ) : (
                       <ThumbUpIcon fontSize="small" /> //color="disabled"
                     )}{" "}
