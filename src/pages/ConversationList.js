@@ -144,7 +144,9 @@ class Conversation extends Component {
           </div>
           <div className="link-to-desktop-conversations">
             {this.state.conversationId === "" ? (
-              <p className="link-to-desktop-conversations">Conversations</p>
+              <h2 className="link-to-desktop-conversations subtitle is-4">
+                Choose your Conversation
+              </h2>
             ) : (
               <ConversationDetailsDesktop
                 conversationId={this.state.conversationId}

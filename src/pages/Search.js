@@ -4,6 +4,7 @@ import userService from "./../lib/user-service";
 import { Theme } from "./../styles/themes";
 import SearchResult from "./../components/SeachResult/SearchResult";
 import Post from "./../components/Posts/Post";
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 const Search = (props) => {
   // state = {
@@ -17,6 +18,9 @@ const Search = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [posts, setPosts] = useState([]);
   const [searchPosts, setSearchPosts] = useState([]);
+  const [searchPostsFirstThree, setSearchPostsFirstThree] = useState([]);
+  const [seeMorePosts, setSeeMorePosts] = useState(false);
+  const [showPosts, setShowPosts] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -96,6 +100,8 @@ const Search = (props) => {
     });
 
     setSearchPosts(filteredPosts);
+    const firstThreePosts = filteredPosts.splice(0, 3);
+    setSearchPostsFirstThree(firstThreePosts);
   };
 
   const handleInput = (event) => {
@@ -118,25 +124,76 @@ const Search = (props) => {
           autoComplete="off"
         />
         {searchInput === "" ? null : (
-          <div className="animated slideInLeft search-content">
+          <div className="animated slideInUp search-content">
             <h1>People</h1>
             <table>
               <tbody className="search-table-body">
-                {searchResults.length === 0
-                  ? "Not results found"
-                  : searchResults.map((user) => {
-                      return <SearchResult key={user._id} userSearch={user} />;
-                    })}
+                {searchResults.length === 0 ? (
+                  <p>Not results found</p>
+                ) : (
+                  searchResults.map((user) => {
+                    return <SearchResult key={user._id} userSearch={user} />;
+                  })
+                )}
               </tbody>
             </table>
 
-            <h1>Posts</h1>
+            <h1
+              onClick={() => {
+                setShowPosts(!showPosts);
+              }}
+            >
+              Posts
+            </h1>
+            <AnimateSharedLayout>
+              <AnimatePresence>
+                {showPosts && (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    {searchPostsFirstThree.map((post) => {
+                      return (
+                        <Post
+                          key={post._id}
+                          post={post}
+                          searchWord={searchInput}
+                        />
+                      );
+                    })}
 
-            {searchPosts.map((post) => {
-              return (
-                <Post key={post._id} post={post} searchWord={searchInput} />
-              );
-            })}
+                    <AnimatePresence>
+                      {seeMorePosts ? (
+                        <motion.div
+                          layout
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          {searchPosts.map((post) => {
+                            return (
+                              <Post
+                                key={post._id}
+                                post={post}
+                                searchWord={searchInput}
+                              />
+                            );
+                          })}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                    <button
+                      className="see-more-button"
+                      onClick={() => setSeeMorePosts(!seeMorePosts)}
+                    >
+                      See More
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </AnimateSharedLayout>
           </div>
         )}
       </div>

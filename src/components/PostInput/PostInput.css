@@ -5,6 +5,7 @@
   .post-actions-input .photo-code-buttons {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 }
 .post-actions .photo-code-buttons-moblie {
@@ -23,6 +24,10 @@
 
 .photo-code-buttons {
   display: none;
+}
+
+.photo-code-buttons div {
+  display: flex;
 }
 
 .post-actions-input {
@@ -52,6 +57,24 @@
 }
 
 .post-actions-input input {
-  width: 200px;
+  width: 20px;
   margin: 0;
+  opacity: 0;
+  z-index: 3;
+  position: relative;
+  left: -10px;
+}
+.photo-upload {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 25px;
+  background-color: #57ba98;
+  border-radius: 50%;
+}
+.moble-photo-upload {
+  display: flex;
 }

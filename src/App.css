@@ -244,6 +244,7 @@ button.navbar-button {
   background-color: #57ba98;
   word-wrap: break-word;
   border-radius: 15px;
+  color: white;
 }
 .admin-message div {
   margin: 0 5px;
@@ -276,6 +277,7 @@ button.navbar-button {
 .message-preview {
   display: flex;
   align-items: center;
+  padding: 5px 0;
 }
 
 .message-name {
@@ -387,7 +389,7 @@ body,
 }
 
 .post-form textarea {
-  width: 90%;
+  width: 100%;
   margin: 0 0;
   border-radius: 10px;
   height: 50px;
@@ -583,7 +585,7 @@ body,
 
 .conversation-list {
   height: 100vh;
-  padding: 20px 0;
+  padding: 20px 20px;
 }
 
 .post-main .large-img {
@@ -626,7 +628,7 @@ html {
     top: 0px;
     bottom: 0;
     width: auto;
-    height: 165px;
+    height: 180px;
     border-radius: 10px;
     /* color: #f2f2f2; */
   }
@@ -729,6 +731,22 @@ html {
 }
 .link-to-desktop-conversations {
   display: none;
+}
+
+h2.link-to-desktop-conversations {
+  text-align: center;
+  position: relative;
+  top: 100px;
+}
+
+.see-more-button {
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+}
+.see-more-button:hover {
+  background-color: #57ba98;
 }
 
 @media (min-width: 1023px) {

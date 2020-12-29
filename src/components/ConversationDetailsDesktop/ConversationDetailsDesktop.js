@@ -5,6 +5,7 @@ import { ThemeConversation } from "./../../styles/themes";
 import { MessageHeader } from "./../../styles/message-header";
 import { MessagePreviewSelected } from "./../../styles/message-preview";
 import io from "socket.io-client";
+import "animate.css/source/animate.css";
 
 //const ENDPOINT = "http://localhost:5000";
 const ENDPOINT = process.env.REACT_APP_API_URL;
@@ -79,7 +80,7 @@ class ConversationDetails extends Component {
   };
 
   scrollToBottom() {
-    this.el.scrollIntoView({ behavior: "smooth" });
+    this.el.scrollIntoView(); //{ behavior: "smooth" }
   }
 
   seenMessage = () => {
@@ -287,7 +288,7 @@ class ConversationDetails extends Component {
                     <div>
                       <div
                         onClick={this.toggleDelete}
-                        className={`admin-message ${classes}`}
+                        className={`admin-message ${classes} animated slideInRight`}
                       >
                         <div>{this.outputDate(message.created_at)}</div>
                         <p>
@@ -302,7 +303,7 @@ class ConversationDetails extends Component {
                       ) : null}
                     </div>
                   ) : (
-                    <div className="user-message">
+                    <div className="user-message animated slideInLeft">
                       <div>{this.outputDate(message.created_at)}</div>
 
                       <p>

@@ -103,10 +103,13 @@ class Post extends Component {
   highlightSearchInput = () => {
     if (this.props.searchWord) {
       const postContent = this.props.post.postContent.split(" ");
-      const searchWord = this.props.searchWord;
+      const searchWord = this.props.searchWord.toLowerCase();
       const capitalSeachWord = searchWord.toUpperCase();
       const highlightedContent = postContent.map((word) => {
-        if (word.includes(searchWord) || word.includes(capitalSeachWord)) {
+        if (
+          word.toLowerCase().includes(searchWord) ||
+          word.includes(capitalSeachWord)
+        ) {
           return <strong>{word}</strong>;
         } else {
           return word;
