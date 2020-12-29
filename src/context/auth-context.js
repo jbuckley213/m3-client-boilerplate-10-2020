@@ -10,6 +10,7 @@ class AuthProvider extends React.Component {
     isLoading: true,
     user: null,
     isDark: false,
+    isNewUser: false,
   };
 
   componentDidMount() {
@@ -31,7 +32,9 @@ class AuthProvider extends React.Component {
   signup = (firstName, lastName, image, email, password) => {
     authService
       .signup(firstName, lastName, image, email, password)
-      .then((user) => this.setState({ isLoggedIn: true, user }))
+      .then((user) =>
+        this.setState({ isLoggedIn: true, user, isNewUser: true })
+      )
       .catch((err) => {
         this.setState({ isLoggedIn: false, user: null });
       });
@@ -95,9 +98,13 @@ class AuthProvider extends React.Component {
       });
   };
 
+  closeNewUser = () => {
+    this.setState({ isNewUser: false });
+  };
+
   render() {
-    const { isDark, isLoggedIn, isLoading, user } = this.state;
-    const { toggleTheme, signup, login, logout, me } = this;
+    const { isDark, isLoggedIn, isLoading, user, isNewUser } = this.state;
+    const { toggleTheme, signup, login, logout, me, closeNewUser } = this;
 
     if (isLoading) return <p>Loading</p>;
 
@@ -108,11 +115,13 @@ class AuthProvider extends React.Component {
           isLoggedIn,
           isLoading,
           user,
+          isNewUser,
           signup,
           login,
           logout,
           me,
           toggleTheme,
+          closeNewUser,
         }}
       >
         {this.props.children}
@@ -133,11 +142,13 @@ const withAuth = (WrappedComponent) => {
               isDark,
               isLoading,
               user,
+              isNewUser,
               signup,
               login,
               logout,
               me,
               toggleTheme,
+              closeNewUser,
             } = value;
 
             return (
@@ -147,11 +158,13 @@ const withAuth = (WrappedComponent) => {
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 user={user}
+                isNewUser={isNewUser}
                 signup={signup}
                 login={login}
                 logout={logout}
                 me={me}
                 toggleTheme={toggleTheme}
+                closeNewUser={closeNewUser}
               />
             );
           }}

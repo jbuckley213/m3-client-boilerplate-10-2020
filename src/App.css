@@ -51,9 +51,9 @@ button.navbar-button {
   object-fit: cover;
 }
 .btn {
-  width: 100px;
+  width: 65px;
   margin: auto 0;
-  height: 45px;
+  height: 40px;
   border-radius: 15px;
   background-color: #f2f2f2;
   display: flex;
@@ -62,7 +62,8 @@ button.navbar-button {
 }
 .nav-link {
   color: #f2f2f2;
-  background-color: #3b945e;
+  /* background-color: #3b945e; */
+  background-color: #57ba98;
 }
 
 .profile-link img {
@@ -618,13 +619,15 @@ html {
 @media (min-width: 1000px) {
   nav.navbar {
     display: block;
-    padding: 0px 20px;
+    padding: 10px 15px;
     background: #f2f2f2;
     overflow: hidden;
     position: sticky;
-    top: 10;
+    top: 0px;
     bottom: 0;
     width: auto;
+    height: 165px;
+    border-radius: 10px;
     /* color: #f2f2f2; */
   }
 
@@ -717,5 +720,32 @@ html {
   }
   100% {
     top: 0;
+  }
+}
+
+.conversation-list-and-details {
+  display: flex;
+  height: 74vh;
+}
+.link-to-desktop-conversations {
+  display: none;
+}
+
+@media (min-width: 1023px) {
+  .link-to-conversation {
+    display: none;
+  }
+  .link-to-desktop-conversations {
+    display: block;
+    width: 100%;
+  }
+  .message-preview {
+    width: 320px;
+  }
+  .conversation-details {
+    width: 100%;
+  }
+  .conversation-details .send-message {
+    width: 50%;
   }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import conversationService from "./../lib/conversation-service";
-import { withAuth } from "./../context/auth-context";
-import { ThemeConversation } from "./../styles/themes";
-import { MessageHeader } from "./../styles/message-header";
+import conversationService from "./../../lib/conversation-service";
+import { withAuth } from "./../../context/auth-context";
+import { ThemeConversation } from "./../../styles/themes";
+import { MessageHeader } from "./../../styles/message-header";
+import { MessagePreviewSelected } from "./../../styles/message-preview";
 import io from "socket.io-client";
 
 //const ENDPOINT = "http://localhost:5000";
@@ -19,13 +20,22 @@ class ConversationDetails extends Component {
     newMessages: [],
     showDelete: false,
     isTyping: false,
+    isSelected: false,
   };
 
   componentDidMount() {
     this.getConversationMount();
     // this.setTimerFromApiCall();
     this.seenMessage();
-    this.scrollToBottom();
+    // this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    const currentConversation = this.state.conversation._id;
+    const nextConversation = this.props.conversationId;
+    if (currentConversation !== nextConversation) {
+      this.getConversationMount();
+    }
   }
 
   startSocket = () => {
@@ -58,7 +68,7 @@ class ConversationDetails extends Component {
 
     socket.on("type", () => {
       this.setState({ isTyping: true });
-      // this.scrollToBottom();
+      //   this.scrollToBottom();
     });
 
     socket.on("StopType", () => {
@@ -73,10 +83,8 @@ class ConversationDetails extends Component {
   }
 
   seenMessage = () => {
-    const { conversationId } = this.props.match.params;
-    socket.emit("messageSeen", { room: this.state.conversation._id }, () => {
-      console.log("message-seen");
-    });
+    const { conversationId } = this.props;
+    socket.emit("messageSeen", { room: this.state.conversation._id }, () => {});
     conversationService
       .messageSeen(conversationId)
       .then((apiResponse) => {})
@@ -84,7 +92,7 @@ class ConversationDetails extends Component {
   };
 
   getConversation = () => {
-    const { conversationId } = this.props.match.params;
+    const { conversationId } = this.props;
     conversationService
       .getConversationOne(conversationId)
       .then((apiResponse) => {
@@ -97,7 +105,7 @@ class ConversationDetails extends Component {
   };
 
   getConversationMount = () => {
-    const { conversationId } = this.props.match.params;
+    const { conversationId } = this.props;
     conversationService
       .getConversationOne(conversationId)
       .then((apiResponse) => {
@@ -152,7 +160,7 @@ class ConversationDetails extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { conversationId } = this.props.match.params;
+    const { conversationId } = this.props;
     const sendMessage = this.state.sendMessage;
     const userContactId = this.state.userContact._id;
     console.log(userContactId);
@@ -198,7 +206,6 @@ class ConversationDetails extends Component {
   };
 
   componentWillUnmount() {
-    console.log("leave conversation");
     socket.emit(
       "leaveConversation",
       { room: this.state.conversation._id },
@@ -237,7 +244,7 @@ class ConversationDetails extends Component {
   };
 
   deleteMessage = (messageId) => {
-    const { conversationId } = this.props.match.params;
+    const { conversationId } = this.props;
     conversationService
       .deleteMessage(conversationId, messageId)
       .then((apiResponse) => {

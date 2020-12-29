@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import conversationService from "./../lib/conversation-service";
 import { withAuth } from "./../context/auth-context";
 import { Link } from "react-router-dom";
-import { MessagePreview } from "./../styles/message-preview";
+import {
+  MessagePreview,
+  MessagePreviewSelected,
+} from "./../styles/message-preview";
 import { Theme } from "./../styles/themes";
 import ConversationListItem from "../components/ConversationListItem/ConversationListItem";
-import ConversationDetailsDesktop from "./../components/ConversationDetailsDesktop/ConversationDetailsDesktop";
-
 import "animate.css/source/animate.css";
+import ConversationDetailsDesktop from "./../components/ConversationDetailsDesktop/ConversationDetailsDesktop";
 
 import io from "socket.io-client";
 
@@ -88,7 +90,6 @@ class Conversation extends Component {
 
   render() {
     const conversations = this.state.conversations;
-
     return (
       <Theme dark={this.props.isDark}>
         <div className="conversation-list-and-details">
@@ -106,26 +107,12 @@ class Conversation extends Component {
 
                 return (
                   <div className="animated fadeInUp" key={conversation._id}>
-                    <Link
-                      className="link-to-conversation"
-                      to={`/conversation-details/${conversation._id}`}
-                    >
-                      <div className="conversations">
-                        <MessagePreview>
-                          <ConversationListItem
-                            online={this.state.online}
-                            conversation={conversation}
-                            messageArrLength={messageArrLength}
-                            receiverUser={user}
-                          />
-                        </MessagePreview>
-                      </div>
-                    </Link>
+                    {/* <Link to={`/conversation-details/${conversation._id}`}> */}
                     <div
                       onClick={() => {
                         this.handleConversationChoosen(conversation._id);
                       }}
-                      className="conversations link-to-desktop-conversations"
+                      className="conversations"
                     >
                       <MessagePreview>
                         <ConversationListItem
@@ -137,20 +124,19 @@ class Conversation extends Component {
                         />
                       </MessagePreview>
                     </div>
+                    {/* </Link> */}
                   </div>
                 );
               })
             )}
           </div>
-          <div className="link-to-desktop-conversations">
-            {this.state.conversationId === "" ? (
-              <p className="link-to-desktop-conversations">Conversations</p>
-            ) : (
-              <ConversationDetailsDesktop
-                conversationId={this.state.conversationId}
-              />
-            )}
-          </div>
+          {this.state.conversationId === "" ? (
+            <p>Conversations</p>
+          ) : (
+            <ConversationDetailsDesktop
+              conversationId={this.state.conversationId}
+            />
+          )}
         </div>
       </Theme>
     );

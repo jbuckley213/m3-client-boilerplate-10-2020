@@ -20,3 +20,18 @@ img{
     font-size:0.8rem;
 `}
 `;
+
+export const MessagePreviewSelected = styled.div`
+  ${(props) =>
+    props.isSelected &&
+    css`
+  background-color: #57ba98;
+
+  h3{
+    color:white;
+  }
+ 
+  p {
+    color:white
+`}
+`;

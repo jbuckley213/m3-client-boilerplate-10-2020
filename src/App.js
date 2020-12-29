@@ -14,6 +14,7 @@ import ProfileHook from "./pages/ProfileHook";
 
 import PostDetails from "./pages/PostDetails";
 import ConversationList from "./pages/ConversationList";
+import ConversationListDesktop from "./pages/ConversationListDesktop";
 import ConversationDetails from "./pages/ConversationDetails";
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -47,11 +48,20 @@ class App extends Component {
                   path="/postdetails/:postId"
                   component={PostDetails}
                 />
+                {/* {window.innerWidth < 1023 ? ( */}
                 <PrivateRoute
                   exact
                   path="/conversations"
                   component={ConversationList}
                 />
+                {/* ) : (
+                  <PrivateRoute
+                    exact
+                    path="/conversations"
+                    component={ConversationListDesktop}
+                  />
+                )} */}
+
                 <PrivateRoute
                   exact
                   path="/conversation-details/:conversationId"

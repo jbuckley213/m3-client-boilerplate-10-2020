@@ -1,4 +1,5 @@
 import React from "react";
+import { withAuth } from "./../../context/auth-context";
 import { PopUp, PopUpMenu } from "./../../styles/new-user-popup";
 import ChatIcon from "@material-ui/icons/Chat";
 import PersonIcon from "@material-ui/icons/Person";
@@ -14,6 +15,7 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import Divider from "@material-ui/core/Divider";
 import SwipeableViews from "react-swipeable-views";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const tutorialSteps = [
   {
@@ -42,7 +44,8 @@ const tutorialSteps = [
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 400,
-    width: 400,
+    width: "90%",
+
     flexGrow: 1,
     border: 0,
   },
@@ -50,27 +53,39 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     height: 70,
-    paddingTop: 20,
+    paddingTop: 7,
     borderRadius: "10px 10px 0 0 ",
-
+    background: "#57ba98",
     paddingLeft: theme.spacing(4),
+    color: "white",
   },
   content: {
     display: "flex",
     flexDirection: "column",
     // borderTop: "1px solid #3b945e",
     paddingTop: 20,
-    height: 100,
+    height: 110,
     paddingLeft: theme.spacing(4),
   },
   buttons: {
     borderRadius: "0 0 10px 10px ",
+    background: "#57ba98",
+    color: "white",
+  },
+  btn: {
+    color: "white",
+  },
+  "@media (min-width: 1024px)": {
+    root: {
+      width: "50%",
+    },
   },
 }));
 
 function NewUserPopup(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const matches = useMediaQuery("(min-width:1023px)");
 
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = tutorialSteps.length;
@@ -95,7 +110,7 @@ function NewUserPopup(props) {
           </Typography>
 
           <Typography>{tutorialSteps[activeStep].title}</Typography>
-          <CloseIcon onClick={props.closeNewUserMessage} />
+          <CloseIcon onClick={props.closeNewUser} />
         </Paper>
         <Divider variant="middle" />
         {/* <Paper square elevation={0} className={classes.content}>
@@ -127,6 +142,7 @@ function NewUserPopup(props) {
           activeStep={activeStep}
           nextButton={
             <Button
+              className={classes.btn}
               size="small"
               onClick={handleNext}
               disabled={activeStep === maxSteps - 1}
@@ -141,6 +157,7 @@ function NewUserPopup(props) {
           }
           backButton={
             <Button
+              className={classes.btn}
               size="small"
               onClick={handleBack}
               disabled={activeStep === 0}
@@ -159,15 +176,4 @@ function NewUserPopup(props) {
   );
 }
 
-export default NewUserPopup;
-//  <PopUp>
-//       <PopUpMenu>
-//         <h1>Welcome to Social Developers</h1>
-
-//         <h3>How to use our App</h3>
-//         <p>
-//           Click on the home icon <HomeIcon /> to see posts from other Developers
-//           who have followed
-//         </p>
-//       </PopUpMenu>
-//     </PopUp>
+export default withAuth(NewUserPopup);

@@ -19,7 +19,7 @@ let socket = io(ENDPOINT);
 const Private = (props) => {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [newUser, setNewUser] = useState(true);
+  // const [newUser, setNewUser] = useState(true);
 
   const [newPosts, setNewPosts] = useState([]);
 
@@ -83,10 +83,9 @@ const Private = (props) => {
     handlePostsFollowedApi();
   };
 
-  const closeNewUserMessage = () => {
-    setNewUser(false);
-  };
-
+  // const closeNewUserMessage = () => {
+  //   setNewUser(false);
+  // };
   return (
     <div className="dashboard">
       <Theme dark={props.isDark}>
@@ -98,9 +97,8 @@ const Private = (props) => {
           </div>
         </div>
 
-        {newUser ? (
-          <NewUserPopup closeNewUserMessage={closeNewUserMessage} />
-        ) : null}
+        {props.isNewUser ? <NewUserPopup /> : null}
+        {/* closeNewUserMessage={closeNewUserMessage} */}
 
         <PostInput handleComponentSubmit={handleComponentSubmit} />
 

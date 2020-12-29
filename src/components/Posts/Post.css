@@ -62,10 +62,12 @@
 .comment-icon {
   color: rgb(182, 179, 179);
   margin-top: 2px;
+  cursor: pointer;
 }
 
 .post-actions div {
   font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .post-user-info {
@@ -93,7 +95,6 @@ li {
   border-radius: 10px;
   margin-bottom: 10px;
   overflow: hidden;
-  cursor: pointer;
   /* border: 1px solid #444; */
   background-color: #f4f4f4;
 }

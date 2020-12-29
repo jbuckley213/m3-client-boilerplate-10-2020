@@ -2,6 +2,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.message-preview:hover {
+  background-color: #57ba98;
+  color: white;
+  border-radius: 5px;
+}
 .message-info .message-date {
   margin-right: 5px;
 }
@@ -19,6 +25,7 @@
 
 @media (min-width: 1023px) {
   .message-info .preview-message-content {
-    width: 500px;
+    /* width: 500px; */
+    width: 135px;
   }
 }
