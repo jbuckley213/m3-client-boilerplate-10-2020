@@ -71,11 +71,13 @@ const Search = (props) => {
     const filteredUsers = users.filter((user) => {
       const lowercaseFirstName = user.firstName.toLowerCase();
       const lowercaseLastName = user.lastName.toLowerCase();
+      const fullName = lowercaseFirstName + " " + lowercaseLastName;
       const lowercaseSearch = value.toLowerCase();
 
       if (
         lowercaseFirstName.startsWith(lowercaseSearch) ||
-        lowercaseLastName.startsWith(lowercaseSearch)
+        lowercaseLastName.startsWith(lowercaseSearch) ||
+        fullName.startsWith(lowercaseSearch)
       ) {
         return true;
       } else {

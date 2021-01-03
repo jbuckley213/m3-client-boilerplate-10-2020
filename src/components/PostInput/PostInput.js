@@ -74,10 +74,11 @@ const PostInput = (props) => {
   const toggleCodeAndImageInput = () => {
     setshowCodeAndImageInput(!showCodeAndImageInput);
   };
+  //    </AnimateSharedLayout>
 
   return (
     <AnimateSharedLayout>
-      <AnimatePresence>
+      <motion.div layout initial={{ borderRadius: 25 }}>
         <form className="post-form" onSubmit={handleSubmit}>
           <div className="post-main">
             <div>
@@ -92,6 +93,15 @@ const PostInput = (props) => {
                   {"   "}
                 </div>
               </div>
+              {input.postPhoto === "" ? null : (
+                <span>
+                  <img
+                    className="large-img animated zoomIn"
+                    src={input.postPhoto && input.postPhoto}
+                    alt=""
+                  ></img>
+                </span>
+              )}
               {/* {this.state.postPhoto === "" ? null : (
                   <span>
                     <img
@@ -109,17 +119,25 @@ const PostInput = (props) => {
                 placeholder="Share your thoughts........"
                 required
               />
-              {showCodeInput && (
-                <textarea
-                  className="post"
-                  name="code"
-                  className="code-input"
-                  value={input.code}
-                  onChange={handleInput}
-                  placeholder="Share your code..."
-                />
-              )}
-
+              <AnimatePresence>
+                {showCodeInput && (
+                  <motion.div
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <textarea
+                      className="post"
+                      name="code"
+                      className="code-input"
+                      value={input.code}
+                      onChange={handleInput}
+                      placeholder="Share your code..."
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <div className="post-actions-input">
                 {/* <PostMenuDropDown /> */}
                 <div className="photo-code-buttons-moblie">
@@ -134,25 +152,27 @@ const PostInput = (props) => {
                       >
                         {" "}
                         <div className="moble-photo-upload">
-                          <div className="photo-upload">
-                            <PhotoIcon />
+                          <div className="moble-photo-upload">
+                            <div className="photo-upload">
+                              <PhotoIcon />
+                            </div>
+                            <input
+                              name="postPhoto"
+                              type="file"
+                              placeholder="Upload photo"
+                              // value={this.state.postPhoto}
+                              onChange={handleFileUpload}
+                            />
                           </div>
-                          <input
-                            name="postPhoto"
-                            type="file"
-                            placeholder="Upload photo"
-                            // value={this.state.postPhoto}
-                            onChange={handleFileUpload}
-                          />
-                        </div>
-                        <div
-                          onClick={() => {
-                            toggleCodeInput();
-                            toggleCodeAndImageInput();
-                          }}
-                          className="photo-upload"
-                        >
-                          <CodeIcon />
+                          <div
+                            onClick={() => {
+                              toggleCodeInput();
+                              toggleCodeAndImageInput();
+                            }}
+                            className="photo-upload"
+                          >
+                            <CodeIcon />
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -180,21 +200,20 @@ const PostInput = (props) => {
                     Post
                   </button>{" "}
                 </div>
+                {/* {input.postPhoto === "" ? null : (
+                  <span>
+                    <img
+                      className="large-img animated zoomIn"
+                      src={input.postPhoto && input.postPhoto}
+                      alt=""
+                    ></img>
+                  </span>
+                )} */}
               </div>
             </div>
           </div>
-
-          {input.postPhoto === "" ? null : (
-            <span>
-              <img
-                style={{ width: "100px" }}
-                src={input.postPhoto && input.postPhoto}
-                alt=""
-              ></img>
-            </span>
-          )}
         </form>
-      </AnimatePresence>
+      </motion.div>
     </AnimateSharedLayout>
   );
 };

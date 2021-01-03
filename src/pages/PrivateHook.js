@@ -43,7 +43,6 @@ const Private = (props) => {
     postService
       .getAllPostsByFollowedUsers()
       .then((apiResponse) => {
-        console.log(...apiResponse.data);
         setUsers(apiResponse.data);
       })
       .catch((err) => setUsers([]));
@@ -54,6 +53,7 @@ const Private = (props) => {
   }, [users]);
 
   const orderPosts = () => {
+    console.log(props.user.posts);
     const postsArr = [...newPosts, ...props.user.posts];
     users.forEach((user) => {
       postsArr.push(...user.posts);

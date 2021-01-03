@@ -17,6 +17,7 @@
 .post-actions .photo-code-buttons-moblie div {
   position: fixed;
   display: flex;
+  background-color: red;
   flex-direction: column;
   background-color: white;
   padding: 20px;

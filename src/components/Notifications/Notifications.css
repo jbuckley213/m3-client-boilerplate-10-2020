@@ -52,3 +52,9 @@
   overflow: auto;
   width: 90%;
 }
+
+@media (min-width: 1023px) {
+  .notifications-menu .notification {
+    width: 50%;
+  }
+}

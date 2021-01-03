@@ -7,3 +7,11 @@
     display: block;
   }
 }
+
+.search-name {
+  display: flex;
+  justify-content: space-around;
+}
+.search-name p {
+  margin: 0 3px;
+}

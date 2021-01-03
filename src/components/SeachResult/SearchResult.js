@@ -12,12 +12,23 @@ class SearchResult extends Component {
     hasConversation: false,
     conversationId: "",
     user: {},
+    isCurrentUser: false,
   };
 
   componentDidMount() {
     this.checkFollow();
     this.checkConversation();
+    this.handleIsCurrentUser();
   }
+
+  handleIsCurrentUser = () => {
+    const userSearch = this.props.userSearch;
+    const currentUser = this.props.user;
+    console.log(typeof userSearch._id, typeof currentUser._id);
+    if (userSearch._id === currentUser._id) {
+      this.setState({ isCurrentUser: true });
+    }
+  };
 
   checkFollow = () => {
     const currentUserFollowing = this.props.user.following;
@@ -87,13 +98,13 @@ class SearchResult extends Component {
         </td>
 
         <td>
-          <Link to={`/profile/${userSearch._id}`}>
+          <Link className="search-name" to={`/profile/${userSearch._id}`}>
             <p>{userSearch && userSearch.firstName} </p>
             <p>{userSearch && userSearch.lastName}</p>
           </Link>
         </td>
         <td className="following-column">
-          {this.state.isFollowing ? (
+          {this.state.isCurrentUser ? null : this.state.isFollowing ? (
             <button
               className="button is-white is-light is-size-7"
               onClick={this.handleUnfollow}
@@ -109,8 +120,9 @@ class SearchResult extends Component {
             </button>
           )}
         </td>
+
         <td>
-          {this.state.hasConversation ? (
+          {this.state.isCurrentUser ? null : this.state.hasConversation ? (
             <Link
               className="button is-success is-light is-size-7"
               to={`/conversation-details/${this.state.conversationId}`}

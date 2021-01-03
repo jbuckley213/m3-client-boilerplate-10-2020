@@ -7,6 +7,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import InsertCommentIcon from "@material-ui/icons/InsertComment";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import DropDownComment from "./../DropDownComments/DropDownComment";
+import PopupLikes from "./../PopupLikes/PopupLikes";
 import "./Post.css";
 import "bulma/css/bulma.css";
 
@@ -22,6 +23,7 @@ const Post = (props) => {
   const [numberOfComments, setNumberOfComments] = useState(0);
   const [showPhoto, setShowPhoto] = useState(false);
   const [postContentLinks, setPostContentLinks] = useState([]);
+  const [showLikes, setShowLikes] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -133,6 +135,10 @@ const Post = (props) => {
     setPostContentLinks(postContentWithLinks);
   };
 
+  const toggleShowLikes = () => {
+    setShowLikes(!showLikes);
+  };
+
   const { post } = props;
 
   return (
@@ -157,10 +163,20 @@ const Post = (props) => {
                   <div className="date">{outputDate(post.date)}</div>
                 </div>
                 {post.postPhoto ? (
+                  showPhoto ? null : (
+                    <img
+                      onClick={toggleShowPicture}
+                      className="post-image"
+                      style={{ width: "100px" }}
+                      src={post.postPhoto && post.postPhoto}
+                      alt=""
+                    ></img>
+                  )
+                ) : null}
+                {showPhoto ? (
                   <img
                     onClick={toggleShowPicture}
-                    className="post-image"
-                    style={{ width: "100px" }}
+                    className="large-img animated zoomIn"
                     src={post.postPhoto && post.postPhoto}
                     alt=""
                   ></img>
@@ -177,6 +193,29 @@ const Post = (props) => {
                     <pre>{post.code}</pre>
                   </code>
                 )}
+                {post.likes[0] && (
+                  <div>
+                    <p
+                      onClick={() => {
+                        setShowLikes(!showLikes);
+                      }}
+                      className="like-preview"
+                    >
+                      <img src={post.likes[0].image} />
+                      {post.likes[0].firstName} {post.likes[0].lastName}{" "}
+                      {post.likes.length !== 1 ? "and others" : null} liked this
+                      post
+                    </p>
+                  </div>
+                )}
+                <AnimatePresence>
+                  {showLikes && (
+                    <PopupLikes
+                      likes={post.likes}
+                      toggleShowLikes={toggleShowLikes}
+                    />
+                  )}
+                </AnimatePresence>
                 {/* </Link> */}
                 <div className="post-actions">
                   {" "}
@@ -197,14 +236,14 @@ const Post = (props) => {
                     <div>{numberOfComments}</div>
                   </div>
                 </div>
-                {showPhoto ? (
+                {/* {showPhoto ? (
                   <img
                     onClick={toggleShowPicture}
                     className="large-img animated zoomIn"
                     src={post.postPhoto && post.postPhoto}
                     alt=""
                   ></img>
-                ) : null}
+                ) : null} */}
               </div>
             </div>
           </motion.li>

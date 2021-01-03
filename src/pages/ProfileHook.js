@@ -13,7 +13,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 import { Theme } from "./../styles/themes";
 import { ProfileButton } from "./../styles/profile-button";
-import { motion, AnimateSharedLayout } from "framer-motion";
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 
 import UserPost from "./../components/UserPost/UserPost";
 import "bulma/css/bulma.css";
@@ -277,13 +277,15 @@ const Profile = (props) => {
                 </div>
               </div>
             ) : null}
-            {showNotifications ? (
-              <Notifications
-                toggleNotifications={toggleNotifications}
-                notifications={user.notifications}
-                reduceNotifications={reduceNotifications}
-              />
-            ) : null}
+            <AnimatePresence>
+              {showNotifications ? (
+                <Notifications
+                  toggleNotifications={toggleNotifications}
+                  notifications={user.notifications}
+                  reduceNotifications={reduceNotifications}
+                />
+              ) : null}
+            </AnimatePresence>
           </div>
         </div>
 
